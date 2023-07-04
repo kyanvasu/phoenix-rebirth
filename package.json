@@ -1,0 +1,32 @@
+{
+  "name": "phoenix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20.0.0",
+    "yarn": ">=1.22.19 && <2.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyanvasu/phoenix.git"
+  },
+  "author": "Rogelio Morey",
+  "contributors": [
+    "Bryan Astacio"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kyanvasu/phoenix/issues"
+  },
+  "homepage": "https://github.com/kyanvasu/phoenix#readme",
+  "devDependencies": {
+    "@kanvas/core": "^0.0.11",
+    "next": "^13.4.8",
+    "react": "^18.2.0",
+    "typescript": "^5.1.6"
+  }
+}
