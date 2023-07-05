@@ -1,15 +1,17 @@
 {
-  "name": "phoenix",
+  "name": "@kanvas/phoenix",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "engines": {
     "node": ">=20.0.0",
     "yarn": ">=1.22.19 && <2.0.0"
   },
   "scripts": {
-    "build": "rm -rf dist && tsdx build",
-    "watch": "tsdx watch"
+    "build": "rm -rf dist && rollup -c",
+    "watch": "rollup -cw"
   },
   "repository": {
     "type": "git",
@@ -26,12 +28,19 @@
   "homepage": "https://github.com/kyanvasu/phoenix#readme",
   "devDependencies": {
     "@kanvas/core": "^0.0.11",
+    "@rollup/plugin-commonjs": "^25.0.2",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-replace": "^5.0.2",
     "@types/react": "^18.2.14",
     "next": "^13.4.8",
     "react": "^18.2.0",
+    "rollup-plugin-multi-input": "^1.4.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.35.0",
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "tsdx": "^0.14.1"
+    "rollup": "^3.26.0"
   }
 }
