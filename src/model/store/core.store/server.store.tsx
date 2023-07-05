@@ -1,6 +1,6 @@
-import React from "react";
-import { Configuration, CoreProps } from "../../types";
-import { CoreContext } from "../../services/core.context";
+import React from 'react';
+import { Configuration, CoreProps } from '../../types';
+import { CoreContext } from '../../services/core.context';
 
 /**
  * Server component that handles the initial configuration of the package

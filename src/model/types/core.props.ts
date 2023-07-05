@@ -1,5 +1,5 @@
-import KanvasCore from "@kanvas/core";
-import { PropsWithChildren } from "react";
+import KanvasCore from '@kanvas/core';
+import { PropsWithChildren } from 'react';
 
 export interface Configuration {
   sdk?: KanvasCore;

@@ -1,4 +1,4 @@
-import { Configuration } from "../../types";
+import { Configuration } from '../../types';
 
 export class CoreContext {
   private static _instance: CoreContext | null = null;

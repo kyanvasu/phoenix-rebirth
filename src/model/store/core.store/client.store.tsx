@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { Configuration, CoreProps } from "../../types";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { Configuration, CoreProps } from '../../types';
 
 const CoreContext = createContext<Configuration>({
   sdk: undefined
