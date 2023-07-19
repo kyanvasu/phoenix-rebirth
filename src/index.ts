@@ -5,3 +5,5 @@ import * as Atoms from './components/atoms';
 import * as Molecules from './components/molecules';
 
 export { Organism, Atoms, Molecules };
+
+export * from "./pages"
