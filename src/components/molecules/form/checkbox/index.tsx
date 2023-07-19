@@ -1,18 +1,66 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Label } from '../../../atoms';
-
-export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+import { CheckboxDefault, CheckboxSelected } from '../../../atoms/icons';
+enum CheckboxState {
+  default,
+  active,
 }
 
-export function Checkbox({
+export interface Props {
+  label?: string;
+  checked?: boolean;
+  disabled?: boolean;
+  required?: boolean;
+  onChange?: (isChecked: boolean) => void;
+  className?: string;
+}
+
+function Checkbox({
+  checked,
+  onClick,
+}: {
+  checked: CheckboxState;
+  onClick?: any;
+}) {
+  return (
+    <div
+      className={classNames(
+        'font-normal text-body-md text-base-neutral-grey-100 flex items-center w-fit gap-2'
+      )}
+      onClick={onClick}
+      role='checkbox'
+      aria-checked={checked === CheckboxState.active}
+      tabIndex={0}
+    >
+      {checked === CheckboxState.active ? (
+        <CheckboxSelected />
+      ) : (
+        <CheckboxDefault />
+      )}
+    </div>
+  );
+}
+
+function useCheckbox({ checked, onChange }: Props) {
+  const toggleCheckbox = () => {
+    onChange?.(!checked);
+  };
+  return {
+    operations: {
+      toggleCheckbox,
+    },
+  };
+}
+
+export function CheckboxInput({
   label,
+  checked,
   className,
-  id,
+  onChange,
   required,
-  ...rest
 }: Props): JSX.Element {
+  const { operations } = useCheckbox({ checked, onChange });
   return (
     <div
       className={classNames(
@@ -20,16 +68,12 @@ export function Checkbox({
         className
       )}
     >
-      <input
-        id={id}
-        name={id}
-        type='checkbox'
-        className='h-[18px] w-[18px] rounded-[4px] border-base-neutral-grey-50 focus:ring-transparent text-base-primary-100'
-        {...rest}
+      <Checkbox
+        checked={checked ? CheckboxState.active : CheckboxState.default}
+        onClick={operations.toggleCheckbox}
       />
-
       {label && (
-        <Label htmlFor={id} className='select-none' required={required}>
+        <Label className='select-none' required={required}>
           {label}
         </Label>
       )}

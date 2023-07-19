@@ -13,6 +13,7 @@ export function Label(props: props) {
       <span
         className={classNames('text-base-semantic-error-70', {
           'hidden': !required,
+          'inline':required
         })}
       >
         *
