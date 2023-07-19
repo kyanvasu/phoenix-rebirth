@@ -15,9 +15,9 @@ export default function Plus(props: IconProps) {
       <path 
         d="M10 5V10M10 10V15M10 10H15M10 10L5 10"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
