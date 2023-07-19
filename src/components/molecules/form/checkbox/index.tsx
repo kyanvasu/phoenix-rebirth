@@ -14,6 +14,7 @@ export interface Props {
   required?: boolean;
   onChange?: (isChecked: boolean) => void;
   className?: string;
+  id?: any;
 }
 
 function Checkbox({

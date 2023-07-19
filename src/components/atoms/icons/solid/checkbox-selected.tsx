@@ -25,9 +25,9 @@ export function CheckboxSelected({
       <path
         d='M6.0625 10.5625L8.3125 12.8125L13.9375 7.1875'
         stroke='white'
-        stroke-width='2'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
