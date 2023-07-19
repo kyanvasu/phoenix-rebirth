@@ -1,11 +1,11 @@
-import { useServerContext } from '@kanvas/phoenix'
+import { useServerContext, Organism } from '@kanvas/phoenix'
+
+
 
 export default function Home() {
   const { sdk } = useServerContext();
 
-  console.log(sdk);
-
   return (
-    <></>
+    <Organism.Sidebar />
   )
 }

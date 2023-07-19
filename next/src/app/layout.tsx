@@ -17,7 +17,7 @@ export default function RootLayout({
     <ServerCoreStore sdk={sdk}>
       <RootClientLayout>
         <html lang="en">
-          <body>{children}</body>
+          <body className='flex min-h-screen min-w-full'>{children}</body>
         </html>
       </RootClientLayout>
     </ServerCoreStore>
