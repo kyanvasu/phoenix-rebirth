@@ -10,7 +10,7 @@ type Props = {
 
 export default function Sidebar({ items, Logo }: Props) {
   return (
-    <div className='w-[260px] min-h-full shrink-0 flex flex-col bg-base-primary-100'>
+    <div className='w-full min-h-full shrink-0 flex flex-col bg-base-primary-100'>
       <div className='shrink-0 py-3 px-2'>{Logo}</div>
 
       <nav className='flex-1 shrink-0 px-2 py-3'>

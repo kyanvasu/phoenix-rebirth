@@ -14,7 +14,7 @@ export default function NavItem({ Icon, title, active }: Props) {
   const container = classnames(
     'rounded-md',
     {
-      'bg-base-primary-90 text-base-primary-30': !active,
+      'bg-base-primary-90 text-base-primary-30 hover:text-white': !active,
       'bg-base-primary-10 text-base-primary-100': active,
     }
   );
