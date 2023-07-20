@@ -5,10 +5,11 @@ import classnames from 'classnames';
 type Props = {
   title: string;
   active?: boolean;
+  link: string;
   Icon: (props: IconProps) => JSX.Element;
 };
 
-export default function NavItem({ Icon, title, active }: Props) {
+export default function NavItem({ Icon, title, link, active }: Props) {
   const iconColor = !active ? 'stroke-white' : 'stroke-base-primary-100';
 
   const container = classnames(
@@ -21,7 +22,7 @@ export default function NavItem({ Icon, title, active }: Props) {
 
   return (
     <li className={container}>
-      <a href="#" className='flex flex-row gap-2.5 py-2.5 px-3.5'>
+      <a href={link} className='flex flex-row gap-2.5 py-2.5 px-3.5'>
         <Icon className={iconColor} size={20} />
         <span className='text-body-md font-semibold'>
           {title}

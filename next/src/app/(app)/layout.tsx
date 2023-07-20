@@ -8,26 +8,26 @@ const items: SidebarItem[] = [
   {
     key: 'dashboard',
     title: 'Dashboard',
+    link: '/home',
     Icon: Icons.Home,
   },
   {
     key: 'leads',
     title: 'Leads',
+    link: '/leads',
     Icon: Icons.Briefcase,
   },
   {
     key: 'sponsor',
     title: 'Sponsor',
+    link: '/sponsor',
     Icon: Icons.Users,
   }
 ];
 
 function getPathname() {
   const headersList = headers();
-  const domain = headersList.get('host') || "";
-  const fullUrl = headersList.get('referer') || "";
-  const [,pathname] = fullUrl.match( new RegExp(`https?:\/\/${domain}(.*)`))||[];
-
+  const pathname = headersList.get("x-invoke-path") || "";
   return pathname;
 }
 
@@ -38,6 +38,7 @@ export default function RoutLayout({ children }: PropsWithChildren) {
         <Organism.Sidebar
           items={items}
           Logo={<Logo />}
+          pathname={getPathname()}
         />
       }
     >
