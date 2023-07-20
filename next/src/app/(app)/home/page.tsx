@@ -1,3 +1,7 @@
+import { Atoms } from "@kanvas/phoenix";
+
 export default function Home() {
-  return <>Hola</>;
+  return (
+    <Atoms.Icons.Checkbox />
+  );
 }

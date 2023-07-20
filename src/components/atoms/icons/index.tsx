@@ -4,9 +4,7 @@ import ChevronLeft from "./chevron-left";
 import Home from "./home";
 import Plus from "./plus";
 import Users from './users';
-
-export * from './outline';
-export * from './solid';
+import Checkbox from "./checkbox";
 
 export default {
   Plus,
@@ -15,4 +13,5 @@ export default {
   Briefcase,
   Users,
   Bell,
+  Checkbox,
 }
