@@ -1,3 +1,4 @@
+import Bell from "./bell";
 import Briefcase from "./briefcase";
 import ChevronLeft from "./chevron-left";
 import Home from "./home";
@@ -13,4 +14,5 @@ export default {
   Home,
   Briefcase,
   Users,
+  Bell,
 }

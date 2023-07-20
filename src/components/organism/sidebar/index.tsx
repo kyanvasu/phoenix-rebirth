@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import Icons from '../../atoms/icons';
 import NavItem from '../../molecules/nav-item';
 import { SidebarItem } from '../../../model/types';
+import { Body } from '../../atoms';
 
 type Props = {
   Logo: ReactNode;
@@ -43,10 +44,11 @@ export default function Sidebar(props: Props) {
   );
 }
 
+// TODO: translates missing here
 function ChangeCompany() {
   return (
     <div className='flex items-center justify-between text-white p-0.5'>
-      <span className='text-body-md font-semibold'>Change Company</span>
+      <Body.Three className='font-semibold'>Change Company</Body.Three>
       <Icons.ChevronLeft className='stroke-white' />
     </div>
   );

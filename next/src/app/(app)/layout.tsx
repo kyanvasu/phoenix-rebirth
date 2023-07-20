@@ -42,6 +42,7 @@ export default function RoutLayout({ children }: PropsWithChildren) {
         />
       }
     >
+      <Organism.Header />
       {children}
     </Templates.BaseLayout>
   )

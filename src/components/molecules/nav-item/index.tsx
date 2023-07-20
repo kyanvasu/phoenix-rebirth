@@ -1,6 +1,7 @@
 import React from "react";
 import { IconProps } from "../../../model/types";
 import classnames from 'classnames';
+import { Body } from "../../atoms";
 
 type Props = {
   title: string;
@@ -24,9 +25,9 @@ export default function NavItem({ Icon, title, link, active }: Props) {
     <li className={container}>
       <a href={link} className='flex flex-row gap-2.5 py-2.5 px-3.5'>
         <Icon className={iconColor} size={20} />
-        <span className='text-body-md font-semibold'>
+        <Body.Three className="font-semibold">
           {title}
-        </span>
+        </Body.Three>
       </a>
     </li>
   );
