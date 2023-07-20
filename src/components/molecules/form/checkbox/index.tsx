@@ -1,11 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Label } from '../../../atoms';
-import { CheckboxDefault, CheckboxSelected } from '../../../atoms/icons';
-enum CheckboxState {
-  default,
-  active,
-}
+import Icons from '../../../atoms/icons';
 
 export interface Props {
   label?: string;
@@ -44,9 +40,7 @@ export function CheckboxInput({
       )}
       onClick={operations.toggleCheckbox}
     >
-      <Checkbox
-        checked={checked ? CheckboxState.active : CheckboxState.default}
-      />
+      <Icons.Checkbox active={checked} />
       {label && (
         <Label className='select-none' required={required}>
           {label}
@@ -54,11 +48,4 @@ export function CheckboxInput({
       )}
     </div>
   );
-}
-
-function Checkbox({ checked }: { checked: CheckboxState }) {
-  if (checked === CheckboxState.active) {
-    return <CheckboxSelected />;
-  }
-  return <CheckboxDefault />;
 }
