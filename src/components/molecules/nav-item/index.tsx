@@ -1,7 +1,7 @@
-import React from "react";
-import { IconProps } from "../../../model/types";
+import React from 'react';
+import { IconProps } from '../../../model/types';
 import classnames from 'classnames';
-import { Body } from "../../atoms";
+import { Body } from '../../atoms';
 
 type Props = {
   title: string;

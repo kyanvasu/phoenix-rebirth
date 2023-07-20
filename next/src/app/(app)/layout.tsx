@@ -1,5 +1,5 @@
-import { headers } from "next/headers";
-import { PropsWithChildren } from "react";
+import { headers } from 'next/headers';
+import { PropsWithChildren } from 'react';
 
 import { Organism, SidebarItem, Atoms, Templates } from '@kanvas/phoenix'
 const { Icons } = Atoms;

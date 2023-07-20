@@ -1,4 +1,4 @@
-import { Atoms } from "@kanvas/phoenix";
+import { Atoms } from '@kanvas/phoenix';
 
 export default function Home() {
   return (

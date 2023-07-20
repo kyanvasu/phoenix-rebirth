@@ -1,5 +1,5 @@
-import React from "react";
-import { IconProps } from "../../../../model/types";
+import React from 'react';
+import { IconProps } from '../../../../model/types';
 
 export default function Bell(props: IconProps) {
   const { className, size = 20 } = props;
