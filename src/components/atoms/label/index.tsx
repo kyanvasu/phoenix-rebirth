@@ -1,23 +1,16 @@
-import classNames from 'classnames';
 import React, { LabelHTMLAttributes } from 'react';
 
-interface props extends LabelHTMLAttributes<HTMLLabelElement> {
+interface Props extends LabelHTMLAttributes<HTMLLabelElement> {
   required?: boolean;
 }
-export function Label(props: props) {
-  const { required, children, ...others } = props;
 
+export function Label({ required = false, children, ...others }: Props) {
   return (
     <label {...others}>
       {children}
-      <span
-        className={classNames('text-base-semantic-error-70', {
-          'hidden': !required,
-          'inline':required
-        })}
-      >
-        *
-      </span>
+      {required && (
+        <span className='text-base-semantic-error-70 inline'>*</span>
+      )}
     </label>
   );
 }
