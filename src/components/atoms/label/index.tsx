@@ -9,7 +9,7 @@ export function Label({ required = false, children, ...others }: Props) {
     <label {...others}>
       {children}
       {required && (
-        <span className='text-base-semantic-error-70 inline'>*</span>
+        <span className='text-base-semantic-error-70 ml-1 '>*</span>
       )}
     </label>
   );

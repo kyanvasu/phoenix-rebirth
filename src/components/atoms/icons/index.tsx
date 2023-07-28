@@ -5,6 +5,7 @@ import Home from './home';
 import Plus from './plus';
 import Users from './users';
 import Checkbox from './checkbox';
+import ArrowLeft from './arrow-left';
 
 export default {
   Plus,
@@ -14,4 +15,5 @@ export default {
   Users,
   Bell,
   Checkbox,
+  ArrowLeft
 }
