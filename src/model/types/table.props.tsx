@@ -30,20 +30,3 @@ export interface TableProps extends Base {
   data: TableRowProps[];
   pages?: number;
 }
-
-export type Status =
-  | 'Lost'
-  | 'Won'
-  | 'Open'
-  | 'Visiting'
-  | 'Active'
-  | 'Pending';
-
-export enum badgeStatus {
-  LOST = 'Lost',
-  WON = 'Won',
-  OPEN = 'Open',
-  VISITING = 'Visiting',
-  ACTIVE = 'Active',
-  PENDING = 'Pending',
-}
