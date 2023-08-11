@@ -7,6 +7,7 @@ import {
   RegisterPage,
   ForgotPasswordPage,
   EmailPage,
+  ResetPasswordPage,
 } from '../pages/(auth)';
 
 export const Auth = {
@@ -14,6 +15,7 @@ export const Auth = {
   RegisterPage,
   ForgotPasswordPage,
   EmailPage,
+  ResetPasswordPage,
   useAuth,
 };
 
