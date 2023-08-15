@@ -6,7 +6,9 @@ import Plus from './plus';
 import Users from './users';
 import Checkbox from './checkbox';
 import ArrowLeft from './arrow-left';
-
+import PlusCircle from './plus-circle';
+import CheckCircle from './check-circle';
+import MinusCircle from './minus-circle';
 export default {
   Plus,
   ChevronLeft,
@@ -15,5 +17,8 @@ export default {
   Users,
   Bell,
   Checkbox,
-  ArrowLeft
-}
+  ArrowLeft,
+  PlusCircle,
+  MinusCircle,
+  CheckCircle,
+};
