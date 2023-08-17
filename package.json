@@ -10,8 +10,8 @@
     "src"
   ],
   "engines": {
-    "node": ">=20.0.0",
-    "yarn": ">=1.22.19 && <2.0.0"
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.17 && <2.0.0"
   },
   "scripts": {
     "build": "rm -rf dist && rollup -c",
