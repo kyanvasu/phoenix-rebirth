@@ -36,7 +36,7 @@ export function TableHeader(props: Props) {
             scope='col'
             className={classNames('p-3', {
               'text-right': index === columns.length - 2 && !enableActions,
-              'text-left': index != columns.length - 2 && enableActions,
+              'text-left': index !== columns.length - 2,
             })}
           >
             {column.title}
