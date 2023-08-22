@@ -38,7 +38,7 @@ export function TableCell({
       })}
     >
       <Link
-        href={enableSubPages ? '/' : ''}
+        href={enableSubPages ? `${enableSubPages}/${row?.uuid}` : ''}
         className={classNames({ 'cursor-default': !enableSubPages })}
       >
         {/* @ts-ignore */}
