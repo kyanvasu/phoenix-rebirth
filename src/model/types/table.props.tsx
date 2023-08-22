@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 
 export interface Base extends PropsWithChildren {
   enableCheckbox?: boolean;
-  enableSubPages?: boolean;
+  enableSubPages?: boolean | string;
   enableActions?: boolean;
   badges?: Record<
     string,
