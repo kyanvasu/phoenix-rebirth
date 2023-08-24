@@ -1,6 +1,6 @@
 {
   "name": "@kanvas/phoenix",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -38,6 +38,7 @@
     "@types/react": "^18.2.14",
     "classnames": "^2.3.2",
     "cookies-next": "^2.1.2",
+    "formik": "^2.4.2",
     "next": "^13.4.8",
     "react": "^18.2.0",
     "rollup-plugin-multi-input": "^1.4.1",
@@ -46,7 +47,7 @@
     "rollup-plugin-typescript2": "^0.35.0",
     "typescript": "^5.1.6",
     "yup": "^1.2.0",
-    "formik": "^2.4.2"
+    "@tanstack/react-table": "^8.9.3"
   },
   "dependencies": {
     "rollup": "^3.26.0"

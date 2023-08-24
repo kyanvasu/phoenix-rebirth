@@ -1,7 +1,6 @@
 export * from '../model/store/core.store/client.store';
-import { Table } from '../components/organism/table/base';
+import { Table } from '../components/organism/table/table';
 import { useAuth } from '../model/interactions/use-auth';
-import TableComponents from "../components/organism/table"
 import {
   LoginPage,
   RegisterPage,
@@ -19,4 +18,4 @@ export const Auth = {
   useAuth,
 };
 
-export { Table, TableComponents };
+export { Table };

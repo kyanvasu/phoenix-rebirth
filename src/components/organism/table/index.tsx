@@ -1,20 +1,15 @@
-
-import { TableContainer } from './container';
-import { TableHeader } from './header';
-import { TableBody } from './body';
-import { TableFooter } from './footer';
-import { TableCell } from './cell';
-import { TableRow } from './row';
+import { TBody } from './body';
+import { TCell } from './cell';
+import { THeader } from './header';
+import { TContainer } from './container';
+import { TRow } from './row';
 import { StatusBadge } from './status-badge';
 
-
-
 export default {
-  TableContainer,
-  TableFooter,
-  TableBody,
-  TableHeader,
-  TableCell,
-  TableRow,
-  StatusBadge
+  TBody,
+  TCell,
+  THeader,
+  TContainer,
+  TRow,
+  StatusBadge,
 };

@@ -1,17 +1,8 @@
 'use client';
 import source from '../../../data/dummy-leads.json';
-import { Atoms } from '@kanvas/phoenix';
+import { Atoms, Organism } from '@kanvas/phoenix';
 import { Table } from '@kanvas/phoenix/client';
 
-const columns = [
-  { key: 'title', title: 'Lead Name' },
-  { key: 'company', title: 'Company' },
-  { key: 'description', title: 'description' },
-  { key: 'modified-by', title: 'modified by' },
-  { key: 'uw-note', title: 'uw notes' },
-  { key: 'status', title: 'status' },
-  { key: 'create-date', title: 'created date' },
-];
 const statusBadges = {
   Lost: {
     label: 'Lost',
@@ -43,15 +34,52 @@ const statusBadges = {
     className: 'bg-base-semantic-error-50 hover:bg-base-semantic-error-50',
   },
 };
+
+const columns = [
+  {
+    accessorKey: 'title',
+    header: () => 'Title',
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'company',
+    header: () => 'Company',
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'description',
+    header: () => 'Description',
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'uw-note',
+    header: () => 'uw notes',
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'status',
+    header: () => 'Status',
+    cell: (info: any) => (
+      <Organism.Table.StatusBadge
+        className={statusBadges[info.renderValue()].className}
+        icon={statusBadges[info.renderValue()].icon}
+      >
+        {info.renderValue()}
+      </Organism.Table.StatusBadge>
+    ),
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'create-date',
+    header: () => 'Created date',
+    footer: (props: any) => props.column.id,
+  },
+];
+
 export default function Leads() {
   return (
     <>
-      <Table
-        columns={columns}
-        data={source}
-        enableCheckbox
-        badges={statusBadges}
-      />
+      <Table columns={columns} data={source} />
     </>
   );
 }
