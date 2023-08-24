@@ -9,6 +9,8 @@ import ArrowLeft from './arrow-left';
 import PlusCircle from './plus-circle';
 import CheckCircle from './check-circle';
 import MinusCircle from './minus-circle';
+import DotsHorizontal from './dots-horizontal';
+import DotsVertical from './dots-vertical';
 export default {
   Plus,
   ChevronLeft,
@@ -21,4 +23,6 @@ export default {
   PlusCircle,
   MinusCircle,
   CheckCircle,
+  DotsHorizontal,
+  DotsVertical,
 };
