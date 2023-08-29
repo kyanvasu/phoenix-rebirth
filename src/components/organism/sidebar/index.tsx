@@ -8,6 +8,7 @@ type Props = {
   Logo: ReactNode;
   pathname: string;
   items: SidebarItem[];
+  companies?: Record<string, any>[];
 };
 
 function useSidebar({ items, pathname }: Props) {
@@ -16,7 +17,7 @@ function useSidebar({ items, pathname }: Props) {
     const item = items.find((value) => pathname.includes(value.link));
     if (!item) return false;
     return current.key === item.key;
-  }
+  };
 
   return {
     currentItem,
@@ -24,7 +25,7 @@ function useSidebar({ items, pathname }: Props) {
 }
 
 export default function Sidebar(props: Props) {
-  const { items, Logo } = props;
+  const { items, Logo, companies } = props;
   const { currentItem } = useSidebar(props);
 
   return (
@@ -33,13 +34,17 @@ export default function Sidebar(props: Props) {
 
       <nav className='flex-1 shrink-0 px-2 py-3'>
         <ul role='list' className='flex flex-col flex-1 gap-2'>
-          {items.map(((item) => <NavItem {...item} active={currentItem(item)} />))}
+          {items.map((item) => (
+            <NavItem {...item} active={currentItem(item)} />
+          ))}
         </ul>
       </nav>
-    
-      <div className='bg-base-primary-90 border-t border-t-base-primary-70 shrink-0 p-5 cursor-pointer'>
-        <ChangeCompany />
-      </div>
+
+      {companies && (
+        <div className='bg-base-primary-90 border-t border-t-base-primary-70 shrink-0 p-5 cursor-pointer'>
+          <ChangeCompany />
+        </div>
+      )}
     </div>
   );
 }
