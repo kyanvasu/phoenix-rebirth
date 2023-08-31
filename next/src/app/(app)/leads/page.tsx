@@ -1,7 +1,9 @@
 'use client';
+import { IndeterminateCheckbox } from '@/components/molecules/indeterminate-checkbox';
 import source from '../../../data/dummy-leads.json';
-import { Atoms, Organism } from '@kanvas/phoenix';
+import { Atoms, Molecules, Organism } from '@kanvas/phoenix';
 import { Table } from '@kanvas/phoenix/client';
+import { useState } from 'react';
 
 const statusBadges = {
   Lost: {
@@ -17,7 +19,7 @@ const statusBadges = {
   Open: {
     label: 'Open',
     className: 'bg-base-primary-80 hover:bg-base-primary-80',
-    icon: <Atoms.Icons.PlusCircle />,
+    icon: <Atoms.Icons.PlusCircle className='stroke-white' />,
   },
   Visiting: {
     label: 'Visiting',
@@ -36,6 +38,30 @@ const statusBadges = {
 };
 
 const columns = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <IndeterminateCheckbox
+        {...{
+          checked: table.getIsAllRowsSelected(),
+          indeterminate: table.getIsSomeRowsSelected(),
+          onChange: table.getToggleAllRowsSelectedHandler(),
+        }}
+      />
+    ),
+    cell: ({ row }) => (
+      <div className='px-1'>
+        <Molecules.Form.CheckboxInput
+          {...{
+            checked: row.getIsSelected(),
+            disabled: !row.getCanSelect(),
+            // indeterminate: row.getIsSomeSelected(),
+            onChange: row.getToggleSelectedHandler(),
+          }}
+        />
+      </div>
+    ),
+  },
   {
     accessorKey: 'title',
     header: () => 'Title',
@@ -77,9 +103,18 @@ const columns = [
 ];
 
 export default function Leads() {
+  const [rowSelection, setRowSelection] = useState({});
+  const options = {
+    enableRowSelection: true,
+    state: {
+      rowSelection,
+    },
+    onRowSelectionChange: setRowSelection,
+  };
+
   return (
     <>
-      <Table columns={columns} data={source} />
+      <Table columns={columns} data={source} options={options} />
     </>
   );
 }
