@@ -35,7 +35,7 @@ const statusBadges = {
     label: 'Pending',
     className: 'bg-base-semantic-error-50 hover:bg-base-semantic-error-50',
   },
-};
+} as any;
 
 const columns = [
   {
