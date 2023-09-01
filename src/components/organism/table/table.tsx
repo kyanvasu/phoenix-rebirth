@@ -1,10 +1,4 @@
-import {
-  flexRender,
-  getCoreRowModel,
-  ColumnDef,
-  getPaginationRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 import React from 'react';
 import { TContainer } from './container';
 import { THeader } from './header';
@@ -12,20 +6,12 @@ import { TRow } from './row';
 import { TBody } from './body';
 import { TCell } from './cell';
 import classNames from 'classnames';
-
-export function Table({
-  data,
-  columns,
-}: {
-  data: any[];
-  columns: ColumnDef<any>[];
-}) {
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-  });
+import { TableProps } from '../../../model/types/table.props';
+import { useTable } from '../../../model/interactions/use-table';
+export function Table({ data, columns, options = {} }: TableProps) {
+  const {
+    models: { table },
+  } = useTable({ data, columns, options });
 
   return (
     <>
