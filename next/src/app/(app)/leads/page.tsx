@@ -42,22 +42,17 @@ const columns = [
     id: 'select',
     header: ({ table }) => (
       <IndeterminateCheckbox
-        {...{
-          checked: table.getIsAllPageRowsSelected(),
-          indeterminate: table.getIsSomeRowsSelected(),
-          onChange: table.getToggleAllPageRowsSelectedHandler(),
-        }}
+        checked={table.getIsAllPageRowsSelected()}
+        indeterminate={table.getIsSomeRowsSelected()}
+        onChange={table.getToggleAllPageRowsSelectedHandler()}
       />
     ),
     cell: ({ row }) => (
       <div className='px-1'>
         <Molecules.Form.CheckboxInput
-          {...{
-            checked: row.getIsSelected(),
-            disabled: !row.getCanSelect(),
-            // indeterminate: row.getIsSomeSelected(),
-            onChange: row.getToggleSelectedHandler(),
-          }}
+          checked={row.getIsSelected()}
+          disabled={!row.getCanSelect()}
+          onChange={row.getToggleSelectedHandler()}
         />
       </div>
     ),
