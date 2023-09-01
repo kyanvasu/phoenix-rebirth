@@ -43,9 +43,9 @@ const columns = [
     header: ({ table }) => (
       <IndeterminateCheckbox
         {...{
-          checked: table.getIsAllRowsSelected(),
+          checked: table.getIsAllPageRowsSelected(),
           indeterminate: table.getIsSomeRowsSelected(),
-          onChange: table.getToggleAllRowsSelectedHandler(),
+          onChange: table.getToggleAllPageRowsSelectedHandler(),
         }}
       />
     ),
