@@ -1,7 +1,10 @@
-import { Atoms } from '@kanvas/phoenix';
+import ClientComponent from "./component.client";
+
 
 export default function Home() {
   return (
-    <Atoms.Icons.Checkbox />
+    <div className='p-3'>
+      <ClientComponent />
+    </div>
   );
 }

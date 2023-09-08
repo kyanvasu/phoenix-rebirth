@@ -11,6 +11,9 @@ import CheckCircle from './check-circle';
 import MinusCircle from './minus-circle';
 import DotsHorizontal from './dots-horizontal';
 import DotsVertical from './dots-vertical';
+import Trash from './trash';
+import Archive from './archive';
+
 export default {
   Plus,
   ChevronLeft,
@@ -25,4 +28,6 @@ export default {
   CheckCircle,
   DotsHorizontal,
   DotsVertical,
+  Trash,
+  Archive,
 };
