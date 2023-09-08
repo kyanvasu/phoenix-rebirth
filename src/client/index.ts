@@ -2,6 +2,9 @@ export * from '../model/store/core.store/client.store';
 import { Table } from '../components/organism/table/table';
 import { useAuth } from '../model/interactions/use-auth';
 import { useTable } from '../model/interactions/use-table';
+
+import * as Molecules from '../components/molecules/index.client';
+
 import {
   LoginPage,
   RegisterPage,
@@ -19,4 +22,4 @@ export const Auth = {
   useAuth,
 };
 
-export { Table, useTable };
+export { Table, useTable, Molecules };
