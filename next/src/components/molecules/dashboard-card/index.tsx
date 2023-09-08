@@ -11,7 +11,7 @@ export function DashboardCard(props: CardProps) {
   const { title, subtitle, amount, icon } = props;
 
   return (
-    <article className='grid p-5 border rounded-md grid-row-2 shadow-elevation-1 border-base-neutral-grey-30'>
+    <Atoms.Card>
       <section className='flex flex-row gap-x-3'>
         <Atoms.CardButton icon={icon} />
 
@@ -37,6 +37,6 @@ export function DashboardCard(props: CardProps) {
           <Atoms.Icons.ChevronRight />
         </Atoms.Button.Link>
       </div>
-    </article>
+    </Atoms.Card>
   );
 }
