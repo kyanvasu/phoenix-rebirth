@@ -13,6 +13,9 @@ import MinusCircle from './minus-circle';
 import DotsHorizontal from './dots-horizontal';
 import DotsVertical from './dots-vertical';
 import Spinner from './spinner';
+import Trash from './trash';
+import Archive from './archive';
+
 export default {
   Plus,
   ChevronRight,
@@ -29,4 +32,6 @@ export default {
   DotsHorizontal,
   DotsVertical,
   Spinner,
+  Trash,
+  Archive,
 };
