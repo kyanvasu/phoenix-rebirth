@@ -4,7 +4,7 @@ import { THeader } from './header';
 import { TContainer } from './container';
 import { TRow } from './row';
 import { StatusBadge } from './status-badge';
-
+import { Pagination } from './pagination';
 export default {
   TBody,
   TCell,
@@ -12,4 +12,5 @@ export default {
   TContainer,
   TRow,
   StatusBadge,
+  Pagination,
 };
