@@ -59,29 +59,6 @@ export function Table({ data, columns, options = {} }: TableProps) {
         </TBody>
       </TContainer>
       <div className='h-4' />
-      <div className='flex items-center justify-center'>
-        <button
-          className='border rounded p-1'
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<'}
-        </button>
-        <span className='flex items-center gap-1'>
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of{' '}
-            {table.getPageCount()}
-          </strong>
-        </span>
-        <button
-          className='border rounded p-1'
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {'>'}
-        </button>
-      </div>
     </>
   );
 }
