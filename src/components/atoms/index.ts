@@ -7,5 +7,6 @@ export * from './help-text';
 export * from './label';
 export * from './card';
 export * from './card-button';
+export * from './avatar';
 
 export { Heading, Button, Body, Icons, Badge };
