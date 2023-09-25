@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useAuth } from '../../../model/interactions/use-auth';
 import { useClientContext } from '../../../model/store/core.store/client.store';
-
+import { useUser } from '../../../model/interactions/use-user';
 
 // TODO: add translates
 interface props {
@@ -16,6 +16,7 @@ interface props {
 function useSignIn({ redirect }: props) {
   const { sdk } = useClientContext();
   const [checkboxState, setCheckboxState] = useState(true);
+  const { operations: userOperations } = useUser({ sdk });
   function handleToggle() {
     setCheckboxState(!checkboxState);
   }
@@ -34,6 +35,8 @@ function useSignIn({ redirect }: props) {
   async function onSubmit(values: typeof initialValues) {
     try {
       await operations.login(values.email, values.password);
+      const profile = await userOperations.getUserInfo();
+      localStorage.setItem("user", JSON.stringify(profile))
       redirect();
     } catch {
       setErrors({

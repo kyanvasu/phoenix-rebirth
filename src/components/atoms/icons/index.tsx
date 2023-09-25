@@ -15,7 +15,11 @@ import DotsVertical from './dots-vertical';
 import Spinner from './spinner';
 import Trash from './trash';
 import Archive from './archive';
-
+import Padlock from './padlock';
+import Logout from './logout';
+import Mail from './mail';
+import Check from './check';
+import ChevronDown from './chevron-down';
 export default {
   Plus,
   ChevronRight,
@@ -34,4 +38,9 @@ export default {
   Spinner,
   Trash,
   Archive,
+  Padlock,
+  Logout,
+  Mail,
+  Check,
+   ChevronDown
 };

@@ -1,13 +1,16 @@
 'use client';
 
-import { ClientCoreStore } from '@kanvas/phoenix/client'
+import { ClientCoreStore } from '@kanvas/phoenix/client';
 import { PropsWithChildren } from 'react';
 import { sdk } from './layout';
+import { Provider } from 'jotai';
 
 export default function RootClientLayout({ children }: PropsWithChildren) {
   return (
-    <ClientCoreStore sdk={sdk}>
-      <>{children}</>
-    </ClientCoreStore>
+    <Provider>
+      <ClientCoreStore sdk={sdk}>
+        <>{children}</>
+      </ClientCoreStore>
+    </Provider>
   );
 }
