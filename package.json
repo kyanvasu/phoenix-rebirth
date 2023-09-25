@@ -50,7 +50,7 @@
     "rollup-plugin-typescript2": "^0.35.0",
     "typescript": "^5.1.6",
     "yup": "^1.2.0",
-    "react-hot-toast": "^2.4.1",
+    "react-hot-toast": "^2.4.1"
   },
   "dependencies": {
     "rollup": "^3.26.0"
