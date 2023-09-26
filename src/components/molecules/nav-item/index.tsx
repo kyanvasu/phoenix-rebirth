@@ -2,7 +2,7 @@ import React from 'react';
 import { SidebarItem } from '../../../model/types';
 import classnames from 'classnames';
 import { Body, Icons } from '../../atoms';
-import { Menu } from '@headlessui/react'; // Importa el componente Menu de Headless UI
+import { Menu } from '@headlessui/react'; 
 import Link from 'next/link';
 
 type Props = {
