@@ -1,6 +1,8 @@
-import { headers } from 'next/headers';
+'use client'
+// import { headers } from 'next/headers';
 import { PropsWithChildren } from 'react';
-
+import { usePathname } from 'next/navigation';
+import { Organism as Client } from '@kanvas/phoenix/client';
 import { Organism, SidebarItem, Atoms, Templates } from '@kanvas/phoenix'
 const { Icons } = Atoms;
 
@@ -22,12 +24,23 @@ const items: SidebarItem[] = [
     title: 'Sponsor',
     link: '/sponsor',
     Icon: Icons.Users,
-  }
+  },
+  {
+    key: 'marketing',
+    title: 'Marketing',
+    link: '',
+    Icon: Icons.Home,
+    children: [
+      { key: 'marketing', title: 'Marketing', link: '/marketing', Icon: Icons.Home },
+      { key: 'dashboard', title: 'Dashboard', link: '/dashboard', Icon: Icons.Home },
+    ],
+  },
 ];
 
 function getPathname() {
-  const headersList = headers();
-  const pathname = headersList.get("x-invoke-path") || "";
+  const pathname = usePathname()
+  // const headersList = headers();
+  // const pathname = headersList.get('x-invoke-path') || '';
   return pathname;
 }
 
@@ -35,7 +48,7 @@ export default function RoutLayout({ children }: PropsWithChildren) {
   return (
     <Templates.BaseLayout
       Sidebar={
-        <Organism.Sidebar
+        <Client.Sidebar
           items={items}
           Logo={<Logo />}
           pathname={getPathname()}
@@ -45,7 +58,7 @@ export default function RoutLayout({ children }: PropsWithChildren) {
       <Organism.Header />
       {children}
     </Templates.BaseLayout>
-  )
+  );
 }
 
 function Logo() {
