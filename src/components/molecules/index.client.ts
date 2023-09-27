@@ -1,3 +1,4 @@
 import Dropdown from "./dropdown";
 import Select from "./select";
-export  { Dropdown, Select };
+import NavItem from './nav-item';
+export  { Dropdown, Select, NavItem };
