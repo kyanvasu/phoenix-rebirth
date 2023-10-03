@@ -34,9 +34,10 @@ export default function Sidebar(props: Props) {
 
       <nav className='flex-1 shrink-0 px-2 py-3'>
         <ul role='list' className='flex flex-col flex-1 gap-2'>
-          {items.map((item) => (
+          {items.map((item, index) => (
             <NavItem
               item={item}
+              key={index}
               pathname={props.pathname}
               active={currentItem(item)}
             />
