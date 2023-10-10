@@ -4,6 +4,8 @@ import { Body, Button } from '../../../components/atoms';
 import ChevronRight from '../../../components/atoms/icons/chevron-right';
 import Icons from '../../../components/atoms/icons';
 import { UserData } from '@kanvas/core';
+import { useAuth } from '../../../model/interactions/use-auth';
+import { useClientContext } from '../../../client';
 
 export interface ViewsProps {
   view: number;
@@ -18,6 +20,8 @@ export interface ViewsProps {
  * @returns {JSX.Element} - The rendered component.
  */
 export function SettingsView({ handleView, profile }: ViewsProps): JSX.Element {
+  const { sdk } = useClientContext();
+  const { operations } = useAuth({ sdk });
   return (
     <>
       <section
@@ -54,7 +58,10 @@ export function SettingsView({ handleView, profile }: ViewsProps): JSX.Element {
           <Button.Link
             className='text-base-neutral-grey-90 hover:text-base-primary-80'
             size='medium'
-            onClick={async () => {}}
+            onClick={async () => {
+              await operations.logout();
+              location.href = '/sign-in';
+            }}
           >
             <Icons.Logout size={20} />
             Logout
