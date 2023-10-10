@@ -7,6 +7,7 @@ import { useAuth } from '../../../model/interactions/use-auth';
 import { useClientContext } from '../../../model/store/core.store/client.store';
 import { Form } from '../../../components/molecules';
 import { Body, Button, Heading } from '../../../components/atoms';
+import { useUser } from '../../../model/interactions/use-user';
 
 interface props {
   redirect: () => void;
@@ -25,6 +26,7 @@ function useSignUp({ redirect }: props) {
   const {
     operations: { register },
   } = useAuth({ sdk });
+  const { operations: userOperations } = useUser({ sdk });
 
   const validationSchema = yup.object().shape({
     firstname: yup.string().required(),
@@ -42,6 +44,8 @@ function useSignUp({ redirect }: props) {
       await register({
         ...values,
       });
+      const profile = await userOperations.getUserInfo();
+      localStorage.setItem("user", JSON.stringify(profile))
       redirect();
     } catch (err: any) {
       setErrors({
