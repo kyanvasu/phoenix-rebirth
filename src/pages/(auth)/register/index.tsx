@@ -8,6 +8,7 @@ import { useClientContext } from '../../../model/store/core.store/client.store';
 import { Form } from '../../../components/molecules';
 import { Body, Button, Heading } from '../../../components/atoms';
 import { useUser } from '../../../model/interactions/use-user';
+import Spinner from '../../../components/atoms/icons/spinner';
 
 interface props {
   redirect: () => void;
@@ -45,7 +46,7 @@ function useSignUp({ redirect }: props) {
         ...values,
       });
       const profile = await userOperations.getUserInfo();
-      localStorage.setItem("user", JSON.stringify(profile))
+      localStorage.setItem('user', JSON.stringify(profile));
       redirect();
     } catch (err: any) {
       setErrors({
@@ -144,8 +145,9 @@ export function RegisterPage({ redirect }: props) {
             className='justify-center w-full my-6'
             size='small'
             type='submit'
+            disabled={models.loading}
           >
-            Sign Up
+            {models.loading ? <Spinner /> : 'Sign Up'}
           </Button.Solid>
 
           <span className='flex flex-row gap-x-4'>

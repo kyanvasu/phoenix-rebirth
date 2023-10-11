@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { useAuth } from '../../../model/interactions/use-auth';
 import { useClientContext } from '../../../model/store/core.store/client.store';
 import { useUser } from '../../../model/interactions/use-user';
+import Spinner from '../../../components/atoms/icons/spinner';
 
 // TODO: add translates
 interface props {
@@ -36,7 +37,7 @@ function useSignIn({ redirect }: props) {
     try {
       await operations.login(values.email, values.password);
       const profile = await userOperations.getUserInfo();
-      localStorage.setItem("user", JSON.stringify(profile))
+      localStorage.setItem('user', JSON.stringify(profile));
       redirect();
     } catch {
       setErrors({
@@ -129,8 +130,9 @@ export function LoginPage({ redirect }: props) {
             className='justify-center w-full my-6'
             size='small'
             type='submit'
+            disabled={models.isSubmitting}
           >
-            Sign In
+            {models.isSubmitting ? <Spinner  /> : 'Sign In'}
           </Button.Solid>
 
           <span className='flex flex-row gap-x-4'>
