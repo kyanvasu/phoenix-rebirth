@@ -5,7 +5,7 @@ import ChevronRight from '../../../components/atoms/icons/chevron-right';
 import Icons from '../../../components/atoms/icons';
 import { UserData } from '@kanvas/core';
 import { useAuth } from '../../../model/interactions/use-auth';
-import { useClientContext } from '../../../client';
+import { useClientContext } from '../../../model/store/core.store/client.store';
 
 export interface ViewsProps {
   view: number;

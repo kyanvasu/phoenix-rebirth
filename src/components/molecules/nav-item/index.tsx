@@ -9,9 +9,10 @@ type Props = {
   item: SidebarItem;
   active?: boolean;
   pathname: string;
+  className?: string;
 };
 
-export default function NavItem({ pathname, active, item }: Props) {
+export default function NavItem({ pathname, active, item, className }: Props) {
   let isOpen = false;
   const isItemActive = isOpen || active;
 
@@ -48,7 +49,7 @@ export default function NavItem({ pathname, active, item }: Props) {
                     <Icons.ChevronRight size={20} className={iconColor} />
                   </span>
                 </Menu.Button>
-                <Menu.Items>
+                <Menu.Items className='space-y-2 mx-auto'>
                   {item.children?.map((childItem, index) => {
                     const isChildActive = pathname?.includes(childItem.link);
 
@@ -58,6 +59,7 @@ export default function NavItem({ pathname, active, item }: Props) {
                         key={index}
                         pathname={pathname}
                         active={isChildActive}
+                        className='w-52'
                       />
                     );
                   })}
@@ -69,7 +71,11 @@ export default function NavItem({ pathname, active, item }: Props) {
       ) : (
         <Link
           href={item.link}
-          className={`flex flex-row gap-2.5 py-2.5 px-3.5 ${container}`}
+          className={classnames(
+            'flex flex-row gap-2.5 py-2.5 px-3.5 ',
+            container,
+            className
+          )}
         >
           <item.Icon className={iconColor} size={20} />
           <Body.Three className='font-semibold'>{item.title}</Body.Three>
