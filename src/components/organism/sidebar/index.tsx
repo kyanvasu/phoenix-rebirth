@@ -3,13 +3,17 @@ import Icons from '../../atoms/icons';
 import NavItem from '../../molecules/nav-item';
 import { SidebarItem } from '../../../model/types';
 import { Body } from '../../atoms';
+import classNames from 'classnames';
 
-type Props = {
+interface Props
+  extends React.HTMLAttributes<HTMLDivElement>,
+    React.PropsWithChildren {
   Logo: ReactNode;
   pathname: string;
   items: SidebarItem[];
   companies?: Record<string, any>[];
-};
+  className?: string;
+}
 
 function useSidebar({ items, pathname }: Props) {
   const currentItem = (current: SidebarItem): boolean => {
@@ -25,11 +29,16 @@ function useSidebar({ items, pathname }: Props) {
 }
 
 export default function Sidebar(props: Props) {
-  const { items, Logo, companies } = props;
+  const { items, Logo, companies, className } = props;
   const { currentItem } = useSidebar(props);
 
   return (
-    <div className='w-full min-h-full shrink-0 flex flex-col bg-base-primary-100'>
+    <div
+      className={classNames(
+        'w-full min-h-full shrink-0 flex flex-col bg-base-primary-100',
+        className
+      )}
+    >
       <div className='shrink-0 py-3 px-2'>{Logo}</div>
 
       <nav className='flex-1 shrink-0 px-2 py-3'>
