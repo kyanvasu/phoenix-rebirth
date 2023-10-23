@@ -3,7 +3,7 @@ import Icons from '../../atoms/icons';
 import NavItem from '../../molecules/nav-item';
 import { SidebarItem } from '../../../model/types';
 import { Body } from '../../atoms';
-import classNames from 'classnames';
+import classnames from 'classnames';
 
 interface Props
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -34,7 +34,7 @@ export default function Sidebar(props: Props) {
 
   return (
     <div
-      className={classNames(
+      className={classnames(
         'w-full min-h-full shrink-0 flex flex-col bg-base-primary-100',
         className
       )}
@@ -49,6 +49,7 @@ export default function Sidebar(props: Props) {
               key={index}
               pathname={props.pathname}
               active={currentItem(item)}
+              className={className}
             />
           ))}
         </ul>

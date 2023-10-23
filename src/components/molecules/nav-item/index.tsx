@@ -23,6 +23,7 @@ export default function NavItem({ pathname, active, item, className }: Props) {
     'bg-base-primary-90 text-base-primary-30 hover:text-white':
       !isOpen && !isItemActive,
     'bg-base-primary-10 text-base-primary-100': isOpen || isItemActive,
+    className,
   });
 
   return (
@@ -35,10 +36,15 @@ export default function NavItem({ pathname, active, item, className }: Props) {
               <>
                 <Menu.Button
                   as='div'
-                  className={`flex flex-row gap-2.5 py-2.5 px-3.5 cursor-pointer ${container}`}
+                  className={classnames(
+                    `flex flex-row gap-2.5 py-2.5 px-3.5 cursor-pointer ${container}`,
+                    className
+                  )}
                 >
                   <item.Icon className={iconColor} size={20} />
-                  <Body.Three className='font-semibold'>
+                  <Body.Three
+                    className={classnames('font-semibold', className)}
+                  >
                     {item.title}
                   </Body.Three>
                   <span
@@ -59,7 +65,7 @@ export default function NavItem({ pathname, active, item, className }: Props) {
                         key={index}
                         pathname={pathname}
                         active={isChildActive}
-                        className='w-52'
+                        className={classnames('w-52', className)}
                       />
                     );
                   })}
@@ -78,7 +84,9 @@ export default function NavItem({ pathname, active, item, className }: Props) {
           )}
         >
           <item.Icon className={iconColor} size={20} />
-          <Body.Three className='font-semibold'>{item.title}</Body.Three>
+          <Body.Three className={classnames('font-semibold', className)}>
+            {item.title}
+          </Body.Three>
         </Link>
       )}
     </>
