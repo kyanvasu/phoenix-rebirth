@@ -1,15 +1,24 @@
 import { setCookie, deleteCookie } from 'cookies-next';
 import { Configuration } from '../../types';
+import { removeSubdomain } from '../remove-subdomain';
 export function useAuth({ sdk }: Configuration) {
   async function login(email: string, password: string) {
     try {
+      const { models } = removeSubdomain(window.location.hostname);
       const response = await sdk!.auth.login(email, password);
-
-      setCookie('refresh_token', {
-        token: response.refresh_token,
-        expires: response.refresh_token_expires,
+      setCookie(
+        'refresh_token',
+        {
+          token: response.refresh_token,
+          expires: response.refresh_token_expires,
+        },
+        {
+          domain: models.onlyDomain,
+        }
+      );
+      setCookie('token', response.token, {
+        domain: models.onlyDomain,
       });
-      setCookie('token', response.token);
       return response;
     } catch (err: any) {
       throw new Error(err);
@@ -57,9 +66,14 @@ export function useAuth({ sdk }: Configuration) {
 
   async function logout(): Promise<void> {
     try {
+      const { models } = removeSubdomain(window.location.hostname);
       await sdk!.auth.logout();
-      deleteCookie('token');
-      deleteCookie('refresh_token');
+      deleteCookie('token', {
+        domain: models.onlyDomain,
+      });
+      deleteCookie('refresh_token', {
+        domain: models.onlyDomain,
+      });
       localStorage.clear();
     } catch (err) {
       console.error(err);
