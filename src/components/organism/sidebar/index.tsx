@@ -13,6 +13,7 @@ interface Props
   items: SidebarItem[];
   companies?: Record<string, any>[];
   className?: string;
+  navItemsClassName?: string;
 }
 
 function useSidebar({ items, pathname }: Props) {
@@ -29,7 +30,7 @@ function useSidebar({ items, pathname }: Props) {
 }
 
 export default function Sidebar(props: Props) {
-  const { items, Logo, companies, className } = props;
+  const { items, Logo, companies, className, navItemsClassName } = props;
   const { currentItem } = useSidebar(props);
 
   return (
@@ -49,7 +50,7 @@ export default function Sidebar(props: Props) {
               key={index}
               pathname={props.pathname}
               active={currentItem(item)}
-              className={className}
+              className={classnames(navItemsClassName)}
             />
           ))}
         </ul>
