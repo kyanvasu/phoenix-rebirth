@@ -20,6 +20,7 @@ import Logout from './logout';
 import Mail from './mail';
 import Check from './check';
 import ChevronDown from './chevron-down';
+import ListEmptyMessage from './list-empty-message';
 export default {
   Plus,
   ChevronRight,
@@ -42,5 +43,6 @@ export default {
   Logout,
   Mail,
   Check,
-   ChevronDown
+  ChevronDown,
+  ListEmptyMessage,
 };

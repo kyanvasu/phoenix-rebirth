@@ -13,6 +13,7 @@ import {
   ResetPasswordPage,
 } from '../pages/(auth)';
 import * as Pages from '../pages/index.client';
+import EmptyTable from '../components/organism/table/empty';
 export const Auth = {
   LoginPage,
   RegisterPage,
@@ -22,4 +23,4 @@ export const Auth = {
   useAuth,
 };
 
-export { Table, useTable, Molecules, Organism, Pages };
+export { Table, useTable, Molecules, Organism, Pages, EmptyTable };
