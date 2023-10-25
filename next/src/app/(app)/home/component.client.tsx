@@ -1,6 +1,6 @@
 'use client';
 
-import { Molecules, Organism, Pages } from '@kanvas/phoenix/client';
+import { Molecules, Organism, Pages, EmptyTable } from '@kanvas/phoenix/client';
 import { Atoms, DropdwonItemInterface } from '@kanvas/phoenix';
 import { useState } from 'react';
 import { useAtom } from 'jotai';
@@ -16,6 +16,34 @@ const items: DropdwonItemInterface[] = [
     Icon: <Atoms.Icons.Trash size={16} className='stroke-inherit' />,
     text: 'Delete',
     key: 'delete',
+  },
+];
+
+const columns = [
+  {
+    accessorKey: 'title',
+    header: () => 'Title',
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'company',
+    header: () => 'Company',
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'description',
+    header: () => 'Description',
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'uw-note',
+    header: () => 'uw notes',
+    footer: (props: any) => props.column.id,
+  },
+  {
+    accessorKey: 'create-date',
+    header: () => 'Created date',
+    footer: (props: any) => props.column.id,
   },
 ];
 
@@ -49,6 +77,7 @@ export default function ClientComponent() {
         placeholder={'permissions'}
         options={STATUS_OPTIONS}
       />
+      <EmptyTable columns={columns} loading={false} text='Table is empty'  />
     </>
   );
 }
