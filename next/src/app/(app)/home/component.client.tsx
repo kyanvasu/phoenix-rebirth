@@ -68,7 +68,8 @@ export default function ClientComponent() {
         <div className='flex items-center p-3'>
           <Atoms.Heading.Six>Settings</Atoms.Heading.Six>
         </div>
-        <Pages.SettingsView view={0} handleView={() => {}} profile={profile} />
+        {/* <Pages.SettingsView view={0} handleView={() => {}} profile={profile} /> */}
+        <Pages.ChangePasswordView />
         {/* <Pages.ProfileView profile={profile} setProfile={setProfile}/> */}
       </Organism.SettingsModal>
       <Molecules.Select

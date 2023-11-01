@@ -108,6 +108,23 @@ export function useAuth({ sdk }: Configuration) {
     }
   }
 
+  async function changePassword({
+    current_password,
+    new_password,
+    confirm_new_password,
+  }: Record<string, string>) {
+    try {
+      const response = await sdk!.auth.changePassword(
+        current_password,
+        new_password,
+        confirm_new_password
+      );
+      return response;
+    } catch (err) {
+      console.error(err);
+      return err;
+    }
+  }
   return {
     operations: {
       login,
@@ -115,6 +132,7 @@ export function useAuth({ sdk }: Configuration) {
       logout,
       forgotPassword,
       resetPassword,
+      changePassword
     },
   };
 }
