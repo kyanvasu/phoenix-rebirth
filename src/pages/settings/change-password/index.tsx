@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useFormik } from 'formik';
 
@@ -8,6 +8,7 @@ import { useAuth } from '../../../model/interactions/use-auth';
 import { useClientContext } from '../../../client';
 import { Body, Button } from '../../../components/atoms';
 import { TextInput } from '../../../components/molecules/form';
+import Spinner from '../../../components/atoms/icons/spinner';
 
 function useChangePassword() {
   const { sdk } = useClientContext();
@@ -16,7 +17,6 @@ function useChangePassword() {
     new_password: '',
     confirm_new_password: '',
   };
-
   const {
     operations: { changePassword },
   } = useAuth({ sdk });
@@ -114,8 +114,11 @@ export function ChangePasswordView() {
           required
         />
 
-        <Button.Solid className='justify-center w-full'>
-          Change Password
+        <Button.Solid
+          className='justify-center w-full'
+          disabled={models.loading}
+        >
+          {models.loading ? <Spinner /> : 'Change Password'}
         </Button.Solid>
       </form>
     </section>

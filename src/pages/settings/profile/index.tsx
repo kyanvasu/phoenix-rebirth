@@ -6,7 +6,7 @@ import { useUser } from '../../../model/interactions/use-user';
 import { useClientContext } from '../../../model/store/core.store/client.store';
 import Profile from '../../../components/molecules/profile';
 import { TextInput } from '../../../components/molecules/form';
-import Select from '../../../components/molecules/select';
+// import Select from '../../../components/molecules/select';
 import { Button } from '../../../components/atoms';
 import { UserData } from '@kanvas/core';
 
@@ -203,13 +203,13 @@ export function ProfileView({ profile, setProfile }: Props) {
           error={!!models.errors.email}
           disabled
         />
-        <Select
+        {/* <Select
           options={[]}
           name='landing'
           label='Select Landing Page'
           value={models.values.landing}
           setFieldValue={operations.setFieldValue}
-        />
+        /> */}
         <TextInput
           name='contact_email'
           type='email'
