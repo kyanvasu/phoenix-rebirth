@@ -6,10 +6,11 @@ type PropsEmptyTable = {
   loading: boolean;
   columns: any[];
   text: string;
+  img?: any;
 };
 
 const EmptyTable = (props: PropsEmptyTable) => {
-  const { loading, columns, text } = props;
+  const { loading, columns, text, img } = props;
   return (
     <div>
       <Table columns={columns} data={[]} />
@@ -18,9 +19,7 @@ const EmptyTable = (props: PropsEmptyTable) => {
           <Spinner size={40} />
         ) : (
           <div>
-            <div>
-              <ListEmptyMessage size={220} className='mb-5' />
-            </div>
+            <div>{img ?? <ListEmptyMessage size={220} className='mb-5' />}</div>
             <div className='grid place-items-center'>
               <p className='text-base-neutral-grey-80'>{text}</p>
             </div>
