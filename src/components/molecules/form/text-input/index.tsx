@@ -19,7 +19,10 @@ export function TextInput({
   return (
     <div
       className={classNames(
-        'flex flex-col gap-[6px] text-base-neutral-grey-80 font-normal text-caption-md',
+        'flex flex-col gap-[6px] font-normal text-caption-md',
+        {
+          'text-base-neutral-grey-80': !className,
+        },
         className
       )}
     >
@@ -27,9 +30,11 @@ export function TextInput({
       <div className='relative shadow-sm'>
         <input
           className={classNames(
-            'block w-full h-9 rounded-md border border-base-neutral-grey-30 p-2 text-base-neutral-grey-100 placeholder:text-base-neutral-grey-70 focus:outline-none focus:border-base-primary-80 text-body-md disabled:bg-base-neutral-grey-30',
+            'block w-full h-9 rounded-md border text-body-md disabled:bg-base-neutral-grey-30',
             {
               'border-red-500': error,
+              'border-base-neutral-grey-30 p-2 text-base-neutral-grey-100 placeholder:text-base-neutral-grey-70 focus:outline-none focus:border-base-primary-80':
+                !className,
             }
           )}
           {...others}
