@@ -5,7 +5,7 @@ interface Props extends React.SVGProps<SVGSVGElement> {
 }
 
 export default function PlusCircle(props: Props) {
-  const { size = 16, ...rest } = props;
+  const { size = 16, stroke = '#111827', ...rest } = props;
 
   return (
     <svg
@@ -14,7 +14,7 @@ export default function PlusCircle(props: Props) {
       viewBox='0 0 24 24'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      stroke='#111827'
+      stroke={stroke}
       {...rest}
     >
       <path
