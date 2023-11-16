@@ -51,6 +51,7 @@ export default function Select(props: Props) {
               placeholder={selected ? selected : props.placeholder}
               Icon={Icon}
               error={error}
+              disabled={disabled}
             />
             <OptionsList open={open} options={options} />
           </div>
