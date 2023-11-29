@@ -31,13 +31,13 @@ function useSignUp({ redirect }: props) {
 
   const validationSchema = yup.object().shape({
     firstname: yup.string().required(),
-    lastname: yup.string().required(),
-    email: yup.string().email(),
+    lastname: yup.string(),
+    email: yup.string().email().required(""),
     password: yup.string().min(8).required(),
     password_confirmation: yup
       .string()
-      .required()
-      .oneOf([yup.ref('password')]),
+      .required("password confirmation is required")
+      .oneOf([yup.ref('password')], "passwords must match"),
   });
 
   async function onSubmit(values: typeof initialValues) {
@@ -111,7 +111,7 @@ export function RegisterPage({ redirect }: props) {
         <Form.TextInput
           type='email'
           placeholder={'Add your email'}
-          label={'email'}
+          label={'Email'}
           value={models.values.email}
           onChange={operations.handleChange}
           name='email'
@@ -121,7 +121,7 @@ export function RegisterPage({ redirect }: props) {
 
         <Form.TextInput
           type='password'
-          label={'password'}
+          label={'Password'}
           placeholder={'Enter your password'}
           value={models.values.password}
           onChange={operations.handleChange}
