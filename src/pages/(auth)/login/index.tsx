@@ -99,7 +99,7 @@ export function LoginPage({ redirect }: props) {
         />
         <Form.TextInput
           type='password'
-          name='Password'
+          name='password'
           label='Password'
           placeholder='password'
           required
