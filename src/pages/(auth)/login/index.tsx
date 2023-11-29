@@ -88,9 +88,10 @@ export function LoginPage({ redirect }: props) {
       >
         <Form.TextInput
           type='email'
-          label={'email'}
+          label={'Email'}
           placeholder={'email'}
           name='email'
+          required
           value={models.values.email}
           onChange={operations.handleChange}
           error={!!models.errors.email}
@@ -98,8 +99,8 @@ export function LoginPage({ redirect }: props) {
         />
         <Form.TextInput
           type='password'
-          name='password'
-          label='password'
+          name='Password'
+          label='Password'
           placeholder='password'
           required
           value={models.values.password}
@@ -112,7 +113,7 @@ export function LoginPage({ redirect }: props) {
           <div className='flex flex-row justify-between'>
             <Form.CheckboxInput
               id='remember-me'
-              label={'remember me'}
+              label={'Remember me'}
               checked={models.checkboxState}
               required
               onChange={operations.handleToggle}
@@ -132,7 +133,7 @@ export function LoginPage({ redirect }: props) {
             type='submit'
             disabled={models.isSubmitting}
           >
-            {models.isSubmitting ? <Spinner  /> : 'Sign In'}
+            {models.isSubmitting ? <Spinner /> : 'Sign In'}
           </Button.Solid>
 
           <span className='flex flex-row gap-x-4'>
