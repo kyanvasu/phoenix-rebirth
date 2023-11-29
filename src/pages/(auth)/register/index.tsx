@@ -36,8 +36,8 @@ function useSignUp({ redirect }: props) {
     password: yup.string().min(8).required(),
     password_confirmation: yup
       .string()
-      .required("password confirmation is required")
-      .oneOf([yup.ref('password')], "passwords must match"),
+      .required('password confirmation is required')
+      .oneOf([yup.ref('password')], 'passwords must match'),
   });
 
   async function onSubmit(values: typeof initialValues) {
