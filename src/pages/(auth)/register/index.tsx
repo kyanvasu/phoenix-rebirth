@@ -32,7 +32,7 @@ function useSignUp({ redirect }: props) {
   const validationSchema = yup.object().shape({
     firstname: yup.string().required(),
     lastname: yup.string(),
-    email: yup.string().email().required(""),
+    email: yup.string().email().required(),
     password: yup.string().min(8).required(),
     password_confirmation: yup
       .string()
