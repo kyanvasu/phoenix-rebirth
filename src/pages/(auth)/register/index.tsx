@@ -30,14 +30,14 @@ function useSignUp({ redirect }: props) {
   const { operations: userOperations } = useUser({ sdk });
 
   const validationSchema = yup.object().shape({
-    firstname: yup.string().required(),
+    firstname: yup.string().required('First name is required field'),
     lastname: yup.string(),
-    email: yup.string().email().required(),
-    password: yup.string().min(8).required(),
+    email: yup.string().email().required('Email is required field'),
+    password: yup.string().min(8).required('Password is required field'),
     password_confirmation: yup
       .string()
-      .required('password confirmation is required')
-      .oneOf([yup.ref('password')], 'passwords must match'),
+      .required('Password confirmation is required')
+      .oneOf([yup.ref('password')], 'Passwords must match'),
   });
 
   async function onSubmit(values: typeof initialValues) {
