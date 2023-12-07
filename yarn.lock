@@ -99,10 +99,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kanvas/core@^0.0.37":
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/@kanvas/core/-/core-0.0.37.tgz#046ad351656d3b5f6867cfcfe01f954d1cadfeb1"
-  integrity sha512-zXEURsRnDlAdkznWNe9O75grjLgUy3k3wW9HF+QI2W4JyhT0DI/XnsYUY+VIzoQ1RlZnOznxNKhj5lXB06f9tA==
+"@kanvas/core@^0.0.67":
+  version "0.0.67"
+  resolved "https://registry.yarnpkg.com/@kanvas/core/-/core-0.0.67.tgz#36381a5ceef305f7cd6f7154a5bc343c8fe4e5be"
+  integrity sha512-Ti8oAQe8PbDvRz2lVbA/gbGe1CAbQj0LGjJj65DR/FHAKhXIqovvynnG4xH3d9m8VntDRyovlQ52qf4GclrUFQ==
   dependencies:
     "@apollo/client" "^3.7.10"
     graphql "^16.6.0"

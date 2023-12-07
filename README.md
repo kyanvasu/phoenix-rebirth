@@ -3,13 +3,13 @@
 
 ## Description
 
-Kanvas Phoenix is a powerful library of pre-built components and features designed to simplify and expedite the development. These components are based on the Atomic Design concept that uses tailwind and seamlessly integrate with Kanvas Nicho. Kanvas Phoenix streamlines the creation of attractive and functional user interfaces, allowing frontend developers to focus on business logic rather than reinventing the wheel in each project.
+Kanvas Phoenix is a powerful library of pre-built components and features designed to simplify and expedite the development. These components are based on the Atomic Design concept that uses tailwind and seamlessly integrate with Kanvas Niche. Kanvas Phoenix streamlines the creation of attractive and functional user interfaces, allowing frontend developers to focus on business logic rather than reinventing the wheel in each project.
 
 ## Key Features
 
 -   **Reusable Components:** Kanvas Phoenix offers a wide range of ready-to-use components such as navigation bars, tables, charts, forms,inputs and more, following best design and usability practices.
     
--   **Integration with Kanvas Nicho:** Kanvas Phoenix components are designed to work seamlessly with Kanvas Nicho, ensuring a consistent development experience.
+-   **Integration with Kanvas Niche:** Kanvas Phoenix components are designed to work seamlessly with Kanvas Niche, ensuring a consistent development experience.
     
 -   **Atomic Design:** The library follows the Atomic Design approach, allowing easy composition and customization of UI elements.
     
