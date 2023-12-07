@@ -22,12 +22,12 @@ function useChangePassword() {
   } = useAuth({ sdk });
 
   const validationSchema = yup.object().shape({
-    current_password: yup.string().min(8).required(),
-    new_password: yup.string().min(8).required(),
+    current_password: yup.string().min(8).required('Current password is a required field'),
+    new_password: yup.string().min(8).required('New password must be at least 8 characters'),
     confirm_new_password: yup
       .string()
       .required()
-      .oneOf([yup.ref('new_password')], 'Confirm your password'),
+      .oneOf([yup.ref('new_password')], 'Confirm and new password must be equals'),
   });
 
   async function onSubmit(values: typeof initialValues) {

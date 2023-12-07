@@ -29,8 +29,8 @@ function useSignIn({ redirect }: props) {
 
   const { operations } = useAuth({ sdk });
   const validationSchema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
+    email: yup.string().email().required('Email is required field'),
+    password: yup.string().required('Password is required field'),
   });
 
   async function onSubmit(values: typeof initialValues) {
@@ -123,7 +123,7 @@ export function LoginPage({ redirect }: props) {
               className='font-semibold text-base-primary-100 text-body-md'
               href='/forgot-password'
             >
-              Forgot Password
+              Forgot Password ?
             </Link>
           </div>
 
@@ -145,7 +145,7 @@ export function LoginPage({ redirect }: props) {
               className='font-semibold text-base-primary-100 text-body-md'
               href='/sign-up'
             >
-              Register
+              Sing Up 
             </Link>
           </span>
         </div>
