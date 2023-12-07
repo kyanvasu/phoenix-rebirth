@@ -11,15 +11,21 @@ export interface ViewsProps {
   view: number;
   profile?: UserData;
   handleView: (index: number) => void;
+  support?: string;
 }
 /**
  * SettingsView component displays user settings options.
  * @param {number} props.view - The current view index.
  * @param {UserData} props.profile - User profile data.
+ * @param {string} props.support - email support
  * @param {Function} props.handleView - Callback function to change the view.
  * @returns {JSX.Element} - The rendered component.
  */
-export function SettingsView({ handleView, profile }: ViewsProps): JSX.Element {
+export function SettingsView({
+  handleView,
+  profile,
+  support,
+}: ViewsProps): JSX.Element {
   const { sdk } = useClientContext();
   const { operations } = useAuth({ sdk });
   return (
@@ -67,16 +73,18 @@ export function SettingsView({ handleView, profile }: ViewsProps): JSX.Element {
             Logout
           </Button.Link>
 
-          <Button.Link
-            onClick={() => {
-              handleView(3);
-            }}
-            className='text-base-neutral-grey-90 hover:text-base-primary-80'
-            size='medium'
-          >
-            <Icons.Mail size={20} />
-            Support
-          </Button.Link>
+          {support && (
+            <Button.Link
+              onClick={() => {
+                handleView(3);
+              }}
+              className='text-base-neutral-grey-90 hover:text-base-primary-80'
+              size='medium'
+            >
+              <Icons.Mail size={20} />
+              Support
+            </Button.Link>
+          )}
         </article>
       </section>
     </>
