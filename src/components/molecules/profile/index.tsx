@@ -23,6 +23,7 @@ export default function Profile(props: Props) {
       <div
         className={classNames(
           'flex flex-col justify-center',
+          rest.textColor,
           {
             'text-body-base': Size === ('medium' || 'small'),
             'text-body-md': Size === 'xx-small',
