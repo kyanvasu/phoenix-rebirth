@@ -115,7 +115,6 @@ export function LoginPage({ redirect }: props) {
               id='remember-me'
               label={'Remember me'}
               checked={models.checkboxState}
-              required
               onChange={operations.handleToggle}
             />
 
@@ -138,7 +137,7 @@ export function LoginPage({ redirect }: props) {
 
           <span className='flex flex-row gap-x-4'>
             <Body.Three className='text-base-neutral-grey-80'>
-              Don't Have an account?
+              Don't Have an account ?
             </Body.Three>
 
             <Link

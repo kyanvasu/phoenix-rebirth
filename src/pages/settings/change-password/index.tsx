@@ -26,8 +26,8 @@ function useChangePassword() {
     new_password: yup.string().min(8).required('New password must be at least 8 characters'),
     confirm_new_password: yup
       .string()
-      .required()
-      .oneOf([yup.ref('new_password')], 'Confirm and new password must be equals'),
+      .required('Confirm and new password must be equals')
+      .oneOf([yup.ref('new_password')]),
   });
 
   async function onSubmit(values: typeof initialValues) {
@@ -73,7 +73,7 @@ export function ChangePasswordView() {
     <section className='flex flex-col px-5 py-5'>
       <Toaster position='top-right' reverseOrder={false} />
       <Body.Two className='text-base-neutral-grey-100 mb-14'>
-        Select the store you want to use
+        Change your password
       </Body.Two>
 
       <form
