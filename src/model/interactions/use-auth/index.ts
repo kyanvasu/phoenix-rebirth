@@ -33,6 +33,7 @@ export function useAuth({ sdk }: Configuration) {
     password_confirmation,
   }: Record<string, string>) {
     try {
+      const { models } = removeSubdomain(window.location.hostname);
       const response = await sdk!.users.register({
         email,
         firstname,
@@ -47,9 +48,12 @@ export function useAuth({ sdk }: Configuration) {
         token: response.register?.token?.refresh_token,
         // @ts-ignore
         expires: response.register?.token?.refresh_token_expires,
+        domain: models.onlyDomain,
       });
       //@ts-ignore
-      setCookie('token', response.register?.token?.token);
+      setCookie('token', response.register?.token?.token, {
+        domain: models.onlyDomain,
+      });
       await sdk!.customFields.setCustomField({
         name: 'Contact Email',
         data: '',
@@ -132,7 +136,7 @@ export function useAuth({ sdk }: Configuration) {
       logout,
       forgotPassword,
       resetPassword,
-      changePassword
+      changePassword,
     },
   };
 }
