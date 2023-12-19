@@ -30,7 +30,7 @@ Follow these steps to run the Phoenix project and the Next.js project. These com
 5. Now, navigate to the Next.js project directory that is in the same repository:
 
    ```bash
-   cd ../next-app
+   cd ./next/
    ```
 
 6. Install the Next.js project dependencies:
@@ -53,4 +53,4 @@ Follow these steps to run the Phoenix project and the Next.js project. These com
 Now you should be able to see your Next.js application running at `localhost:3000` in your browser.
 
 > [!NOTE]  
-> Please note that these steps are general and may vary depending on the specific configuration of your project. Be sure to replace `next-app` with the actual name of your Next.js project directory.
+> Please note that these steps are general and may vary depending on the specific configuration of your project. Be sure to replace `next` with the actual name of your Next.js project directory.
