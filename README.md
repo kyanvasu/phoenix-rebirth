@@ -58,9 +58,17 @@ function MyPage() {
 } 
 ```
 
+## How to Run the Project
+
+For detailed instructions on how to run this project, please refer to the [Running the Project Guide](USAGE.md).
+
+
+
 ## Detailed Documentation
 
 For more in-depth information on using Kanvas Phoenix components and features, please refer to our documentation at [TBD]().
 
 
 ----------
+
+
