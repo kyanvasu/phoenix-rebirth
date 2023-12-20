@@ -21,6 +21,7 @@ import Mail from './mail';
 import Check from './check';
 import ChevronDown from './chevron-down';
 import ListEmptyMessage from './list-empty-message';
+import XCicle from './x-cicle';
 export default {
   Plus,
   ChevronRight,
@@ -45,4 +46,5 @@ export default {
   Check,
   ChevronDown,
   ListEmptyMessage,
+  XCicle
 };
