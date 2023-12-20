@@ -6,11 +6,17 @@ import { UserInfo } from '../../molecules';
 type Props = {
   Left?: ReactNode;
   Center?: ReactNode;
+  className?: string;
 };
 
-export default function Header({ Left, Center }: Props) {
+export default function Header({ Left, Center, className }: Props) {
   return (
-    <div className='p-3 bg-base-neutral-grey-10 border-b border-base-neutral-grey-40 flex items-center justify-between'>
+    <div className={classnames(
+      'p-3 flex items-center justify-between', className,
+      { 'bg-base-neutral-grey-10 border-b border-base-neutral-grey-40': !className }
+    )
+    }
+    >
       <Section>
         {Left}
       </Section>
@@ -26,7 +32,7 @@ export default function Header({ Left, Center }: Props) {
 }
 
 type SectionProps = { className?: string } & PropsWithChildren
-function Section({ children , className }: SectionProps) {
+function Section({ children, className }: SectionProps) {
   return (
     <div className={classnames('flex items-center gap-3', className)}>
       {children}
