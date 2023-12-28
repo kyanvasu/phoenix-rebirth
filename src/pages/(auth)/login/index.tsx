@@ -144,7 +144,7 @@ export function LoginPage({ redirect }: props) {
               className='font-semibold text-base-primary-100 text-body-md'
               href='/sign-up'
             >
-              Sing Up 
+              Sign Up
             </Link>
           </span>
         </div>

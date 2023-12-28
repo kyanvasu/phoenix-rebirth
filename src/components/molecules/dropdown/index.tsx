@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from "react";
 import { DropdwonItemInterface } from "../../../model/types";
 import classNames from "classnames";
 
-interface Props extends PropsWithChildren { 
+interface Props extends PropsWithChildren {
   items: DropdwonItemInterface[];
   onChange?: (value: DropdwonItemInterface) => void;
   className?: string;
@@ -13,9 +13,11 @@ export default function Dropdown(props: Props) {
   const { children, className, items = [], onChange } = props;
 
   const classname = classNames(
-    'absolute bg-base-neutral-white rounded-sm border border-base-primary-30 shadow-elevation-3',
-    'text-base-neutral-grey-60 stroke-base-neutral-grey-60 hover:text-base-primary-60 hover:stroke-base-primary-60',
-    className
+    'absolute  rounded-sm border  shadow-elevation-3',
+    className,
+    className, {
+    'bg-base-neutral-white border-base-primary-30 text-base-neutral-grey-60 stroke-base-neutral-grey-60 hover:text-base-primary-60 hover:stroke-base-primary-60': !className,
+  }
   );
 
   return (

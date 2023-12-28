@@ -13,6 +13,7 @@ export interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   Icon?: React.ReactNode;
   error?: boolean;
   value?: string;
+  textColor?: string;
   setFieldValue?: (
     field: string,
     val: any
@@ -31,6 +32,7 @@ export default function Select(props: Props) {
     helpText,
     options,
     label,
+    textColor,
   } = props;
   const [selected, setSelected] = React.useState<string | undefined>(value);
   const handleChange = (val: string) => {
@@ -42,7 +44,13 @@ export default function Select(props: Props) {
       {({ open }) => (
         <div className={className}>
           {label && (
-            <Listbox.Label className='block font-medium text-caption-md text-base-neutral-grey-80 pb-[6px]'>
+            <Listbox.Label className={classNames(
+              'block font-medium text-caption-md pb-[6px]',
+              className, {
+              'text-base-neutral-grey-80': !textColor
+            }
+            )} >
+
               {label}
             </Listbox.Label>
           )}
@@ -58,9 +66,10 @@ export default function Select(props: Props) {
           {helpText && (
             <Listbox.Label
               className={classNames(
-                'relative mt-[6px] text-caption-md font-normal text-base-neutral-grey-80',
+                'relative mt-[6px] text-caption-md font-normal',
                 {
                   ' text-base-semantic-error-100': error,
+                  'text-base-neutral-grey-60': !textColor,
                 }
               )}
             >

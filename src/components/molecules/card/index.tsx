@@ -15,8 +15,10 @@ export default function Card(props: Props) {
   return (
     <article
       className={classNames(
-        'border rounded-md bg-base-neutral-white border-base-neutral-grey-30 shadow-elevation-1',
-        className
+        'border rounded-md  shadow-elevation-1',
+        className, {
+        'bg-base-neutral-white border-base-neutral-grey-30': !className
+      }
       )}
     >
       <section className='flex items-center justify-between h-12 p-3 border-b border-b-base-neutral-grey-30'>
