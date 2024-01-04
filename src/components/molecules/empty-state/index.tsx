@@ -1,6 +1,7 @@
-import React from 'react';
-import classNames from 'classnames';
-import { Body, Button } from '../../atoms';
+import React from "react";
+import classNames from "classnames";
+import { Body, Button } from "../../atoms";
+import { useClientContext } from "../../../client";
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
   title: string;
@@ -20,20 +21,19 @@ export default function EmptyState({
   className,
   ...rest
 }: Props) {
+  const { theme } = useClientContext();
+
   return (
     <article
-      className={classNames(
-        'flex flex-col items-center text-center gap-y-8',
-        className
-      )}
+      className={classNames(theme.emptyState.container, className)}
       {...rest}
     >
-      <img src={image} width={226} height={226} alt='' />
+      <img src={image} width={226} height={226} alt="" />
       <section>
-        <Body.Three className='font-semibold text-base-neutral-grey-100'>
+        <Body.Three className={theme.emptyState.title}>
           {title}
         </Body.Three>
-        <Body.Three className='text-base-neutral-grey-80'>
+        <Body.Three className={theme.emptyState.subtitle}>
           {subtitle}
         </Body.Three>
       </section>
