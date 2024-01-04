@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { ConfigurationClient, CoreClientProps } from "../../types";
-import { DefaultStylesConfig } from "../../../theme";
+import { BaseTheme } from "../../../theme";
 
 const CoreContext = createContext<ConfigurationClient>({
   sdk: undefined,
-  stylesConfig: DefaultStylesConfig,
+  theme: BaseTheme,
 });
 
 /**
@@ -14,17 +14,17 @@ const CoreContext = createContext<ConfigurationClient>({
  */
 export function ClientCoreStore({
   sdk,
-  stylesConfig,
+  theme,
   children,
 }: CoreClientProps) {
   const [data, setData] = useState<ConfigurationClient>({
     sdk,
-    stylesConfig: DefaultStylesConfig,
+    theme: BaseTheme,
   });
 
   useEffect(() => {
-    setData({ sdk, stylesConfig: stylesConfig ?? DefaultStylesConfig });
-  }, [sdk, stylesConfig]);
+    setData({ sdk, theme: theme ?? BaseTheme });
+  }, [sdk, theme]);
 
   return <CoreContext.Provider value={data}>{children}</CoreContext.Provider>;
 }

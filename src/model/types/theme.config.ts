@@ -4,6 +4,6 @@ export type EmptyStateStyles = {
   subtitle: string;
 };
 
-export type StylesConfigTypes = {
+export type ThemeTypes = {
   emptyState: EmptyStateStyles;
 };

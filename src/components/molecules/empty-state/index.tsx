@@ -21,19 +21,19 @@ export default function EmptyState({
   className,
   ...rest
 }: Props) {
-  const { stylesConfig } = useClientContext();
+  const { theme } = useClientContext();
 
   return (
     <article
-      className={classNames(stylesConfig.emptyState.container, className)}
+      className={classNames(theme.emptyState.container, className)}
       {...rest}
     >
       <img src={image} width={226} height={226} alt="" />
       <section>
-        <Body.Three className={stylesConfig.emptyState.title}>
+        <Body.Three className={theme.emptyState.title}>
           {title}
         </Body.Three>
-        <Body.Three className={stylesConfig.emptyState.subtitle}>
+        <Body.Three className={theme.emptyState.subtitle}>
           {subtitle}
         </Body.Three>
       </section>

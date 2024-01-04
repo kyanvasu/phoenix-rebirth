@@ -1,6 +1,6 @@
-import { StylesConfigTypes } from "../../model/types";
+import { ThemeTypes } from "../../model/types";
 
-export const DefaultStylesConfig: StylesConfigTypes = {
+export const BaseTheme: ThemeTypes = {
   emptyState: {
     container: "flex flex-col items-center text-center gap-y-8",
     title: "font-semibold text-base-neutral-grey-100",

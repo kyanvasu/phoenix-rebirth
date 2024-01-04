@@ -1,3 +1,3 @@
-import { DefaultStylesConfig } from "./default-styles-config";
+import { BaseTheme } from "./base-theme";
 
-export { DefaultStylesConfig };
+export { BaseTheme };

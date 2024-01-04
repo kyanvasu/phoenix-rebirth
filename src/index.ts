@@ -5,5 +5,5 @@ import * as Atoms from "./components/atoms";
 import * as Molecules from "./components/molecules";
 import * as Templates from "./components/templates";
 export * from "./pages";
-import { DefaultStylesConfig } from "./theme";
-export { Organism, Atoms, Molecules, Templates, DefaultStylesConfig };
+import { BaseTheme } from "./theme";
+export { Organism, Atoms, Molecules, Templates, BaseTheme };

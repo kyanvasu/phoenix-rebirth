@@ -1,6 +1,6 @@
 import KanvasCore from "@kanvas/core";
 import { PropsWithChildren } from "react";
-import { StylesConfigTypes } from "./default-styles-config";
+import { ThemeTypes } from "./theme.config";
 
 export interface Configuration {
   sdk?: KanvasCore;
@@ -11,9 +11,9 @@ export interface CoreProps extends PropsWithChildren {
 }
 
 export interface CoreClientProps extends CoreProps {
-  stylesConfig?: StylesConfigTypes;
+  theme?: ThemeTypes;
 }
 
 export interface ConfigurationClient extends Configuration {
-  stylesConfig: StylesConfigTypes;
+  theme: ThemeTypes;
 }
