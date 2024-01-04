@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext } from "react";
 import { ConfigurationClient, CoreClientProps } from "../../types";
 import { BaseTheme } from "../../../theme";
 
@@ -12,21 +12,17 @@ const CoreContext = createContext<ConfigurationClient>({
  * @param props required properties
  * @returns JSX.Element
  */
-export function ClientCoreStore({
-  sdk,
-  theme,
-  children,
-}: CoreClientProps) {
-  const [data, setData] = useState<ConfigurationClient>({
-    sdk,
-    theme: BaseTheme,
-  });
-
-  useEffect(() => {
-    setData({ sdk, theme: theme ?? BaseTheme });
-  }, [sdk, theme]);
-
-  return <CoreContext.Provider value={data}>{children}</CoreContext.Provider>;
+export function ClientCoreStore({ sdk, theme, children }: CoreClientProps) {
+  return (
+    <CoreContext.Provider
+      value={{
+        sdk,
+        theme: theme ?? BaseTheme,
+      }}
+    >
+      {children}
+    </CoreContext.Provider>
+  );
 }
 
 export function useClientContext() {
