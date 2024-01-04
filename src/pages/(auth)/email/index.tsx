@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
-import { EmptyState } from '../../../components/molecules';
+import EmptyState from '../../../components/molecules/empty-state';
+
 
 interface props {
   router: AppRouterInstance;

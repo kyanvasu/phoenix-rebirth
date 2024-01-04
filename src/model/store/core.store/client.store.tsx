@@ -1,8 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Configuration, CoreProps } from '../../types';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { ConfigurationClient, CoreClientProps } from "../../types";
+import { DefaultStylesConfig } from "../../../theme";
 
-const CoreContext = createContext<Configuration>({
-  sdk: undefined
+const CoreContext = createContext<ConfigurationClient>({
+  sdk: undefined,
+  stylesConfig: DefaultStylesConfig,
 });
 
 /**
@@ -10,18 +12,21 @@ const CoreContext = createContext<Configuration>({
  * @param props required properties
  * @returns JSX.Element
  */
-export function ClientCoreStore({ sdk, children }: CoreProps) {
-  const [data, setData] = useState<Configuration>({ sdk: undefined });
+export function ClientCoreStore({
+  sdk,
+  stylesConfig,
+  children,
+}: CoreClientProps) {
+  const [data, setData] = useState<ConfigurationClient>({
+    sdk,
+    stylesConfig: DefaultStylesConfig,
+  });
 
   useEffect(() => {
-    setData({ sdk });
-  }, [sdk]);
-  
-  return (
-    <CoreContext.Provider value={data}>
-      {children}
-    </CoreContext.Provider>
-  );
+    setData({ sdk, stylesConfig: stylesConfig ?? DefaultStylesConfig });
+  }, [sdk, stylesConfig]);
+
+  return <CoreContext.Provider value={data}>{children}</CoreContext.Provider>;
 }
 
 export function useClientContext() {
