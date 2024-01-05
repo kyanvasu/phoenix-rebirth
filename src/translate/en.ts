@@ -15,7 +15,7 @@ export default {
       invalidInput: 'Invalid email or password',
       emailRequired: 'Please enter a valid email address',
       passwordRequired: 'Please enter a valid password',
-      singInAccount: 'Sign in to your account',
+      account: 'Sign in to your account',
       forgotPasswordLabel: 'Forgot Password?',
       noHaveAccount: 'Don’t have an account?',
       signUpLink: 'Sign Up',
