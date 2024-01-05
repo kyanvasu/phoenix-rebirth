@@ -6,9 +6,10 @@ import { Form } from '../../../components/molecules';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useAuth } from '../../../model/interactions/use-auth';
-import { useClientContext } from '../../../model/store/core.store/client.store';
+import { useClientContext } from '../../../client';
 import { useUser } from '../../../model/interactions/use-user';
 import Spinner from '../../../components/atoms/icons/spinner';
+import { translate } from '../../../translate';
 
 // TODO: add translates
 interface props {
@@ -29,8 +30,11 @@ function useSignIn({ redirect }: props) {
 
   const { operations } = useAuth({ sdk });
   const validationSchema = yup.object().shape({
-    email: yup.string().email().required('Email is required field'),
-    password: yup.string().required('Password is required field'),
+    email: yup
+      .string()
+      .email()
+      .required(translate('auth.signIn.emailRequired')),
+    password: yup.string().required(translate('auth.signIn.passwordRequired')),
   });
 
   async function onSubmit(values: typeof initialValues) {
@@ -41,7 +45,7 @@ function useSignIn({ redirect }: props) {
       redirect();
     } catch {
       setErrors({
-        email: 'Invalid email or password',
+        email: translate('auth.signIn.invalidInput'),
       });
     }
   }
@@ -77,78 +81,112 @@ function useSignIn({ redirect }: props) {
 
 export function LoginPage({ redirect }: props) {
   const { models, operations } = useSignIn({ redirect });
+  const { theme } = useClientContext();
   return (
-    <div>
-      <Heading.Five className='mt-6 mb-10 font-bold text-base-neutal-grey-100'>
-        Sign in to your account
+    <div className={theme.login.container}>
+      <Heading.Five className={theme.login.title}>
+        {translate('auth.singInAccount')}
       </Heading.Five>
-      <form
-        className='flex flex-col gap-y-[38px]'
-        onSubmit={operations.handleSubmit}
-      >
-        <Form.TextInput
-          type='email'
-          label={'Email'}
-          placeholder={'email'}
-          name='email'
-          required
-          value={models.values.email}
-          onChange={operations.handleChange}
-          error={!!models.errors.email}
-          helpText={models.errors.email}
-        />
-        <Form.TextInput
-          type='password'
-          name='password'
-          label='Password'
-          placeholder='password'
-          required
-          value={models.values.password}
-          onChange={operations.handleChange}
-          error={!!models.errors.password}
-          helpText={models.errors.password}
-        />
-
-        <div>
-          <div className='flex flex-row justify-between'>
-            <Form.CheckboxInput
-              id='remember-me'
-              label={'Remember me'}
-              checked={models.checkboxState}
-              onChange={operations.handleToggle}
-            />
-
-            <Link
-              className='font-semibold text-base-primary-100 text-body-md'
-              href='/forgot-password'
-            >
-              Forgot Password ?
-            </Link>
-          </div>
-
-          <Button.Solid
-            className='justify-center w-full my-6'
-            size='small'
-            type='submit'
-            disabled={models.isSubmitting}
-          >
-            {models.isSubmitting ? <Spinner /> : 'Sign In'}
-          </Button.Solid>
-
-          <span className='flex flex-row gap-x-4'>
-            <Body.Three className='text-base-neutral-grey-80'>
-              Don't Have an account ?
-            </Body.Three>
-
-            <Link
-              className='font-semibold text-base-primary-100 text-body-md'
-              href='/sign-up'
-            >
-              Sign Up
-            </Link>
-          </span>
-        </div>
-      </form>
+      <LoginForm
+        theme={theme.login.formTheme}
+        operations={operations}
+        models={models}
+      />
     </div>
   );
 }
+
+interface FormProps {
+  theme: any;
+  operations: any;
+  models: any;
+}
+
+const LoginForm: React.FC<FormProps> = ({ theme, operations, models }) => {
+  return (
+    <form className={theme.container} onSubmit={operations.handleSubmit}>
+      <Form.TextInput
+        type='email'
+        label={translate('auth.email.label')}
+        theme={theme.textInputTheme}
+        placeholder={translate('auth.email.Placeholder')}
+        name='email'
+        required
+        value={models.values.email}
+        onChange={operations.handleChange}
+        error={!!models.errors.email}
+        helpText={models.errors.email}
+      />
+      <Form.TextInput
+        type='password'
+        name='password'
+        theme={theme.textInputTheme}
+        label={translate('auth.password.label')}
+        placeholder={translate('auth.password.Placeholder')}
+        required
+        value={models.values.password}
+        onChange={operations.handleChange}
+        error={!!models.errors.password}
+        helpText={models.errors.password}
+      />
+
+      <ActionForm
+        theme={theme.actionTheme}
+        operations={operations}
+        models={models}
+      />
+    </form>
+  );
+};
+
+
+
+const ActionForm: React.FC<FormProps> = ({
+  theme,
+  operations,
+  models,
+}) => {
+  return (
+    <div className={theme.container}>
+      <Form.CheckboxInput
+        id='remember-me'
+        label={translate('auth.rememberMe')}
+        checked={models.checkboxState}
+        onChange={operations.handleToggle}
+      />
+
+      <Link
+        className={theme.link}
+        href='/forgot-password'
+      >
+        {translate('auth.singIn.forgotPasswordLabel')}
+      </Link>
+
+      <Button.Solid
+        className={theme.button}
+        size='small'
+        type='submit'
+        disabled={models.isSubmitting}
+      >
+        {models.isSubmitting ? (
+          <Spinner />
+        ) : (
+          translate('auth.signIn.buttonLabel')
+        )}
+      </Button.Solid>
+
+      <span className={theme.span}>
+        <Body.Three className={theme.titleThree}>
+          {translate('auth.singIn.noHaveAccount')}
+        </Body.Three>
+
+        <Link
+          className={theme.link}
+          href='/sign-up'
+        >
+          {translate('auth.signIn.signUpLink')}
+        </Link>
+      </span>
+    </div>
+  );
+};
