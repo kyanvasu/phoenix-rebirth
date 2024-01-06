@@ -21,25 +21,24 @@ export function TextInput({
 }: Props) {
   return (
     <div
-      className={classNames(
-        theme?.container,
-        {
-          'text-base-neutral-grey-80': !className,
-        },
-        className
-      )}
+      className={classNames(theme?.container, {
+        'flex flex-col gap-[6px] font-normal text-caption-md text-base-neutral-grey-80':
+          !className && !theme?.container,
+        [`${className}`]: !theme?.container && !!className,
+      })}
     >
       {label && (
-        <Label className={theme?.label} required={required}>
+        <Label className={classNames(theme?.label)} required={required}>
           {label}
         </Label>
       )}
       <div className='relative shadow-sm'>
         <input
-          className={classNames(theme?.input, className, {
-            'border-red-500': error,
-            'border-base-neutral-grey-30 p-2 text-base-neutral-grey-100 placeholder:text-base-neutral-grey-70 focus:outline-none focus:border-base-primary-80':
-              !className,
+          className={classNames(theme?.input, {
+            [`${theme?.error}`]: error,
+            'block w-full h-9 rounded-md border text-body-md disabled:bg-base-neutral-grey-30 border-base-neutral-grey-30 p-2 text-base-neutral-grey-100 placeholder:text-base-neutral-grey-70 focus:outline-none focus:border-base-primary-80':
+              !className && !theme?.input,
+            [`${className}`]: !theme?.input && !!className,
           })}
           {...others}
         />
