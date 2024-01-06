@@ -11,24 +11,18 @@ export type InputStyles = {
   error: string;
 };
 
-
-export type ActionStyles = {
+export type FormStyles = {
   container: string;
   span: string;
   button: string;
   link: string;
-  titleThree: string;
-  checkBoxTheme: InputStyles;
-};
-
-export type LoginFormStyles = {
-  container: string;
-  actionTheme: ActionStyles;
-  textInputTheme: InputStyles;
+  title: string;
 };
 
 export type LoginPageStyles = {
-  formTheme: LoginFormStyles;
+  formTheme: FormStyles;
+  textInputTheme: InputStyles;
+  checkBoxTheme: InputStyles;
   title: string;
   container: string;
 };
