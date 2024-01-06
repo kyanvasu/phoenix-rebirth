@@ -10,6 +10,7 @@ import { useClientContext } from '../../../client';
 import { useUser } from '../../../model/interactions/use-user';
 import Spinner from '../../../components/atoms/icons/spinner';
 import { translate } from '../../../translate';
+import { LoginPageStyles } from '../../../model/types';
 
 // TODO: add translates
 interface props {
@@ -85,19 +86,15 @@ export function LoginPage({ redirect }: props) {
   return (
     <div className={theme.login.container}>
       <Heading.Five className={theme.login.title}>
-        {translate('auth.singInAccount')}
+        {translate('auth.signIn.account')}
       </Heading.Five>
-      <LoginForm
-        theme={theme.login.formTheme}
-        operations={operations}
-        models={models}
-      />
+      <LoginForm theme={theme.login} operations={operations} models={models} />
     </div>
   );
 }
 
 interface FormProps {
-  theme: any;
+  theme: LoginPageStyles;
   operations: any;
   models: any;
 }
@@ -109,7 +106,7 @@ const LoginForm: React.FC<FormProps> = ({ theme, operations, models }) => {
         type='email'
         label={translate('auth.email.label')}
         theme={theme.textInputTheme}
-        placeholder={translate('auth.email.Placeholder')}
+        placeholder={translate('auth.email.placeholder')}
         name='email'
         required
         value={models.values.email}
@@ -122,7 +119,7 @@ const LoginForm: React.FC<FormProps> = ({ theme, operations, models }) => {
         name='password'
         theme={theme.textInputTheme}
         label={translate('auth.password.label')}
-        placeholder={translate('auth.password.Placeholder')}
+        placeholder={translate('auth.password.placeholder')}
         required
         value={models.values.password}
         onChange={operations.handleChange}
@@ -130,40 +127,30 @@ const LoginForm: React.FC<FormProps> = ({ theme, operations, models }) => {
         helpText={models.errors.password}
       />
 
-      <ActionForm
-        theme={theme.actionTheme}
-        operations={operations}
-        models={models}
-      />
+      <ActionForm theme={theme} operations={operations} models={models} />
     </form>
   );
 };
 
-
-
-const ActionForm: React.FC<FormProps> = ({
-  theme,
-  operations,
-  models,
-}) => {
+const ActionForm: React.FC<FormProps> = ({ theme, operations, models }) => {
   return (
-    <div className={theme.container}>
-      <Form.CheckboxInput
-        id='remember-me'
-        label={translate('auth.rememberMe')}
-        checked={models.checkboxState}
-        onChange={operations.handleToggle}
-      />
+    <div className={theme.formTheme.container}>
+      <div className={theme.checkBoxTheme.container}>
+        <Form.CheckboxInput
+          id='remember-me'
+          theme={theme.checkBoxTheme}
+          label={translate('auth.rememberMe')}
+          checked={models.checkboxState}
+          onChange={operations.handleToggle}
+        />
 
-      <Link
-        className={theme.link}
-        href='/forgot-password'
-      >
-        {translate('auth.singIn.forgotPasswordLabel')}
-      </Link>
+        <Link className={theme.formTheme.link} href='/forgot-password'>
+          {translate('auth.signIn.forgotPasswordLabel')}
+        </Link>
+      </div>
 
       <Button.Solid
-        className={theme.button}
+        className={theme.formTheme.button}
         size='small'
         type='submit'
         disabled={models.isSubmitting}
@@ -175,15 +162,12 @@ const ActionForm: React.FC<FormProps> = ({
         )}
       </Button.Solid>
 
-      <span className={theme.span}>
-        <Body.Three className={theme.titleThree}>
-          {translate('auth.singIn.noHaveAccount')}
+      <span className={theme.formTheme.span}>
+        <Body.Three className={theme.formTheme.title}>
+          {translate('auth.signIn.noHaveAccount')}
         </Body.Three>
 
-        <Link
-          className={theme.link}
-          href='/sign-up'
-        >
+        <Link className={theme.formTheme.link} href='/sign-up'>
           {translate('auth.signIn.signUpLink')}
         </Link>
       </span>
