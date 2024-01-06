@@ -37,12 +37,16 @@ export function CheckboxInput({
   const { operations } = useCheckbox({ checked, onChange });
   return (
     <div
-      className={classNames(theme?.container, className)}
+      className={classNames(theme?.container, {
+        'font-normal text-body-md text-base-neutral-grey-100 flex items-center w-fit gap-2':
+          !className && !theme?.container,
+        [`${className}`]: !theme?.container && !!className,
+      })}
       onClick={operations.toggleCheckbox}
     >
       <Icons.Checkbox active={checked} />
       {label && (
-        <Label className={theme?.label} required={required}>
+        <Label className={classNames(theme?.label)} required={required}>
           {label}
         </Label>
       )}
