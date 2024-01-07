@@ -11,6 +11,12 @@ export type InputStyles = {
   error: string;
 };
 
+export type GroupStyles = {
+  container: string;
+  rows: string;
+  columns: string;
+};
+
 export type FormStyles = {
   container: string;
   span: string;
@@ -27,7 +33,16 @@ export type LoginPageStyles = {
   container: string;
 };
 
+export type RegisterPageStyles = {
+  formTheme: FormStyles;
+  groupTheme: GroupStyles;
+  textInputTheme: InputStyles;
+  title: string;
+  container: string;
+};
+
 export type ThemeTypes = {
   emptyState: EmptyStateStyles;
   login: LoginPageStyles;
+  register: RegisterPageStyles;
 };
