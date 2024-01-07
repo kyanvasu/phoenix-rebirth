@@ -8,10 +8,19 @@ export default {
     password: {
       label: 'Password',
       placeholder: '********',
+      confirm: 'Confirm Password',
+    },
+    firstName: {
+      label: 'First Name',
+      placeholder: 'Add your First Name',
+    },
+    lastName: {
+      label: 'Last Name',
+      placeholder: 'Add your Last Name',
     },
     signIn: {
-      buttonLabel: 'Sign In',
       haveAccount: 'Have an account?',
+      buttonLabel: 'Sign In',
       invalidInput: 'Invalid email or password',
       emailRequired: 'Please enter a valid email address',
       passwordRequired: 'Please enter a valid password',
@@ -21,7 +30,14 @@ export default {
       signUpLink: 'Sign Up',
     },
     signUp: {
-      title: 'Sign Up',
+      title: 'Create an account',
+      requiredFirstName: 'First name is required field',
+      requiredEmail: 'Email is required field',
+      requiredPassword: 'Password is required field',
+      requiredPasswordConfirmation: 'Password confirmation is required',
+      passwordMatch: 'Passwords must match',
+      buttonLabel: 'Sign Up',
+      signInLink: 'Sign In',
     },
     createPassword: 'Create Password',
     rememberMe: 'Remember me',
