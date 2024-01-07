@@ -25,17 +25,10 @@ export type FormStyles = {
   title: string;
 };
 
-export type LoginPageStyles = {
-  formTheme: FormStyles;
-  textInputTheme: InputStyles;
-  checkBoxTheme: InputStyles;
-  title: string;
-  container: string;
-};
-
-export type RegisterPageStyles = {
+export type AuthPageStyles = {
   formTheme: FormStyles;
   groupTheme: GroupStyles;
+  checkBoxTheme: InputStyles;
   textInputTheme: InputStyles;
   title: string;
   container: string;
@@ -43,6 +36,5 @@ export type RegisterPageStyles = {
 
 export type ThemeTypes = {
   emptyState: EmptyStateStyles;
-  login: LoginPageStyles;
-  register: RegisterPageStyles;
+  auth: AuthPageStyles;
 };

@@ -10,7 +10,7 @@ import { Body, Button, Heading } from '../../../components/atoms';
 import { useUser } from '../../../model/interactions/use-user';
 import Spinner from '../../../components/atoms/icons/spinner';
 import { translate } from '../../../translate';
-import { RegisterPageStyles } from '../../../model/types';
+import { AuthPageStyles } from '../../../model/types';
 
 interface props {
   redirect: () => void;
@@ -91,24 +91,24 @@ export function RegisterPage({ redirect }: props) {
   const { models, operations } = useSignUp({ redirect });
   const { theme } = useClientContext();
   return (
-    <div className={theme.register.container}>
+    <div className={theme.auth.container}>
       <div>
-        <Heading.Five className={theme.register.title}>
+        <Heading.Five className={theme.auth.title}>
           {translate('auth.signUp.title')}
         </Heading.Five>
       </div>
 
       <FormComponent
+        theme={theme.auth}
         models={models}
         operations={operations}
-        theme={theme.register}
       />
     </div>
   );
 }
 
 interface FormComponentProps {
-  theme: RegisterPageStyles;
+  theme: AuthPageStyles;
   models: any;
   operations?: any;
 }
@@ -221,7 +221,7 @@ const AuthInputFields: React.FC<FormComponentProps> = ({
 
 const ActionForm: React.FC<FormComponentProps> = ({ theme, models }) => {
   return (
-    <div>
+    <div className={theme.groupTheme.columns}>
       <Button.Solid
         className={theme.formTheme.button}
         size='small'
