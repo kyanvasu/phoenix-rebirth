@@ -2,6 +2,7 @@ export type EmptyStateStyles = {
   container: string;
   title: string;
   subtitle: string;
+  button: string;
 };
 
 export type InputStyles = {
@@ -26,15 +27,16 @@ export type FormStyles = {
 };
 
 export type AuthPageStyles = {
+  emptyStateTheme: EmptyStateStyles;
   formTheme: FormStyles;
   groupTheme: GroupStyles;
   checkBoxTheme: InputStyles;
   textInputTheme: InputStyles;
   title: string;
+  subtitle: string;
   container: string;
 };
 
 export type ThemeTypes = {
-  emptyState: EmptyStateStyles;
   auth: AuthPageStyles;
 };

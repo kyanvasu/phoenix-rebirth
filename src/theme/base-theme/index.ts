@@ -1,12 +1,13 @@
 import { ThemeTypes } from '../../model/types';
 
 export const BaseTheme: ThemeTypes = {
-  emptyState: {
-    container: 'flex flex-col items-center text-center gap-y-8',
-    title: 'font-semibold text-base-neutral-grey-100',
-    subtitle: 'text-base-neutral-grey-80',
-  },
   auth: {
+    emptyStateTheme: {
+      container: 'flex flex-col items-center text-center gap-y-8',
+      title: 'font-semibold text-base-neutral-grey-100',
+      subtitle: 'text-base-neutral-grey-80',
+      button: 'text-base-neutral-grey-80',
+    },
     groupTheme: {
       container: 'flex flex-col gap-2 form-group',
       rows: 'flex justify-between gap-4',
@@ -34,5 +35,6 @@ export const BaseTheme: ThemeTypes = {
     },
     container: 'flex flex-col gap-y-[38px]',
     title: 'mt-6 mb-10 font-bold text-base-neutral-grey-100',
+    subtitle: 'font-bold text-base-neutral-grey-100',
   },
 };
