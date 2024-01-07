@@ -1,7 +1,7 @@
-import React from "react";
-import classNames from "classnames";
-import { Body, Button } from "../../atoms";
-import { useClientContext } from "../../../client";
+import React from 'react';
+import classNames from 'classnames';
+import { Body, Button } from '../../atoms';
+import { EmptyStateStyles } from '../../../model/types';
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
   title: string;
@@ -9,6 +9,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
   image: string;
   showButton?: boolean;
   label?: string;
+  theme?: EmptyStateStyles;
 }
 
 export default function EmptyState({
@@ -19,25 +20,45 @@ export default function EmptyState({
   label,
   onClick,
   className,
+  theme,
   ...rest
 }: Props) {
-  const { theme } = useClientContext();
-
   return (
     <article
-      className={classNames(theme.emptyState.container, className)}
+      className={classNames(theme?.container, {
+        'flex flex-col items-center text-center gap-y-8':
+          !className && !theme?.container,
+        [`${className}`]: !theme?.container && !!className,
+      })}
       {...rest}
     >
-      <img src={image} width={226} height={226} alt="" />
+      <img src={image} width={226} height={226} alt='' />
       <section>
-        <Body.Three className={theme.emptyState.title}>
+        <Body.Three
+          className={classNames(theme?.title, {
+            'font-semibold text-base-neutral-grey-100': !theme?.title,
+          })}
+        >
           {title}
         </Body.Three>
-        <Body.Three className={theme.emptyState.subtitle}>
+        <Body.Three
+          className={classNames(theme?.subtitle, {
+            'text-base-neutral-grey-80': !theme?.subtitle,
+          })}
+        >
           {subtitle}
         </Body.Three>
       </section>
-      {showButton && <Button.Solid onClick={onClick}>{label}</Button.Solid>}
+      {showButton && (
+        <Button.Solid
+          className={classNames(theme?.button, {
+            'text-base-neutral-grey-80': !theme?.button,
+          })}
+          onClick={onClick}
+        >
+          {label}
+        </Button.Solid>
+      )}
     </article>
   );
 }
