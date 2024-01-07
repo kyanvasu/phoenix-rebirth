@@ -13,6 +13,8 @@ export default {
       required: 'Password is required field',
       reset: 'Reset Password',
       validation: 'Your password must be 8 characters long.',
+      resetSuccess: 'Your password has been reset successfully',
+      resetError: 'Your password reset failed',
     },
     newPassword: {
       label: 'New Password',

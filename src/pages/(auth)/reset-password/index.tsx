@@ -7,6 +7,7 @@ import { Body, Button, Heading } from '../../../components/atoms';
 import { Form } from '../../../components/molecules';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { translate } from '../../../translate';
+import { toast } from 'react-hot-toast';
 
 interface props {
   router: AppRouterInstance;
@@ -37,12 +38,14 @@ function useResetPassword({ router, params }: props) {
         hash_key: params,
         ...values,
       });
-      sessionStorage.setItem('reset_password_sucessful', 'true');
+      sessionStorage.setItem('reset_password_successful', 'true');
+      toast.success(translate('auth.password.resetSuccess'));
       router.push('/sign-in');
     } catch (err: any) {
       setErrors({
         new_password: err.message,
       });
+      toast.error(translate('auth.password.resetError'));
     }
   }
 
