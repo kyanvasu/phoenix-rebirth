@@ -12,7 +12,6 @@ import Spinner from '../../../components/atoms/icons/spinner';
 import { translate } from '../../../translate';
 import { LoginPageStyles } from '../../../model/types';
 
-// TODO: add translates
 interface props {
   redirect: () => void;
 }
@@ -93,13 +92,17 @@ export function LoginPage({ redirect }: props) {
   );
 }
 
-interface FormProps {
+interface FormComponentProps {
   theme: LoginPageStyles;
   operations: any;
   models: any;
 }
 
-const LoginForm: React.FC<FormProps> = ({ theme, operations, models }) => {
+const LoginForm: React.FC<FormComponentProps> = ({
+  theme,
+  operations,
+  models,
+}) => {
   return (
     <form className={theme.container} onSubmit={operations.handleSubmit}>
       <Form.TextInput
@@ -132,7 +135,11 @@ const LoginForm: React.FC<FormProps> = ({ theme, operations, models }) => {
   );
 };
 
-const ActionForm: React.FC<FormProps> = ({ theme, operations, models }) => {
+const ActionForm: React.FC<FormComponentProps> = ({
+  theme,
+  operations,
+  models,
+}) => {
   return (
     <div className={theme.formTheme.container}>
       <div className={theme.checkBoxTheme.container}>
