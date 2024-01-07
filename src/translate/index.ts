@@ -8,10 +8,12 @@ const i18n = new I18n({
 i18n.defaultLocale = 'en';
 i18n.locale = 'en';
 
-export function translate(text: string): string {
-  return i18n.t(text);
+export function translate(
+  key: string,
+  replacements: Record<string, any> = {}
+): string {
+  return i18n.t(key, replacements);
 }
-
 declare module 'i18n-js' {
   interface CustomTypeOptions {
     defaultNS: 'en';

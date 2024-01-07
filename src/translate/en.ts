@@ -4,11 +4,24 @@ export default {
     email: {
       label: 'Email',
       placeholder: 'anna@gmail.com',
+      required: 'Email is required field',
     },
     password: {
       label: 'Password',
       placeholder: '********',
       confirm: 'Confirm Password',
+      required: 'Password is required field',
+      reset: 'Reset Password',
+      validation: 'Your password must be 8 characters long.',
+    },
+    newPassword: {
+      label: 'New Password',
+      placeholder: 'Enter your new password',
+      buttonLabel: 'Create New Password',
+    },
+    repeatPassword: {
+      label: 'Repeat new password',
+      placeholder: 'Repeat password',
     },
     firstName: {
       label: 'First Name',
@@ -17,6 +30,15 @@ export default {
     lastName: {
       label: 'Last Name',
       placeholder: 'Add your Last Name',
+    },
+    sendEmail: {
+      buttonLabel: 'Send Email',
+      success: 'Your email has been sent successfully',
+      error: 'Something went wrong, please try again later',
+      emailSent:
+        "We've sent an email to {email} with password reset instructions.",
+      sendTitle: 'An email was send',
+      return: 'Return to login',
     },
     signIn: {
       haveAccount: 'Have an account?',
@@ -45,7 +67,7 @@ export default {
       title: 'Forgot Password',
       description:
         'Enter your email and we will send you a link to reset your password.',
-      'email-placeholder': 'EJ: myexample@gmail.com',
+      placeholder: 'myexample@gmail.com',
     },
     resetPassword: {
       title: 'Reset Password',
