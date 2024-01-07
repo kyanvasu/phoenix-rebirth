@@ -6,6 +6,7 @@ import { useAuth } from '../../../model/interactions/use-auth';
 import { Body, Button, Heading } from '../../../components/atoms';
 import { Form } from '../../../components/molecules';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
+import { translate } from '../../../translate';
 
 interface props {
   router: AppRouterInstance;
@@ -70,23 +71,27 @@ function useResetPassword({ router, params }: props) {
 
 export function ResetPasswordPage({ router, params }: props) {
   const { models, operations } = useResetPassword({ router, params });
+  const { theme } = useClientContext();
 
   return (
-    <>
-      <section className='mb-24'>
-        <Heading.Four className='my-3 font-bold'>Reset Password</Heading.Four>
+    <div className={theme.auth.container}>
+      <section className={theme.auth.groupTheme.columns}>
+        <Heading.Four className={theme.auth.title}>
+          {translate('auth.password.reset')}
+        </Heading.Four>
 
-        <Body.Two>Your password must be 8 characters long.</Body.Two>
+        <Body.Two>{translate('auth.password.validation')}</Body.Two>
       </section>
 
       <form
-        className='flex flex-col gap-y-[38px]'
+        className={theme.auth.formTheme.container}
         onSubmit={operations.handleSubmit}
       >
         <Form.TextInput
-          label='New Password'
+          theme={theme.auth.textInputTheme}
+          label={translate('auth.newPassword.label')}
           type='password'
-          placeholder='Enter your new password'
+          placeholder={translate('auth.newPassword.placeholder')}
           value={models.values.new_password}
           onChange={operations.handleChange}
           name='new_password'
@@ -95,9 +100,10 @@ export function ResetPasswordPage({ router, params }: props) {
         />
 
         <Form.TextInput
-          label='Repeat new password'
+          theme={theme.auth.textInputTheme}
+          label={translate('auth.repeatPassword.label')}
           type='password'
-          placeholder='Repeat password'
+          placeholder={translate('auth.repeatPassword.placeholder')}
           value={models.values.verify_password}
           onChange={operations.handleChange}
           name='verify_password'
@@ -105,10 +111,10 @@ export function ResetPasswordPage({ router, params }: props) {
           error={!!models.errors.verify_password}
         />
 
-        <Button.Solid className='justify-center w-full mt-3' size='small'>
-          Create password
+        <Button.Solid className={theme.auth.formTheme.button} size='small'>
+          {translate('auth.newPassword.buttonLabel')}
         </Button.Solid>
       </form>
-    </>
+    </div>
   );
 }
