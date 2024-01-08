@@ -72,7 +72,7 @@ export function ForgotPasswordPage({ router }: props) {
   const { theme } = useClientContext();
   return (
     <div className={theme.auth.container}>
-      <section className={theme.auth.groupTheme.rows}>
+      <section className={theme.auth.groupTheme.columns}>
         <Link href='/sign-in'>
           <Button.Link>
             <Icons.ArrowLeft />
@@ -105,7 +105,7 @@ export function ForgotPasswordPage({ router }: props) {
           size='small'
           type='submit'
         >
-          {translate('auth.sendEmail')}
+          {translate('auth.sendEmail.buttonLabel')}
         </Button.Solid>
       </form>
     </div>
