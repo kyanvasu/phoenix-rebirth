@@ -16,7 +16,21 @@ export type DropdownTypes = {
     hover: string;
   };
 };
+
+export type SidebarTypes = {
+  container: string;
+  logoContainer: string;
+  nav: string;
+  ul: string;
+  navItem: string;
+  companyContainer: string;
+  changeCompany: string;
+  changeCompanyText: string;
+  changeCompanyIcon: string;
+};
+
 export type ThemeTypes = {
   emptyState: EmptyStateStyles;
   dropdown: DropdownTypes;
+  sidebar: SidebarTypes;
 };
