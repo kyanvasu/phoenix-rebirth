@@ -7,8 +7,8 @@ import classnames from 'classnames';
 
 interface Props
   extends React.HTMLAttributes<HTMLDivElement>,
-    React.PropsWithChildren {
-  Logo: ReactNode;
+  React.PropsWithChildren {
+  Logo?: ReactNode;
   pathname: string;
   items: SidebarItem[];
   companies?: Record<string, any>[];
@@ -40,7 +40,7 @@ export default function Sidebar(props: Props) {
         className
       )}
     >
-      <div className='shrink-0 py-3 px-2'>{Logo}</div>
+      {Logo && <div className='shrink-0 py-3 px-2'>{Logo}</div>}
 
       <nav className='flex-1 shrink-0 px-2 py-3'>
         <ul role='list' className='flex flex-col flex-1 gap-2'>
