@@ -3,7 +3,7 @@ import Icons from '../../atoms/icons';
 import NavItem from '../../molecules/nav-item';
 import { SidebarItem } from '../../../model/types';
 import { Body } from '../../atoms';
-import classnames from 'classnames';
+import { useClientContext } from '../../../client';
 
 interface Props
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -13,7 +13,7 @@ interface Props
   items: SidebarItem[];
   companies?: Record<string, any>[];
   className?: string;
-  navItemsClassName?: string;
+
 }
 
 function useSidebar({ items, pathname }: Props) {
@@ -30,34 +30,32 @@ function useSidebar({ items, pathname }: Props) {
 }
 
 export default function Sidebar(props: Props) {
-  const { items, Logo, companies, className, navItemsClassName } = props;
+  const { items, Logo, companies } = props;
   const { currentItem } = useSidebar(props);
+  const { theme } = useClientContext();
 
   return (
     <div
-      className={classnames(
-        'w-full min-h-full shrink-0 flex flex-col bg-base-primary-100',
-        className
-      )}
+      className={theme.sidebar.container}
     >
-      {Logo && <div className='shrink-0 py-3 px-2'>{Logo}</div>}
+      {Logo && <div className={theme.sidebar.logoContainer}>{Logo}</div>}
 
-      <nav className='flex-1 shrink-0 px-2 py-3'>
-        <ul role='list' className='flex flex-col flex-1 gap-2'>
+      <nav className={theme.sidebar.nav}>
+        <ul role='list' className={theme.sidebar.ul}>
           {items.map((item, index) => (
             <NavItem
               item={item}
               key={index}
               pathname={props.pathname}
               active={currentItem(item)}
-              className={classnames(navItemsClassName)}
+              className={theme.sidebar.navItem}
             />
           ))}
         </ul>
       </nav>
 
       {companies && (
-        <div className='bg-base-primary-90 border-t border-t-base-primary-70 shrink-0 p-5 cursor-pointer'>
+        <div className={theme.sidebar.companyContainer}>
           <ChangeCompany />
         </div>
       )}
@@ -67,10 +65,12 @@ export default function Sidebar(props: Props) {
 
 // TODO: translates missing here
 function ChangeCompany() {
+  const { theme } = useClientContext();
+
   return (
-    <div className='flex items-center justify-between text-white p-0.5'>
-      <Body.Three className='font-semibold'>Change Company</Body.Three>
-      <Icons.ChevronLeft className='stroke-white' />
+    <div className={theme.sidebar.changeCompany}>
+      <Body.Three className={theme.sidebar.changeCompanyText}>Change Company</Body.Three>
+      <Icons.ChevronLeft className={theme.sidebar.changeCompanyIcon} />
     </div>
   );
 }
