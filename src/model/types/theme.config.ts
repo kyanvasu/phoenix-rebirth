@@ -27,11 +27,11 @@ export type FormStyles = {
 };
 
 export type AuthPageStyles = {
-  emptyStateTheme: EmptyStateStyles;
-  formTheme: FormStyles;
-  groupTheme: GroupStyles;
-  checkBoxTheme: InputStyles;
-  textInputTheme: InputStyles;
+  emptyState: EmptyStateStyles;
+  form: FormStyles;
+  group: GroupStyles;
+  checkBox: InputStyles;
+  textInput: InputStyles;
   title: string;
   subtitle: string;
   container: string;

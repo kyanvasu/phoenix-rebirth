@@ -103,23 +103,18 @@ interface FormComponentProps {
   operations: any;
   models: any;
 }
-
-const FormComponent: React.FC<FormComponentProps> = ({
-  theme,
-  operations,
-  models,
-}) => {
+function FormComponent({ theme, operations, models }: FormComponentProps) {
   return (
     <form
-      className={theme.formTheme.container}
+      className={theme.form.container}
       onSubmit={operations.handleSubmit}
     >
-      <div className={theme.groupTheme.container}>
-        <div className={theme.groupTheme.columns}>
+      <div className={theme.group.container}>
+        <div className={theme.group.columns}>
           <Form.TextInput
             type='email'
             label={translate('auth.email.label')}
-            theme={theme.textInputTheme}
+            theme={theme.textInput}
             placeholder={translate('auth.email.placeholder')}
             name='email'
             required
@@ -131,7 +126,7 @@ const FormComponent: React.FC<FormComponentProps> = ({
           <Form.TextInput
             type='password'
             name='password'
-            theme={theme.textInputTheme}
+            theme={theme.textInput}
             label={translate('auth.password.label')}
             placeholder={translate('auth.password.placeholder')}
             required
@@ -146,31 +141,27 @@ const FormComponent: React.FC<FormComponentProps> = ({
       <ActionForm theme={theme} operations={operations} models={models} />
     </form>
   );
-};
+}
 
-const ActionForm: React.FC<FormComponentProps> = ({
-  theme,
-  operations,
-  models,
-}) => {
+function ActionForm({ theme, operations, models }: FormComponentProps) {
   return (
-    <div className={theme.groupTheme.columns}>
-      <span className={theme.formTheme.span}>
+    <div className={theme.group.columns}>
+      <span className={theme.form.span}>
         <Form.CheckboxInput
           id='remember-me'
-          theme={theme.checkBoxTheme}
+          theme={theme.checkBox}
           label={translate('auth.rememberMe')}
           checked={models.checkboxState}
           onChange={operations.handleToggle}
         />
 
-        <Link className={theme.formTheme.link} href='/forgot-password'>
+        <Link className={theme.form.link} href='/forgot-password'>
           {translate('auth.signIn.forgotPasswordLabel')}
         </Link>
       </span>
-      <div className={theme.groupTheme.columns}>
+      <div className={theme.group.columns}>
         <Button.Solid
-          className={theme.formTheme.button}
+          className={theme.form.button}
           size='small'
           type='submit'
           disabled={models.isSubmitting}
@@ -182,16 +173,16 @@ const ActionForm: React.FC<FormComponentProps> = ({
           )}
         </Button.Solid>
 
-        <span className={theme.formTheme.span}>
+        <span className={theme.form.span}>
           <Body.Three className={theme.formTheme.title}>
             {translate('auth.signIn.noHaveAccount')}
           </Body.Three>
 
-          <Link className={theme.formTheme.link} href='/sign-up'>
+          <Link className={theme.form.link} href='/sign-up'>
             {translate('auth.signIn.signUpLink')}
           </Link>
         </span>
       </div>
     </div>
   );
-};
+}
