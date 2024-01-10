@@ -56,4 +56,8 @@ export const BaseTheme: ThemeTypes = {
     container: 'flex items-center justify-center rounded-full w-11 h-11',
     icon: 'stroke-base-neutral-grey-100',
   },
+
+  helpText: {
+    error: 'text-base-semantic-error-60',
+  },
 };

@@ -55,6 +55,9 @@ export type CardButtonTypes = {
   icon: string;
 };
 
+export type HelpText = {
+  error: string;
+};
 
 export type ThemeTypes = {
   emptyState: EmptyStateStyles;
@@ -64,4 +67,5 @@ export type ThemeTypes = {
   badge: BadgeTypes;
   card: CardTypes;
   cardButton: CardButtonTypes;
+  helpText: HelpText;
 };
