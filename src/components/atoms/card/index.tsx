@@ -1,18 +1,18 @@
-import classNames from "classnames";
-import React from "react";
+import classNames from 'classnames';
+import React from 'react';
+import { BaseTheme } from '../../../theme';
+import { CardTypes } from '../../../model/types';
 
-export function Card(props: React.HTMLProps<HTMLInputElement>) {
-  const { children, className } = props;
+export interface Props extends React.HTMLProps<HTMLInputElement> {
+  theme?: CardTypes;
+}
+export function Card(props: Props) {
+  
+  const { children, theme } = props;
+  const styles = theme || BaseTheme.card;
+
   return (
-    <article
-      className={classNames(
-        'grid p-5 border rounded-md shadow-elevation-1',
-        className,
-        {
-          'border-base-neutral-grey-30': !className,
-        }
-      )}
-    >
+    <article className={classNames(styles.container, styles.default)}>
       {children}
     </article>
   );

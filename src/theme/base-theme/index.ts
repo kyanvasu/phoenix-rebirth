@@ -48,4 +48,8 @@ export const BaseTheme: ThemeTypes = {
     square: 'rounded-sm',
     round: 'rounded-xl',
   },
+  card: {
+    container: 'grid p-5 border rounded-md shadow-elevation-1',
+    default: 'border-base-neutral-grey-30',
+  },
 };

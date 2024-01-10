@@ -29,20 +29,25 @@ export type SidebarTypes = {
   changeCompanyIcon: string;
 };
 
- export type AvatarTypes = {
-   container: string;
-   img: string;
-   "xx-small": string;
-   "x-small": string;
-   small: string;
-   medium: string;
-   large: string;
-   default: string
- };
- export type BadgeTypes= {
+export type AvatarTypes = {
+  container: string;
+  img: string;
+  "xx-small": string;
+  "x-small": string;
+  small: string;
+  medium: string;
+  large: string;
+  default: string;
+};
+export type BadgeTypes = {
   button: string;
   square: string;
   round: string;
+};
+
+export type CardTypes = {
+  container: string;
+  default: string;
 };
 
 export type ThemeTypes = {
@@ -51,4 +56,5 @@ export type ThemeTypes = {
   sidebar: SidebarTypes;
   avatar: AvatarTypes;
   badge: BadgeTypes;
+  card: CardTypes;
 };
