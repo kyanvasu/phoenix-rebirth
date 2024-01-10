@@ -16,15 +16,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={classNames(
-        className,
-        {
-          'rounded-md w-fit text-body-md font-semibold disabled:text-base-neutral-grey-60 flex flex-row items-center gap-2':
-            !className,
-        },
-        model.size,
-        model.variant
-      )}
+      className={classNames(className, model.size, model.variant)}
       disabled={disabled}
       {...rest}
     >

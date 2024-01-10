@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+
 import React from 'react';
 import { Label } from '../../../atoms';
 import Icons from '../../../atoms/icons';
@@ -29,24 +29,16 @@ function useCheckbox({ checked, onChange }: Props) {
 export function CheckboxInput({
   label,
   checked,
-  className,
   theme,
   onChange,
   required,
 }: Props): JSX.Element {
   const { operations } = useCheckbox({ checked, onChange });
   return (
-    <div
-      className={classNames(theme?.container, {
-        'font-normal text-body-md text-base-neutral-grey-100 flex items-center w-fit gap-2':
-          !className && !theme?.container,
-        [`${className}`]: !theme?.container && !!className,
-      })}
-      onClick={operations.toggleCheckbox}
-    >
+    <div className={theme?.container} onClick={operations.toggleCheckbox}>
       <Icons.Checkbox active={checked} />
       {label && (
-        <Label className={classNames(theme?.label)} required={required}>
+        <Label className={theme?.label} required={required}>
           {label}
         </Label>
       )}

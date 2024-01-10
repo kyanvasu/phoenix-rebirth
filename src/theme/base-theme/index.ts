@@ -14,7 +14,8 @@ export const BaseTheme: ThemeTypes = {
       columns: 'flex flex-col gap-4',
     },
     checkBox: {
-      container: 'flex justify-between items-center',
+      container:
+        'flex justify-between items-center font-normal text-body-md text-base-neutral-grey-100 w-fit gap-2',
       label: 'font-semibold text-base-neutral-grey-100',
       input: 'border border-base-neutral-grey-40 rounded-md h-10 px-4',
       error: 'text-base-red-100 text-body-sm',
@@ -22,15 +23,17 @@ export const BaseTheme: ThemeTypes = {
     form: {
       container: 'flex flex-col gap-y-[38px]',
       span: 'flex flex-row gap-x-4',
-      button: 'justify-center w-full my-6',
+      button:
+        'rounded-md w-fit text-body-md font-semibold disabled:text-base-neutral-grey-60 flex flex-row items-center gap-2 justify-center w-full my-6',
       link: 'font-semibold text-base-primary-100 text-body-md',
       title: 'text-base-neutral-grey-80',
     },
     textInput: {
-      container: ' flex flex-col gap-[6px] font-normal text-caption-md',
+      container:
+        'flex flex-col gap-[6px] font-normal text-caption-md text-base-neutral-grey-80',
       label: 'font-semibold text-base-neutral-grey-100',
       input:
-        'block w-full h-9 rounded-md border text-body-md disabled:bg-base-neutral-grey-30',
+        'block w-full h-9 rounded-md border text-body-md disabled:bg-base-neutral-grey-30 border-base-neutral-grey-30 p-2 text-base-neutral-grey-100 placeholder:text-base-neutral-grey-70 focus:outline-none focus:border-base-primary-80',
       error: 'border-red-500 text-base-red-100 text-body-sm',
     },
     container: 'flex flex-col gap-y-[38px]',
