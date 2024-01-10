@@ -43,4 +43,9 @@ export const BaseTheme: ThemeTypes = {
     default:
       "inline-flex items-center justify-center leading-0 bg-base-primary-80 text-base-neutral-white font-normal",
   },
+  badge: {
+    button: 'bg-base-primary-100 disabled:bg-base-neutral-grey-20 hover:bg-base-primary-80 text-base-neutral-white disabled:text-base-neutral-grey-80 w-fit text-body-md font-normal flex items-center gap-1.5 px-2 py-[2px] text-body-md font-normal text-base-neutral-white',
+    square: 'rounded-sm',
+    round: 'rounded-xl',
+  },
 };

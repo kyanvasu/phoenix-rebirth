@@ -39,10 +39,16 @@ export type SidebarTypes = {
    large: string;
    default: string
  };
+ export type BadgeTypes= {
+  button: string;
+  square: string;
+  round: string;
+};
 
 export type ThemeTypes = {
   emptyState: EmptyStateStyles;
   dropdown: DropdownTypes;
   sidebar: SidebarTypes;
   avatar: AvatarTypes;
+  badge: BadgeTypes;
 };
