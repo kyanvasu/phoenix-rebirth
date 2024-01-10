@@ -29,8 +29,20 @@ export type SidebarTypes = {
   changeCompanyIcon: string;
 };
 
+ export type AvatarTypes = {
+   container: string;
+   img: string;
+   "xx-small": string;
+   "x-small": string;
+   small: string;
+   medium: string;
+   large: string;
+   default: string
+ };
+
 export type ThemeTypes = {
   emptyState: EmptyStateStyles;
   dropdown: DropdownTypes;
   sidebar: SidebarTypes;
+  avatar: AvatarTypes;
 };

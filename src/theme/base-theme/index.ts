@@ -32,4 +32,15 @@ export const BaseTheme: ThemeTypes = {
     changeCompanyText: "font-semibold",
     changeCompanyIcon: "stroke-white",
   },
+  avatar: {
+    container: "rounded-full border border-base-neutral-grey-30",
+    img: "rounded-full object-cover",
+    "xx-small": "h-6 w-6 text-caption-sm",
+    "x-small": "h-8 w-8 text-body-md",
+    small: "h-10 w-10 text-heading-xs",
+    medium: "h-[60px] w-[60px] text-heading-base",
+    large: "h-[100px] w-[100px] text-heading-base",
+    default:
+      "inline-flex items-center justify-center leading-0 bg-base-primary-80 text-base-neutral-white font-normal",
+  },
 };
