@@ -10,7 +10,7 @@ interface props {
   img?: string;
 }
 
-function useEmailPage({ router, params }: props) {
+export function useEmailPage({ router, params }: props) {
   const email = decodeURIComponent(params);
 
   const message = translate('auth.resetPassword.emailSent', { email });
@@ -34,7 +34,7 @@ export function EmailPage({ router, params, img }: props) {
   return (
     <section className={theme.auth.container}>
       <EmptyState
-        theme={theme.auth.emptyStateTheme}
+        theme={theme.auth.emptyState}
         image={img ?? ''}
         title={translate('auth.sendEmail.sendTitle')}
         subtitle={models.message}

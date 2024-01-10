@@ -13,7 +13,8 @@ import { translate } from '../../../translate';
 interface props {
   router: AppRouterInstance;
 }
-function useForgotPassword({ router }: props) {
+
+export function useForgotPassword({ router }: props) {
   const { sdk } = useClientContext();
 
   const initialValues = {
@@ -72,7 +73,7 @@ export function ForgotPasswordPage({ router }: props) {
   const { theme } = useClientContext();
   return (
     <div className={theme.auth.container}>
-      <section className={theme.auth.groupTheme.columns}>
+      <section className={theme.auth.group.columns}>
         <Link href='/sign-in'>
           <Button.Link>
             <Icons.ArrowLeft />
@@ -85,11 +86,11 @@ export function ForgotPasswordPage({ router }: props) {
         <Body.Two>{translate('auth.forgotPassword.description')}</Body.Two>
       </section>
       <form
-        className={theme.auth.formTheme.container}
+        className={theme.auth.form.container}
         onSubmit={operations.handleSubmit}
       >
         <Form.TextInput
-          theme={theme.auth.textInputTheme}
+          theme={theme.auth.textInput}
           label={translate('auth.email.label')}
           placeholder={translate('auth.email.placeholder')}
           name='email'
@@ -101,7 +102,7 @@ export function ForgotPasswordPage({ router }: props) {
         />
 
         <Button.Solid
-          className={theme.auth.formTheme.button}
+          className={theme.auth.form.button}
           size='small'
           type='submit'
         >
