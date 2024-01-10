@@ -50,6 +50,12 @@ export type CardTypes = {
   default: string;
 };
 
+export type CardButtonTypes = {
+  container: string;
+  icon: string;
+};
+
+
 export type ThemeTypes = {
   emptyState: EmptyStateStyles;
   dropdown: DropdownTypes;
@@ -57,4 +63,5 @@ export type ThemeTypes = {
   avatar: AvatarTypes;
   badge: BadgeTypes;
   card: CardTypes;
+  cardButton: CardButtonTypes;
 };

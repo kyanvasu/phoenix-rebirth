@@ -52,4 +52,8 @@ export const BaseTheme: ThemeTypes = {
     container: 'grid p-5 border rounded-md shadow-elevation-1',
     default: 'border-base-neutral-grey-30',
   },
+  cardButton: {
+    container: 'flex items-center justify-center rounded-full w-11 h-11',
+    icon: 'stroke-base-neutral-grey-100',
+  },
 };
