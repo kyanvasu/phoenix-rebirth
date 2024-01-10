@@ -58,6 +58,9 @@ export type CardButtonTypes = {
 export type HelpText = {
   error: string;
 };
+export type LabelTypes = {
+  required: string;
+};
 
 export type ThemeTypes = {
   emptyState: EmptyStateStyles;
@@ -68,4 +71,5 @@ export type ThemeTypes = {
   card: CardTypes;
   cardButton: CardButtonTypes;
   helpText: HelpText;
+  label: LabelTypes;
 };
