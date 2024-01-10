@@ -9,10 +9,12 @@ import { ThemeTypes } from "@kanvas/phoenix/model/types/theme.config";
 
 export default function RootClientLayout({ children }: PropsWithChildren) {
   const customStylesConfig: ThemeTypes = {
+    ...BaseTheme,
     emptyState: {
       ...BaseTheme.emptyState,
       title: "font-semibold text-base-neutral-grey-50",
     },
+
   };
   return (
     <Provider>
