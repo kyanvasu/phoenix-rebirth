@@ -14,7 +14,9 @@ interface props {
   params: string;
 }
 
-function useResetPassword({ router, params }: props) {
+export const RESET_PASSWORD_SUCCESSFUL = 'reset_password_successful';
+
+export function useResetPassword({ router, params }: props) {
   const { sdk } = useClientContext();
 
   const initialValues = {
@@ -78,7 +80,7 @@ export function ResetPasswordPage({ router, params }: props) {
 
   return (
     <div className={theme.auth.container}>
-      <section className={theme.auth.groupTheme.columns}>
+      <section className={theme.auth.group.columns}>
         <Heading.Four className={theme.auth.title}>
           {translate('auth.password.reset')}
         </Heading.Four>
@@ -87,11 +89,11 @@ export function ResetPasswordPage({ router, params }: props) {
       </section>
 
       <form
-        className={theme.auth.formTheme.container}
+        className={theme.auth.form.container}
         onSubmit={operations.handleSubmit}
       >
         <Form.TextInput
-          theme={theme.auth.textInputTheme}
+          theme={theme.auth.textInput}
           label={translate('auth.newPassword.label')}
           type='password'
           placeholder={translate('auth.newPassword.placeholder')}
@@ -103,7 +105,7 @@ export function ResetPasswordPage({ router, params }: props) {
         />
 
         <Form.TextInput
-          theme={theme.auth.textInputTheme}
+          theme={theme.auth.textInput}
           label={translate('auth.repeatPassword.label')}
           type='password'
           placeholder={translate('auth.repeatPassword.placeholder')}
@@ -114,7 +116,7 @@ export function ResetPasswordPage({ router, params }: props) {
           error={!!models.errors.verify_password}
         />
 
-        <Button.Solid className={theme.auth.formTheme.button} size='small'>
+        <Button.Solid className={theme.auth.form.button} size='small'>
           {translate('auth.newPassword.buttonLabel')}
         </Button.Solid>
       </form>

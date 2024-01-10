@@ -15,7 +15,8 @@ import { AuthPageStyles } from '../../../model/types';
 interface props {
   redirect: () => void;
 }
-function useSignIn({ redirect }: props) {
+
+export function useSignIn({ redirect }: props) {
   const { sdk } = useClientContext();
   const [checkboxState, setCheckboxState] = useState(true);
   const { operations: userOperations } = useUser({ sdk });
@@ -103,12 +104,10 @@ interface FormComponentProps {
   operations: any;
   models: any;
 }
+
 function FormComponent({ theme, operations, models }: FormComponentProps) {
   return (
-    <form
-      className={theme.form.container}
-      onSubmit={operations.handleSubmit}
-    >
+    <form className={theme.form.container} onSubmit={operations.handleSubmit}>
       <div className={theme.group.container}>
         <div className={theme.group.columns}>
           <Form.TextInput
@@ -174,7 +173,7 @@ function ActionForm({ theme, operations, models }: FormComponentProps) {
         </Button.Solid>
 
         <span className={theme.form.span}>
-          <Body.Three className={theme.formTheme.title}>
+          <Body.Three className={theme.form.title}>
             {translate('auth.signIn.noHaveAccount')}
           </Body.Three>
 

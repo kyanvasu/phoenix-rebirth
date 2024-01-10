@@ -15,7 +15,8 @@ import { AuthPageStyles } from '../../../model/types';
 interface props {
   redirect: () => void;
 }
-function useSignUp({ redirect }: props) {
+
+export function useSignUp({ redirect }: props) {
   const { sdk } = useClientContext();
 
   const initialValues = {
@@ -113,17 +114,10 @@ interface FormComponentProps {
   operations?: any;
 }
 
-const FormComponent: React.FC<FormComponentProps> = ({
-  theme,
-  models,
-  operations,
-}) => {
+function FormComponent({ theme, models, operations }: FormComponentProps) {
   return (
-    <form
-      className={theme.formTheme.container}
-      onSubmit={operations.handleSubmit}
-    >
-      <div className={theme.groupTheme.container}>
+    <form className={theme.form.container} onSubmit={operations.handleSubmit}>
+      <div className={theme.group.container}>
         <NameInputFields
           models={models}
           operations={operations}
@@ -139,17 +133,13 @@ const FormComponent: React.FC<FormComponentProps> = ({
       <ActionForm models={models} theme={theme} />
     </form>
   );
-};
+}
 
-const NameInputFields: React.FC<FormComponentProps> = ({
-  theme,
-  models,
-  operations,
-}) => {
+function NameInputFields({ theme, models, operations }: FormComponentProps) {
   return (
-    <div className={theme.groupTheme.rows}>
+    <div className={theme.group.rows}>
       <Form.TextInput
-        theme={theme.textInputTheme}
+        theme={theme.textInput}
         type='text'
         label={translate('auth.firstName.label')}
         placeholder={translate('auth.firstName.placeholder')}
@@ -161,7 +151,7 @@ const NameInputFields: React.FC<FormComponentProps> = ({
       />
 
       <Form.TextInput
-        theme={theme.textInputTheme}
+        theme={theme.textInput}
         type='text'
         label={translate('auth.lastName.label')}
         placeholder={translate('auth.lastName.placeholder')}
@@ -171,17 +161,13 @@ const NameInputFields: React.FC<FormComponentProps> = ({
       />
     </div>
   );
-};
+}
 
-const AuthInputFields: React.FC<FormComponentProps> = ({
-  theme,
-  models,
-  operations,
-}) => {
+function AuthInputFields({ theme, models, operations }: FormComponentProps) {
   return (
-    <div className={theme.groupTheme.columns}>
+    <div className={theme.group.columns}>
       <Form.TextInput
-        theme={theme.textInputTheme}
+        theme={theme.textInput}
         type='email'
         placeholder={translate('auth.email.placeholder')}
         label={translate('auth.email.label')}
@@ -193,7 +179,7 @@ const AuthInputFields: React.FC<FormComponentProps> = ({
       />
 
       <Form.TextInput
-        theme={theme.textInputTheme}
+        theme={theme.textInput}
         type='password'
         label={translate('auth.password.label')}
         placeholder={translate('auth.password.placeholder')}
@@ -205,7 +191,7 @@ const AuthInputFields: React.FC<FormComponentProps> = ({
       />
 
       <Form.TextInput
-        theme={theme.textInputTheme}
+        theme={theme.textInput}
         type='password'
         label={translate('auth.password.confirm')}
         placeholder={translate('auth.password.placeholder')}
@@ -217,13 +203,13 @@ const AuthInputFields: React.FC<FormComponentProps> = ({
       />
     </div>
   );
-};
+}
 
-const ActionForm: React.FC<FormComponentProps> = ({ theme, models }) => {
+function ActionForm({ theme, models }: FormComponentProps) {
   return (
-    <div className={theme.groupTheme.columns}>
+    <div className={theme.group.columns}>
       <Button.Solid
-        className={theme.formTheme.button}
+        className={theme.form.button}
         size='small'
         type='submit'
         disabled={models.loading}
@@ -231,15 +217,15 @@ const ActionForm: React.FC<FormComponentProps> = ({ theme, models }) => {
         {models.loading ? <Spinner /> : translate('auth.signUp.buttonLabel')}
       </Button.Solid>
 
-      <span className={theme.formTheme.span}>
-        <Body.Three className={theme.formTheme.title}>
+      <span className={theme.form.span}>
+        <Body.Three className={theme.form.title}>
           {translate('auth.signIn.haveAccount')}
         </Body.Three>
 
-        <Link className={theme.formTheme.link} href='/sign-in'>
+        <Link className={theme.form.link} href='/sign-in'>
           {translate('auth.signUp.signInLink')}
         </Link>
       </span>
     </div>
   );
-};
+}
