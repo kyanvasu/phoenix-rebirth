@@ -11,9 +11,11 @@ import {
   ForgotPasswordPage,
   EmailPage,
   ResetPasswordPage,
+  RESET_PASSWORD_SUCCESSFUL,
 } from '../pages/(auth)';
 import * as Pages from '../pages/index.client';
 import EmptyTable from '../components/organism/table/empty';
+
 export const Auth = {
   LoginPage,
   RegisterPage,
@@ -21,6 +23,7 @@ export const Auth = {
   EmailPage,
   ResetPasswordPage,
   useAuth,
+  RESET_PASSWORD_SUCCESSFUL,
 };
 
 export { Table, useTable, Molecules, Organism, Pages, EmptyTable };
