@@ -2,7 +2,7 @@
 import React from 'react';
 import { Body, Button } from '../../atoms';
 import { EmptyStateTypes } from '../../../model/types';
-import { useClientContext } from '../../../client';
+import { BaseTheme } from '../../../theme';
 interface Props extends React.HTMLAttributes<HTMLElement> {
   title: string;
   subtitle: string;
@@ -23,8 +23,7 @@ export default function EmptyState({
   theme,
   ...rest
 }: Props) {
-  const context = useClientContext();
-  const styles = theme || context.theme.emptyState;
+  const styles = theme || BaseTheme.emptyState;
 
   return (
     <article className={styles?.container} {...rest}>

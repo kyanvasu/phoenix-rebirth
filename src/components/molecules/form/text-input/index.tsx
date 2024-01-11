@@ -1,8 +1,7 @@
-'use client';
 import React from 'react';
 import { HelpText, Label } from '../../../atoms';
 import { InputTypes } from '../../../../model/types';
-import { useClientContext } from '../../../../client';
+import { BaseTheme } from '../../../../theme';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -14,14 +13,13 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 export function TextInput({
   className,
   label,
-  theme,
   required,
   helpText,
+  theme,
   error,
   ...others
 }: Props) {
-  const context = useClientContext();
-  const styles = theme || context.theme.checkBox;
+  const styles = theme || BaseTheme.textInput;
 
   return (
     <div className={styles?.container}>

@@ -1,9 +1,8 @@
-'use client';
 import React from 'react';
 import { Label } from '../../../atoms';
 import Icons from '../../../atoms/icons';
 import { InputTypes } from '../../../../model/types';
-import { useClientContext } from '../../../../client';
+import { BaseTheme } from '../../../../theme';
 
 export interface Props {
   label?: string;
@@ -30,20 +29,19 @@ function useCheckbox({ checked, onChange }: Props) {
 export function CheckboxInput({
   label,
   checked,
-  theme,
   onChange,
   required,
+  theme,
 }: Props): JSX.Element {
   const { operations } = useCheckbox({ checked, onChange });
-  const context = useClientContext();
 
-  theme = theme || context.theme.checkBox;
+  const styles = theme || BaseTheme.checkBox;
 
   return (
-    <div className={theme?.container} onClick={operations.toggleCheckbox}>
+    <div className={styles?.container} onClick={operations.toggleCheckbox}>
       <Icons.Checkbox active={checked} />
       {label && (
-        <Label className={theme?.label} required={required}>
+        <Label className={styles?.label} required={required}>
           {label}
         </Label>
       )}
