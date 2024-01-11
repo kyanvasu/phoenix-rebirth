@@ -1,3 +1,4 @@
+
 import React from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -6,13 +7,17 @@ import { useAuth } from '../../../model/interactions/use-auth';
 import { Body, Button, Heading } from '../../../components/atoms';
 import { Form } from '../../../components/molecules';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
+import { translate } from '../../../translate';
+import { toast } from 'react-hot-toast';
 
 interface props {
   router: AppRouterInstance;
   params: string;
 }
 
-function useResetPassword({ router, params }: props) {
+export const RESET_PASSWORD_SUCCESSFUL = 'reset_password_successful';
+
+export function useResetPassword({ router, params }: props) {
   const { sdk } = useClientContext();
 
   const initialValues = {
@@ -36,12 +41,14 @@ function useResetPassword({ router, params }: props) {
         hash_key: params,
         ...values,
       });
-      sessionStorage.setItem('reset_password_sucessful', 'true');
+      sessionStorage.setItem('reset_password_successful', 'true');
+      toast.success(translate('auth.password.resetSuccess'));
       router.push('/sign-in');
     } catch (err: any) {
       setErrors({
         new_password: err.message,
       });
+      toast.error(translate('auth.password.resetError'));
     }
   }
 
@@ -70,23 +77,27 @@ function useResetPassword({ router, params }: props) {
 
 export function ResetPasswordPage({ router, params }: props) {
   const { models, operations } = useResetPassword({ router, params });
+  const { theme } = useClientContext();
 
   return (
-    <>
-      <section className='mb-24'>
-        <Heading.Four className='my-3 font-bold'>Reset Password</Heading.Four>
+    <div className={theme.auth.container}>
+      <section className={theme.auth.group.columns}>
+        <Heading.Four className={theme.auth.title}>
+          {translate('auth.password.reset')}
+        </Heading.Four>
 
-        <Body.Two>Your password must be 8 characters long.</Body.Two>
+        <Body.Two>{translate('auth.password.validation')}</Body.Two>
       </section>
 
       <form
-        className='flex flex-col gap-y-[38px]'
+        className={theme.auth.form.container}
         onSubmit={operations.handleSubmit}
       >
         <Form.TextInput
-          label='New Password'
+          theme={theme.auth.textInput}
+          label={translate('auth.newPassword.label')}
           type='password'
-          placeholder='Enter your new password'
+          placeholder={translate('auth.newPassword.placeholder')}
           value={models.values.new_password}
           onChange={operations.handleChange}
           name='new_password'
@@ -95,9 +106,10 @@ export function ResetPasswordPage({ router, params }: props) {
         />
 
         <Form.TextInput
-          label='Repeat new password'
+          theme={theme.auth.textInput}
+          label={translate('auth.repeatPassword.label')}
           type='password'
-          placeholder='Repeat password'
+          placeholder={translate('auth.repeatPassword.placeholder')}
           value={models.values.verify_password}
           onChange={operations.handleChange}
           name='verify_password'
@@ -105,10 +117,10 @@ export function ResetPasswordPage({ router, params }: props) {
           error={!!models.errors.verify_password}
         />
 
-        <Button.Solid className='justify-center w-full mt-3' size='small'>
-          Create password
+        <Button.Solid className={theme.auth.form.button} size='small'>
+          {translate('auth.newPassword.buttonLabel')}
         </Button.Solid>
       </form>
-    </>
+    </div>
   );
 }
