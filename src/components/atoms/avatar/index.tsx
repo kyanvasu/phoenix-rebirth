@@ -1,43 +1,35 @@
 import classNames from 'classnames';
 import React from 'react';
+import { AvatarTypes } from '../../../model/types';
+import { BaseTheme } from '../../../theme';
+
 
 export type AvatarSize = 'xx-small' | 'x-small' | 'small' | 'medium' | 'large';
 
 interface Props {
   size: AvatarSize;
   name?: string;
-  className?: string;
   src?: string;
   alt?: string;
+  theme?: AvatarTypes;
 }
 
-const sizeStyles: Record<AvatarSize, string> = {
-  'xx-small': 'h-6 w-6 text-caption-sm',
-  'x-small': 'h-8 w-8 text-body-md',
-  small: 'h-10 w-10 text-heading-xs',
-  medium: 'h-[60px] w-[60px] text-heading-base',
-  large: 'h-[100px] w-[100px] text-heading-base',
-};
-
 export function Avatar(props: Props) {
-  const { size, alt, className, name, src } = props;
-  const defaultStyles = 'rounded-full border border-base-neutral-grey-30';
-
+  const { size, alt, name, src, theme } = props;
+  const styles = theme || BaseTheme.avatar;
   return (
     <div
       className={classNames(
-        defaultStyles,
-        sizeStyles[size],
+        styles.container,
+        styles[size],
         {
-          'inline-flex items-center justify-center leading-0 bg-base-primary-80 text-base-neutral-white font-normal':
-            !src,
-        },
-        className
+          [styles.default]: !src,
+        }
       )}
     >
       {src ? (
         <img
-          className={classNames('rounded-full object-cover', sizeStyles[size])}
+          className={classNames(styles.img, styles[size])}
           src={src}
           alt={alt}
         />

@@ -64,6 +64,39 @@ export type SidebarTypes = {
   changeCompanyIcon: string;
 };
 
+export type AvatarTypes = {
+  container: string;
+  img: string;
+  "xx-small": string;
+  "x-small": string;
+  small: string;
+  medium: string;
+  large: string;
+  default: string;
+};
+export type BadgeTypes = {
+  button: string;
+  square: string;
+  round: string;
+};
+
+export type CardTypes = {
+  container: string;
+  default: string;
+};
+
+export type CardButtonTypes = {
+  container: string;
+  icon: string;
+};
+
+export type HelpText = {
+  error: string;
+};
+export type LabelTypes = {
+  required: string;
+};
+
 export type ThemeTypes = {
   auth: AuthPageTypes;
   textInput: InputTypes;
@@ -71,4 +104,10 @@ export type ThemeTypes = {
   emptyState: EmptyStateTypes;
   dropdown: DropdownTypes;
   sidebar: SidebarTypes;
+  avatar: AvatarTypes;
+  badge: BadgeTypes;
+  card: CardTypes;
+  cardButton: CardButtonTypes;
+  helpText: HelpText;
+  label: LabelTypes;
 };
