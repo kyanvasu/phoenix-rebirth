@@ -1,3 +1,4 @@
+
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
@@ -7,11 +8,14 @@ import { useAuth } from '../../../model/interactions/use-auth';
 import React from 'react';
 import { Body, Button, Heading, Icons } from '../../../components/atoms';
 import { Form } from '../../../components/molecules';
+import { toast } from 'react-hot-toast';
+import { translate } from '../../../translate';
 
 interface props {
   router: AppRouterInstance;
 }
-function useForgotPassword({ router }: props) {
+
+export function useForgotPassword({ router }: props) {
   const { sdk } = useClientContext();
 
   const initialValues = {
@@ -20,7 +24,7 @@ function useForgotPassword({ router }: props) {
 
   const { operations } = useAuth({ sdk });
   const validationSchema = yup.object().shape({
-    email: yup.string().email().required(),
+    email: yup.string().email().required(translate('auth.email.required')),
   });
 
   async function onSubmit(values: typeof initialValues) {
@@ -29,10 +33,12 @@ function useForgotPassword({ router }: props) {
     try {
       await operations.forgotPassword(email);
       router.push(`/forgot-password/${email}`);
+      toast.success(translate('auth.sendEmail.success'));
     } catch {
       setErrors({
-        email: 'Invalid email',
+        email: translate('auth.sendEmail.error'),
       });
+      toast.error(translate('auth.sendEmail.error'));
     }
   }
   const {
@@ -62,31 +68,32 @@ function useForgotPassword({ router }: props) {
     },
   };
 }
+
 export function ForgotPasswordPage({ router }: props) {
   const { models, operations } = useForgotPassword({ router });
+  const { theme } = useClientContext();
   return (
-    <>
-      <section className='mb-24'>
+    <div className={theme.auth.container}>
+      <section className={theme.auth.group.columns}>
         <Link href='/sign-in'>
           <Button.Link>
             <Icons.ArrowLeft />
           </Button.Link>
         </Link>
-        <Heading.Four className='my-3 font-bold text-base-neutral-grey-100'>
-          Forgot Password
+        <Heading.Four className={theme.auth.title}>
+          {translate('auth.forgotPassword.title')}
         </Heading.Four>
 
-        <Body.Two>
-          Enter your email and we will send you a link to reset your password.
-        </Body.Two>
+        <Body.Two>{translate('auth.forgotPassword.description')}</Body.Two>
       </section>
       <form
-        className='flex flex-col gap-y-[38px]'
+        className={theme.auth.form.container}
         onSubmit={operations.handleSubmit}
       >
         <Form.TextInput
-          label='Email'
-          placeholder='enter your email address'
+          theme={theme.auth.textInput}
+          label={translate('auth.email.label')}
+          placeholder={translate('auth.email.placeholder')}
           name='email'
           value={models.values.email}
           error={!!models.errors.email}
@@ -96,13 +103,13 @@ export function ForgotPasswordPage({ router }: props) {
         />
 
         <Button.Solid
-          className='justify-center w-full mt-3'
+          className={theme.auth.form.button}
           size='small'
           type='submit'
         >
-          Send
+          {translate('auth.sendEmail.buttonLabel')}
         </Button.Solid>
       </form>
-    </>
+    </div>
   );
 }

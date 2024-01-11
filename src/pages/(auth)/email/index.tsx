@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
+import { useClientContext } from '../../../model/store/core.store/client.store';
 import EmptyState from '../../../components/molecules/empty-state';
-
+import { translate } from '../../../translate';
 
 interface props {
   router: AppRouterInstance;
@@ -9,11 +11,10 @@ interface props {
   img?: string;
 }
 
-function useEmailPage({ router, params }: props) {
+export function useEmailPage({ router, params }: props) {
   const email = decodeURIComponent(params);
 
-  const message = `We've sent an email to ${email} 
-  with password reset instructions..`;
+  const message = translate('auth.resetPassword.emailSent', { email });
 
   const handleClick = () => {
     router.push('/sign-in');
@@ -30,13 +31,15 @@ function useEmailPage({ router, params }: props) {
 }
 export function EmailPage({ router, params, img }: props) {
   const { models, operations } = useEmailPage({ router, params });
+  const { theme } = useClientContext();
   return (
-    <section className='mb-24'>
+    <section className={theme.auth.container}>
       <EmptyState
+        theme={theme.auth.emptyState}
         image={img ?? ''}
-        title='An email was send'
+        title={translate('auth.sendEmail.sendTitle')}
         subtitle={models.message}
-        label='Return to login'
+        label={translate('auth.sendEmail.sendTitle')}
         onClick={operations.handleClick}
         showButton
       />

@@ -1,14 +1,15 @@
-import React from "react";
-import classNames from "classnames";
-import { Body, Button } from "../../atoms";
-import { useClientContext } from "../../../client";
-
+'use client';
+import React from 'react';
+import { Body, Button } from '../../atoms';
+import { EmptyStateTypes } from '../../../model/types';
+import { BaseTheme } from '../../../theme';
 interface Props extends React.HTMLAttributes<HTMLElement> {
   title: string;
   subtitle: string;
   image: string;
   showButton?: boolean;
   label?: string;
+  theme?: EmptyStateTypes;
 }
 
 export default function EmptyState({
@@ -19,25 +20,23 @@ export default function EmptyState({
   label,
   onClick,
   className,
+  theme,
   ...rest
 }: Props) {
-  const { theme } = useClientContext();
+  const styles = theme || BaseTheme.emptyState;
 
   return (
-    <article
-      className={classNames(theme.emptyState.container, className)}
-      {...rest}
-    >
-      <img src={image} width={226} height={226} alt="" />
+    <article className={styles?.container} {...rest}>
+      <img src={image} width={226} height={226} alt='' />
       <section>
-        <Body.Three className={theme.emptyState.title}>
-          {title}
-        </Body.Three>
-        <Body.Three className={theme.emptyState.subtitle}>
-          {subtitle}
-        </Body.Three>
+        <Body.Three className={styles?.title}>{title}</Body.Three>
+        <Body.Three className={styles?.subtitle}>{subtitle}</Body.Three>
       </section>
-      {showButton && <Button.Solid onClick={onClick}>{label}</Button.Solid>}
+      {showButton && (
+        <Button.Solid className={styles?.button} onClick={onClick}>
+          {label}
+        </Button.Solid>
+      )}
     </article>
   );
 }
