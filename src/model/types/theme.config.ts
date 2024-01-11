@@ -1,25 +1,24 @@
-export type EmptyStateStyles = {
+export type EmptyStateTypes = {
   container: string;
   title: string;
   subtitle: string;
   button: string;
 };
 
-
-export type InputStyles = {
+export type InputTypes = {
   container: string;
   label: string;
   input: string;
   error: string;
 };
 
-export type GroupStyles = {
+export type GroupTypes = {
   container: string;
   rows: string;
   columns: string;
 };
 
-export type FormStyles = {
+export type FormTypes = {
   container: string;
   span: string;
   button: string;
@@ -27,15 +26,22 @@ export type FormStyles = {
   title: string;
 };
 
-export type AuthPageStyles = {
-  emptyState: EmptyStateStyles;
-  form: FormStyles;
-  group: GroupStyles;
-  checkBox: InputStyles;
-  textInput: InputStyles;
+export type AuthPageTypes = {
+  emptyState: EmptyStateTypes;
+  form: FormTypes;
+  group: GroupTypes;
+  checkBox: InputTypes;
+  textInput: InputTypes;
   title: string;
   subtitle: string;
   container: string;
+};
+
+export type DropdownItemTypes = {
+  container: string;
+  text: string;
+  icon: string;
+  hover: string;
 };
 
 export type DropdownTypes = {
@@ -43,12 +49,7 @@ export type DropdownTypes = {
   button: string;
   panel: string;
   list: string;
-  item: {
-    container: string;
-    text: string;
-    icon: string;
-    hover: string;
-  };
+  item: DropdownItemTypes;
 };
 
 export type SidebarTypes = {
@@ -63,10 +64,11 @@ export type SidebarTypes = {
   changeCompanyIcon: string;
 };
 
-
 export type ThemeTypes = {
-  auth: AuthPageStyles;
-  emptyState: EmptyStateStyles;
+  auth: AuthPageTypes;
+  textInput: InputTypes;
+  checkBox: InputTypes;
+  emptyState: EmptyStateTypes;
   dropdown: DropdownTypes;
   sidebar: SidebarTypes;
 };

@@ -1,14 +1,15 @@
+'use client';
 import React from 'react';
 import { Body, Button } from '../../atoms';
-import { EmptyStateStyles } from '../../../model/types';
-
+import { EmptyStateTypes } from '../../../model/types';
+import { useClientContext } from '../../../client';
 interface Props extends React.HTMLAttributes<HTMLElement> {
   title: string;
   subtitle: string;
   image: string;
   showButton?: boolean;
   label?: string;
-  theme?: EmptyStateStyles;
+  theme?: EmptyStateTypes;
 }
 
 export default function EmptyState({
@@ -22,15 +23,18 @@ export default function EmptyState({
   theme,
   ...rest
 }: Props) {
+  const context = useClientContext();
+  const styles = theme || context.theme.emptyState;
+
   return (
-    <article className={theme?.container} {...rest}>
+    <article className={styles?.container} {...rest}>
       <img src={image} width={226} height={226} alt='' />
       <section>
-        <Body.Three className={theme?.title}>{title}</Body.Three>
-        <Body.Three className={theme?.subtitle}>{subtitle}</Body.Three>
+        <Body.Three className={styles?.title}>{title}</Body.Three>
+        <Body.Three className={styles?.subtitle}>{subtitle}</Body.Three>
       </section>
       {showButton && (
-        <Button.Solid className={theme?.button} onClick={onClick}>
+        <Button.Solid className={styles?.button} onClick={onClick}>
           {label}
         </Button.Solid>
       )}

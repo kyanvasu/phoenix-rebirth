@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import React from 'react';
 import { useState } from 'react';
@@ -10,7 +11,7 @@ import { useClientContext } from '../../../client';
 import { useUser } from '../../../model/interactions/use-user';
 import Spinner from '../../../components/atoms/icons/spinner';
 import { translate } from '../../../translate';
-import { AuthPageStyles } from '../../../model/types';
+import { AuthPageTypes } from '../../../model/types';
 
 interface props {
   redirect: () => void;
@@ -100,7 +101,7 @@ export function LoginPage({ redirect }: props) {
 }
 
 interface FormComponentProps {
-  theme: AuthPageStyles;
+  theme: AuthPageTypes;
   operations: any;
   models: any;
 }

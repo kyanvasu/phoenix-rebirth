@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useClientContext } from '../../../model/store/core.store/client.store';

@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 // import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
@@ -10,7 +11,7 @@ import { Body, Button, Heading } from '../../../components/atoms';
 import { useUser } from '../../../model/interactions/use-user';
 import Spinner from '../../../components/atoms/icons/spinner';
 import { translate } from '../../../translate';
-import { AuthPageStyles } from '../../../model/types';
+import { AuthPageTypes } from '../../../model/types';
 
 interface props {
   redirect: () => void;
@@ -109,7 +110,7 @@ export function RegisterPage({ redirect }: props) {
 }
 
 interface FormComponentProps {
-  theme: AuthPageStyles;
+  theme: AuthPageTypes;
   models: any;
   operations?: any;
 }
