@@ -3,12 +3,12 @@ export default {
   auth: {
     email: {
       label: 'Email',
-      placeholder: 'anna@gmail.com',
+      placeholder: 'Enter your email',
       required: 'Email is required field',
     },
     password: {
       label: 'Password',
-      placeholder: '********',
+      placeholder: 'Enter your password',
       confirm: 'Confirm Password',
       required: 'Password is required field',
       reset: 'Reset Password',
@@ -69,7 +69,7 @@ export default {
       title: 'Forgot Password',
       description:
         'Enter your email and we will send you a link to reset your password.',
-      placeholder: 'myexample@gmail.com',
+      placeholder: 'Enter your email address',
     },
     resetPassword: {
       title: 'Reset Password',
