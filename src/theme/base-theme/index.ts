@@ -44,7 +44,7 @@ export const BaseTheme: ThemeTypes = {
     container: 'relative select-none w-min',
     button: 'outline-none',
     panel:
-      'absolute rounded-sm border shadow-elevation-3 bg-base-neutral-white border-base-primary-30 text-base-neutral-grey-60 stroke-base-neutral-grey-60 hover:text-base-primary-60 hover:stroke-base-primary-60',
+      'absolute rounded-sm border shadow-elevation-3 bg-base-neutral-white border-base-primary-30 text-base-neutral-grey-60 stroke-base-neutral-grey-60',
     list: 'list-none p-0 m-0',
     item: {
       container:
