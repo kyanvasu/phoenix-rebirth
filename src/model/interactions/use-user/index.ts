@@ -24,7 +24,7 @@ export function useUser({ sdk: client }: Configuration) {
     }
   }
 
-  async function processRegisterAgent(agent: InviteProcessParams) {
+  async function processRegisterUser(agent: InviteProcessParams) {
     try {
       const response = await client?.users.processInvite(agent);
       return response as InviteProcessData;
@@ -52,7 +52,7 @@ export function useUser({ sdk: client }: Configuration) {
       getUserInfo,
       updateUserData,
       getInviteUserByHash,
-      processRegisterAgent
+      processRegisterUser,
     },
   };
 }
