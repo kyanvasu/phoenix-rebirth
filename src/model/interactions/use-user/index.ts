@@ -1,10 +1,33 @@
-import { UpdateUserParams } from '@kanvas/core';
+import {
+  InviteProcessData,
+  InviteProcessParams,
+  InviteUserData,
+  UpdateUserParams,
+} from '@kanvas/core';
 import { Configuration } from '../../types';
 
 export function useUser({ sdk: client }: Configuration) {
   async function getUserInfo() {
     try {
       return await client?.users.getUserData();
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
+  async function getInviteUserByHash(hash: string) {
+    try {
+      const response = await client?.users.getInvite(hash);
+      return response as InviteUserData;
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
+  async function processRegisterAgent(agent: InviteProcessParams) {
+    try {
+      const response = await client?.users.processInvite(agent);
+      return response as InviteProcessData;
     } catch (err: any) {
       throw new Error(err);
     }
@@ -28,6 +51,8 @@ export function useUser({ sdk: client }: Configuration) {
     operations: {
       getUserInfo,
       updateUserData,
+      getInviteUserByHash,
+      processRegisterAgent
     },
   };
 }
