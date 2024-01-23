@@ -76,8 +76,7 @@ export type AvatarTypes = {
 };
 export type BadgeTypes = {
   button: string;
-  square: string;
-  round: string;
+  variant?: string;
 };
 
 export type CardTypes = {
@@ -96,6 +95,9 @@ export type HelpText = {
 export type LabelTypes = {
   required: string;
 };
+export type StatusBadgeTypes = {
+  styles: string;
+};
 
 export type ThemeTypes = {
   auth: AuthPageTypes;
@@ -110,4 +112,5 @@ export type ThemeTypes = {
   cardButton: CardButtonTypes;
   helpText: HelpText;
   label: LabelTypes;
+  statusBadge: StatusBadgeTypes;
 };
