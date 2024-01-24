@@ -1,6 +1,9 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   auth: {
+    invite: {
+      hashError: 'Invalid hash or state',
+    },
     email: {
       label: 'Email',
       placeholder: 'Enter your email',
