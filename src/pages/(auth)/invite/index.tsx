@@ -31,14 +31,14 @@ export function useInvite({ redirect, hash }: props) {
       throw new Error(translate('auth.invite.hashError'));
     }
     try {
-      console.log(hash, values);
-      const resp = await processInvite({
+      
+      await processInvite({
         invite_hash: hash,
         password: values.password,
         firstname: values.firstname,
         lastname: values.lastname,
       });
-      console.log(resp);
+      
       redirect();
     } catch (error) {
       console.error('Error processing invite:', error);

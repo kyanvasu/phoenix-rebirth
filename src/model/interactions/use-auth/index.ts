@@ -132,10 +132,10 @@ export function useAuth({ sdk }: Configuration) {
     }
   }
 
-  async function processInvite(agent: InviteProcessParams) {
+  async function processInvite(user: InviteProcessParams) {
     try {
       const { models } = removeSubdomain(window.location.hostname);
-      const response = await sdk!.users.processInvite(agent);
+      const response = await sdk!.users.processInvite(user);
       setCookie('refresh_token', {
         token: response?.refresh_token,
         expires: response?.refresh_token_expires,
