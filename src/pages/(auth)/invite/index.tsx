@@ -3,6 +3,7 @@ import Link from 'next/link';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import React from 'react';
+import { useAsync,  useUpdateEffect } from 'react-use';
 import { useAuth } from '../../../model/interactions/use-auth';
 import { useClientContext } from '../../../model/store/core.store/client.store';
 import { Form } from '../../../components/molecules';
@@ -10,40 +11,55 @@ import { Body, Button, Heading } from '../../../components/atoms';
 import Spinner from '../../../components/atoms/icons/spinner';
 import { translate } from '../../../translate';
 import { AuthPageTypes } from '../../../model/types';
+import { useUser } from '../../../model/interactions/use-user';
 
-interface props {
+interface User {
+  email: string;
+  firstname: string;
+  lastname: string;
+  password: string;
+  password_confirmation?: string;
+}
+
+interface UseInviteProps {
   redirect: () => void;
   hash: string;
 }
-export function useInvite({ redirect, hash }: props) {
-  const { sdk } = useClientContext();
-  const {
-    operations: { processInvite },
-  } = useAuth({ sdk });
 
-  const onSubmit = async (values: {
-    password: string;
-    password_confirmation: string;
-    firstname: string;
-    lastname: string;
-  }) => {
+export function useInvite({ redirect, hash }: UseInviteProps) {
+  const { sdk } = useClientContext();
+  const { operations: authOperations } = useAuth({ sdk });
+  const { operations: userOperations } = useUser({ sdk });
+
+  const fetchUser = async (): Promise<User> => {
     if (!hash) {
       throw new Error(translate('auth.invite.hashError'));
     }
-    try {
-      
-      await processInvite({
-        invite_hash: hash,
-        password: values.password,
-        firstname: values.firstname,
-        lastname: values.lastname,
-      });
-      
-      redirect();
-    } catch (error) {
-      console.error('Error processing invite:', error);
-      // Handle the error appropriately here, e.g. show an error message to the user
+    const result = await userOperations.getInviteUserByHash(hash);
+    return {
+      email: result?.email as string,
+      firstname: result?.firstname as string,
+      lastname: result?.lastname as string,
+      password: '',
+      password_confirmation: '',
+    };
+  };
+
+  const userState = useAsync(fetchUser, [hash]);
+
+  const onSubmit = async (values: User) => {
+    if (!hash || !userState.value) {
+      throw new Error(translate('auth.invite.hashError'));
     }
+    await authOperations.processInvite({
+      invite_hash: hash,
+      password: values.password,
+      lastname: values.lastname,
+      firstname: values.firstname,
+    });
+    const profile = await userOperations.getUserInfo();
+    localStorage.setItem('user', JSON.stringify(profile));
+    redirect();
   };
 
   const validationSchema = yup.object().shape({
@@ -51,6 +67,10 @@ export function useInvite({ redirect, hash }: props) {
       .string()
       .required(translate('auth.signUp.requiredFirstName')),
     lastname: yup.string(),
+    email: yup
+      .string()
+      .email()
+      .required(translate('auth.signUp.requiredEmail')),
     password: yup
       .string()
       .min(8)
@@ -60,9 +80,9 @@ export function useInvite({ redirect, hash }: props) {
       .required(translate('auth.signUp.requiredPasswordConfirmation'))
       .oneOf([yup.ref('password')], translate('auth.signUp.passwordMatch')),
   });
-
   const formikProps = useFormik({
-    initialValues: {
+    initialValues: userState.value || {
+      email: '',
       firstname: '',
       lastname: '',
       password: '',
@@ -74,16 +94,29 @@ export function useInvite({ redirect, hash }: props) {
     onSubmit,
   });
 
-  const { values, handleChange, handleSubmit, errors, isSubmitting } =
-    formikProps;
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    setErrors,
+    isSubmitting,
+    setValues,
+  } = formikProps;
+
+  useUpdateEffect(() => {
+    if (userState.value) {
+      setValues(userState.value);
+    }
+  }, [userState.value]);
 
   return {
-    models: { values, errors, loading: isSubmitting },
-    operations: { handleChange, handleSubmit },
+    models: { values, errors, loading: isSubmitting || userState.loading },
+    operations: { handleChange, handleSubmit, setErrors },
   };
 }
 
-export function InvitePage({ redirect, hash }: props) {
+export function InvitePage({ redirect, hash }: UseInviteProps) {
   const { models, operations } = useInvite({ redirect, hash });
   const { theme } = useClientContext();
   return (
@@ -161,6 +194,19 @@ function NameInputFields({ theme, models, operations }: FormComponentProps) {
 function AuthInputFields({ theme, models, operations }: FormComponentProps) {
   return (
     <div className={theme.group.columns}>
+      <Form.TextInput
+        theme={theme.textInput}
+        type='email'
+        placeholder={translate('auth.email.placeholder')}
+        label={translate('auth.email.label')}
+        value={models.values.email}
+        onChange={operations.handleChange}
+        name='email'
+        helpText={models.errors.email}
+        error={!!models.errors.email}
+        disabled={true}
+      />
+
       <Form.TextInput
         theme={theme.textInput}
         type='password'
