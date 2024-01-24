@@ -54,6 +54,7 @@
     "yup": "^1.2.0"
   },
   "dependencies": {
+    "react-use": "^17.5.0",
     "rollup": "^3.26.0"
   }
 }
