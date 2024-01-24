@@ -44,7 +44,7 @@ export const BaseTheme: ThemeTypes = {
     container: 'relative select-none w-min',
     button: 'outline-none',
     panel:
-      'absolute rounded-sm border shadow-elevation-3 bg-base-neutral-white border-base-primary-30 text-base-neutral-grey-60 stroke-base-neutral-grey-60 hover:text-base-primary-60 hover:stroke-base-primary-60',
+      'absolute rounded-sm border shadow-elevation-3 bg-base-neutral-white border-base-primary-30 text-base-neutral-grey-60 stroke-base-neutral-grey-60',
     list: 'list-none p-0 m-0',
     item: {
       container:
@@ -101,8 +101,7 @@ export const BaseTheme: ThemeTypes = {
   badge: {
     button:
       'bg-base-primary-100 disabled:bg-base-neutral-grey-20 hover:bg-base-primary-80 text-base-neutral-white disabled:text-base-neutral-grey-80 w-fit text-body-md font-normal flex items-center gap-1.5 px-2 py-[2px] text-body-md font-normal text-base-neutral-white',
-    square: 'rounded-sm',
-    round: 'rounded-xl',
+    variant: 'rounded-xl'
   },
   card: {
     container: 'grid p-5 border rounded-md shadow-elevation-1',
@@ -119,4 +118,7 @@ export const BaseTheme: ThemeTypes = {
   label: {
     required: 'text-base-semantic-error-70 ml-1',
   },
+  statusBadge:{
+    styles:''
+  }
 };
