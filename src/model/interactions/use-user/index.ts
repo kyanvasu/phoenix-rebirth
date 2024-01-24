@@ -1,7 +1,4 @@
-import {
-  InviteUserData,
-  UpdateUserParams,
-} from '@kanvas/core';
+import { UpdateUserParams } from '@kanvas/core';
 import { Configuration } from '../../types';
 
 export function useUser({ sdk: client }: Configuration) {
@@ -16,7 +13,7 @@ export function useUser({ sdk: client }: Configuration) {
   async function getInviteUserByHash(hash: string) {
     try {
       const response = await client?.users.getInvite(hash);
-      return response as InviteUserData;
+      return response;
     } catch (err: any) {
       throw new Error(err);
     }
