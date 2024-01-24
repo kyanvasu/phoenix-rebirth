@@ -18,7 +18,7 @@ interface props {
   hash: string;
 }
 
-export function useSignUp({ redirect, hash }: props) {
+export function useInvite({ redirect, hash }: props) {
   const { sdk } = useClientContext();
   const {
     operations: { processInvite },
