@@ -104,7 +104,7 @@ export function useInvite({ redirect, hash }: props) {
 }
 
 export function InvitePage({ redirect, hash }: props) {
-  const { models, operations } = useSignUp({ redirect, hash });
+  const { models, operations } = useInvite({ redirect, hash });
   const { theme } = useClientContext();
   return (
     <div className={theme.auth.container}>
