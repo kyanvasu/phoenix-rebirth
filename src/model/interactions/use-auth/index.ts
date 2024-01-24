@@ -137,8 +137,8 @@ export function useAuth({ sdk }: Configuration) {
       const { models } = removeSubdomain(window.location.hostname);
       const response = await sdk!.users.processInvite(agent);
       setCookie('refresh_token', {
-        token: response?.token?.refresh_token,
-        expires: response?.token?.refresh_token_expires,
+        token: response?.refresh_token,
+        expires: response?.refresh_token_expires,
         domain: models.onlyDomain,
       });
       setCookie('token', response?.token, {
