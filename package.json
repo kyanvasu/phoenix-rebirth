@@ -1,6 +1,6 @@
 {
   "name": "@kanvas/phoenix",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "description": "",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -54,6 +54,7 @@
     "yup": "^1.2.0"
   },
   "dependencies": {
+    "react-use": "^17.5.0",
     "rollup": "^3.26.0"
   }
 }

@@ -1,6 +1,8 @@
 import { setCookie, deleteCookie } from 'cookies-next';
 import { Configuration } from '../../types';
 import { removeSubdomain } from '../remove-subdomain';
+import { InviteProcessParams } from '@kanvas/core';
+
 export function useAuth({ sdk }: Configuration) {
   async function login(email: string, password: string) {
     try {
@@ -129,6 +131,25 @@ export function useAuth({ sdk }: Configuration) {
       return err;
     }
   }
+
+  async function processInvite(user: InviteProcessParams) {
+    try {
+      const { models } = removeSubdomain(window.location.hostname);
+      const response = await sdk!.users.processInvite(user);
+      setCookie('refresh_token', {
+        token: response?.refresh_token,
+        expires: response?.refresh_token_expires,
+        domain: models.onlyDomain,
+      });
+      setCookie('token', response?.token, {
+        domain: models.onlyDomain,
+      });
+      return response;
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
   return {
     operations: {
       login,
@@ -137,6 +158,7 @@ export function useAuth({ sdk }: Configuration) {
       forgotPassword,
       resetPassword,
       changePassword,
+      processInvite,
     },
   };
 }

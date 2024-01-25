@@ -10,6 +10,15 @@ export function useUser({ sdk: client }: Configuration) {
     }
   }
 
+  async function getInviteUserByHash(hash: string) {
+    try {
+      const response = await client?.users.getInvite(hash);
+      return response;
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
   async function updateUserData({
     userId,
     updatedUser,
@@ -28,6 +37,7 @@ export function useUser({ sdk: client }: Configuration) {
     operations: {
       getUserInfo,
       updateUserData,
+      getInviteUserByHash,
     },
   };
 }

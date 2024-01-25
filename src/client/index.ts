@@ -11,6 +11,7 @@ import {
   ForgotPasswordPage,
   EmailPage,
   ResetPasswordPage,
+  InvitePage,
   RESET_PASSWORD_SUCCESSFUL,
 } from '../pages/(auth)';
 import * as Pages from '../pages/index.client';
@@ -22,6 +23,7 @@ export const Auth = {
   ForgotPasswordPage,
   EmailPage,
   ResetPasswordPage,
+  InvitePage,
   useAuth,
   RESET_PASSWORD_SUCCESSFUL,
 };
