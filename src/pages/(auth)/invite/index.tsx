@@ -3,7 +3,7 @@ import Link from 'next/link';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import React from 'react';
-import { useAsync,  useUpdateEffect } from 'react-use';
+import { useAsync, useUpdateEffect } from 'react-use';
 import { useAuth } from '../../../model/interactions/use-auth';
 import { useClientContext } from '../../../model/store/core.store/client.store';
 import { Form } from '../../../components/molecules';
@@ -25,6 +25,20 @@ interface UseInviteProps {
   redirect: () => void;
   hash: string;
 }
+
+const validationSchema = yup.object().shape({
+  firstname: yup.string().required(translate('auth.signUp.requiredFirstName')),
+  lastname: yup.string(),
+  email: yup.string().email().required(translate('auth.signUp.requiredEmail')),
+  password: yup
+    .string()
+    .min(8)
+    .required(translate('auth.signUp.requiredPassword')),
+  password_confirmation: yup
+    .string()
+    .required(translate('auth.signUp.requiredPasswordConfirmation'))
+    .oneOf([yup.ref('password')], translate('auth.signUp.passwordMatch')),
+});
 
 export function useInvite({ redirect, hash }: UseInviteProps) {
   const { sdk } = useClientContext();
@@ -62,24 +76,6 @@ export function useInvite({ redirect, hash }: UseInviteProps) {
     redirect();
   };
 
-  const validationSchema = yup.object().shape({
-    firstname: yup
-      .string()
-      .required(translate('auth.signUp.requiredFirstName')),
-    lastname: yup.string(),
-    email: yup
-      .string()
-      .email()
-      .required(translate('auth.signUp.requiredEmail')),
-    password: yup
-      .string()
-      .min(8)
-      .required(translate('auth.signUp.requiredPassword')),
-    password_confirmation: yup
-      .string()
-      .required(translate('auth.signUp.requiredPasswordConfirmation'))
-      .oneOf([yup.ref('password')], translate('auth.signUp.passwordMatch')),
-  });
   const formikProps = useFormik({
     initialValues: userState.value || {
       email: '',
