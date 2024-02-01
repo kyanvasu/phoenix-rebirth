@@ -1,7 +1,7 @@
 import { setCookie, deleteCookie } from 'cookies-next';
 import { Configuration } from '../../types';
 import { removeSubdomain } from '../remove-subdomain';
-import { InviteProcessParams } from '@kanvas/core';
+import { CreateUserParams, InviteProcessParams } from '@kanvas/core';
 
 export function useAuth({ sdk }: Configuration) {
   async function login(email: string, password: string) {
@@ -33,7 +33,8 @@ export function useAuth({ sdk }: Configuration) {
     displayname,
     password,
     password_confirmation,
-  }: Record<string, string>) {
+    custom_fields,
+  }: CreateUserParams) {
     try {
       const { models } = removeSubdomain(window.location.hostname);
       const response = await sdk!.users.register({
@@ -43,12 +44,7 @@ export function useAuth({ sdk }: Configuration) {
         displayname,
         password,
         password_confirmation,
-        custom_fields: [
-          {
-            name: 'agent_website',
-            data: models.onlyDomain,
-          },
-        ],
+        custom_fields,
       });
       // TODO(Kanvas core): Fix the response type on kanvas of register
       setCookie('refresh_token', {
