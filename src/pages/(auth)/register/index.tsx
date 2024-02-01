@@ -14,7 +14,7 @@ import { AuthPageTypes } from '../../../model/types';
 
 interface props {
   redirect: () => void;
-  customFields: {
+  customFields?: {
     name: string;
     data: any;
   }[];
@@ -93,7 +93,7 @@ export function useSignUp({ redirect, customFields }: props) {
     operations: { handleChange, handleSubmit },
   };
 }
-export function RegisterPage({ redirect, customFields }: props) {
+export function RegisterPage({ redirect, customFields = [] }: props) {
   const { models, operations } = useSignUp({ redirect, customFields });
   const { theme } = useClientContext();
   return (
