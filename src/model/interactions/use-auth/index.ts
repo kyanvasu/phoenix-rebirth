@@ -43,6 +43,12 @@ export function useAuth({ sdk }: Configuration) {
         displayname,
         password,
         password_confirmation,
+        custom_fields: [
+          {
+            name: 'agent_website',
+            data: models.onlyDomain,
+          },
+        ],
       });
       // TODO(Kanvas core): Fix the response type on kanvas of register
       setCookie('refresh_token', {
