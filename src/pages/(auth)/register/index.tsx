@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 // import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
@@ -15,9 +14,13 @@ import { AuthPageTypes } from '../../../model/types';
 
 interface props {
   redirect: () => void;
+  customFields?: {
+    name: string;
+    data: any;
+  }[];
 }
 
-export function useSignUp({ redirect }: props) {
+export function useSignUp({ redirect, customFields }: props) {
   const { sdk } = useClientContext();
 
   const initialValues = {
@@ -56,6 +59,7 @@ export function useSignUp({ redirect }: props) {
     try {
       await register({
         ...values,
+        custom_fields: customFields,
       });
       const profile = await userOperations.getUserInfo();
       localStorage.setItem('user', JSON.stringify(profile));
@@ -89,8 +93,8 @@ export function useSignUp({ redirect }: props) {
     operations: { handleChange, handleSubmit },
   };
 }
-export function RegisterPage({ redirect }: props) {
-  const { models, operations } = useSignUp({ redirect });
+export function RegisterPage({ redirect, customFields = [] }: props) {
+  const { models, operations } = useSignUp({ redirect, customFields });
   const { theme } = useClientContext();
   return (
     <div className={theme.auth.container}>
