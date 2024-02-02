@@ -58,14 +58,7 @@ export function useAuth({ sdk }: Configuration) {
       setCookie('token', response.register?.token?.token, {
         domain: models.onlyDomain,
       });
-      await sdk!.customFields.setCustomField({
-        name: 'Contact Email',
-        data: '',
-        system_module_uuid: process.env.NEXT_PUBLIC_KANVAS_SYSTEM_MODULE_UUID!,
-        //@ts-ignore
-        entity_id: response.register.user.uuid,
-      });
-
+  
       return response;
     } catch (err: any) {
       throw new Error(err);
