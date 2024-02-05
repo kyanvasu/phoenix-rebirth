@@ -1,5 +1,6 @@
 import { client } from '@/models/api/kanvas-client';
 import { FILESYSTEM, UPLOAD_INTERFACE } from '@kanvas/core';
+import { Configuration } from '../../types';
 
 interface GetEntityFilesParams {
   name?: string;
@@ -7,10 +8,10 @@ interface GetEntityFilesParams {
   systemModuleUUID: string;
   entityUUID: string;
 }
-export function useFileSystem() {
+export function useFileSystem({ sdk }: Configuration) {
   async function uploadFile({ data }: { data: File }) {
     try {
-      const resp: UPLOAD_INTERFACE = await client.filesystem.uploadFile(data);
+      const resp: UPLOAD_INTERFACE = await sdk!.filesystem.uploadFile(data);
       return resp;
     } catch (err: any) {
       throw new Error(err);
@@ -29,7 +30,7 @@ export function useFileSystem() {
     systemModuleUUID: string;
   }) {
     try {
-      const resp: string = await client.filesystem.attachFile({
+      const resp: string = await sdk!.filesystem.attachFile({
         filesystem_uuid: fileSystemUUID,
         entity_id: entityUUID,
         field_name: fieldName,
@@ -48,7 +49,7 @@ export function useFileSystem() {
     entityUUID,
   }: GetEntityFilesParams) {
     try {
-      const resp: FILESYSTEM[] = await client.filesystem.getEntityFiles({
+      const resp: FILESYSTEM[] = await sdk!.filesystem.getEntityFiles({
         name,
         data,
         system_module_uuid: systemModuleUUID,

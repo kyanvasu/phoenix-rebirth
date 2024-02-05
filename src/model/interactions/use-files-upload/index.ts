@@ -1,28 +1,32 @@
-import { useAsyncFn, useList } from 'react-use';
-import { useFileSystem } from '@/models/interactions/use-file-system';
+import { useState } from 'react';
+import { useAsyncFn } from 'react-use';
+import { useFileSystem } from '../use-file-system';
 import { UPLOAD_INTERFACE } from '@kanvas/core';
 import { useSystemModule } from '../use-system-module';
+import { useClientContext } from '../../../client';
 
 export interface UPLOAD_FILES_INTERFACE {
   entityUUID: string;
   systemModuleSlug: string;
-  files: File[];
+  files: File | File[];
 }
 
 export default function useFilesUpload() {
+  const { sdk } = useClientContext();
   const {
     operations: { getSystemModuleBySlug },
-  } = useSystemModule();
+  } = useSystemModule({ sdk });
 
-  const [filesUploaded, { set }] = useList<UPLOAD_INTERFACE>([]);
+  const [filesUploaded, setFilesUploaded] = useState<UPLOAD_INTERFACE[]>([]);
   const {
     operations: { uploadFile, attachFile },
-  } = useFileSystem();
+  } = useFileSystem({ sdk });
 
   const [state, execute] = useAsyncFn(
     async ({ entityUUID, systemModuleSlug, files }: UPLOAD_FILES_INTERFACE) => {
       try {
-        const uploadPromises = files
+        const filesArray = Array.isArray(files) ? files : [files];
+        const uploadPromises = filesArray
           .filter((file): file is File => file !== undefined)
           .map((file) => uploadFile({ data: file }));
         const uploaded = await Promise.all(uploadPromises);
@@ -38,7 +42,7 @@ export default function useFilesUpload() {
         );
         await Promise.all(attachPromises);
 
-        set(uploaded);
+        setFilesUploaded(uploaded);
       } catch (error) {
         console.error(error);
         throw error;
