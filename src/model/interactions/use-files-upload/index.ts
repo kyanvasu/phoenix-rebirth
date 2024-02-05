@@ -10,7 +10,6 @@ export interface UPLOAD_FILES_INTERFACE {
   systemModuleSlug: string;
   files: File | File[];
 }
-
 export default function useFilesUpload() {
   const { sdk } = useClientContext();
   const {

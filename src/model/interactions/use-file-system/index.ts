@@ -1,4 +1,3 @@
-import { client } from '@/models/api/kanvas-client';
 import { FILESYSTEM, UPLOAD_INTERFACE } from '@kanvas/core';
 import { Configuration } from '../../types';
 
