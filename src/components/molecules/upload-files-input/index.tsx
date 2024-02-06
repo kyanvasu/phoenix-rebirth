@@ -1,8 +1,9 @@
-import { translate } from '@/translate';
 import Image from 'next/image';
-import { OutlineIcons } from '@components/atoms/icons';
-import { HelpText } from '@/components/atoms/help-text';
+import { HelpText } from '../../atoms/help-text';
 import toast, { Toaster } from 'react-hot-toast';
+import Icons from '../../atoms/icons';
+import { translate } from '../../../translate';
+import React from 'react';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
@@ -48,7 +49,7 @@ function Header(props: Props) {
   return (
     <div className='flex justify-between border'>
       <div className='flex flex-row p-4'>
-        <OutlineIcons.UploadArrow size={20} />
+        <Icons.UploadArrow size={20} />
         <div>
           <label
             className='block mb-2  px-2 text-sm  font-medium text-gray-900 dark:text-white'
@@ -185,7 +186,7 @@ function FilePreviewItem(props: PropsFileItem) {
             onClick={handleRemoveFile}
           >
             <div className='flex flex-row p-1'>
-              <OutlineIcons.XMark
+              <Icons.XMark
                 size={20}
                 className='stroke-base-semantic-warning-90'
               />
@@ -207,15 +208,15 @@ function SelectIconFile(props: { fileMime: string; iconSize: number }) {
   const { fileMime, iconSize } = props;
   // special case for pdf files
   if (APPLICATION_MIME[0] === fileMime)
-    return <OutlineIcons.UploadPDF size={iconSize} />;
+    return <Icons.UploadPDF size={iconSize} />;
 
   // all valid images types
   if (IMAGES_MIME.includes(fileMime))
-    return <OutlineIcons.UploadImage size={iconSize} />;
+    return <Icons.UploadImage size={iconSize} />;
 
   // all valid applications types
   if (APPLICATION_MIME.includes(fileMime))
-    return <OutlineIcons.UploadDoc size={iconSize} />;
+    return <Icons.UploadDoc size={iconSize} />;
 
-  return <OutlineIcons.UploadArrow size={iconSize} />;
+  return <Icons.UploadArrow size={iconSize} />;
 }

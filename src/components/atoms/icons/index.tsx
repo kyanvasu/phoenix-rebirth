@@ -23,7 +23,18 @@ import ChevronDown from './chevron-down';
 import ListEmptyMessage from './list-empty-message';
 import XCicle from './x-cicle';
 import PencilAlt from './pencil-alt';
+import XMark from './x-mark';
+import UploadArrow from './upload-arrow';
+import UploadDoc from './upload-doc';
+import UploadImage from './upload-image';
+import UploadPDF from './upload-pdf';
+
 export default {
+  XMark,
+  UploadArrow,
+  UploadDoc,
+  UploadImage,
+  UploadPDF,
   Plus,
   ChevronRight,
   ChevronLeft,
@@ -48,5 +59,5 @@ export default {
   ChevronDown,
   ListEmptyMessage,
   XCicle,
-  PencilAlt
+  PencilAlt,
 };
