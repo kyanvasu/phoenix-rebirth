@@ -79,4 +79,16 @@ export default {
       description: 'Your password must be 8 characters long.',
     },
   },
+  files: {
+    upload: 'Upload',
+    maxFileNumbers: 'Cannot add more than 5 files',
+    fileTypes: 'Only JPG, PNG, or PDF files are allowed',
+    fileSize: 'File size should not exceed 50 MB',
+    uploadFiles: 'Upload Files',
+    uploadDocuments: 'Upload Documents',
+    noFileSelected: 'No files selected',
+    fileValidationsError:
+      'The files to be uploaded do not comply with the validations',
+    validFilesTypes: 'PDF, PNG, JPG or DOCX. (MAX 5*50MB).',
+  },
 };

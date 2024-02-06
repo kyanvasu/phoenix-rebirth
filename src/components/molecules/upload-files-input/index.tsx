@@ -55,7 +55,7 @@ export function Header(props: Props) {
             className='block mb-2  px-2 text-sm  font-medium text-gray-900 dark:text-white'
             htmlFor='file_input'
           >
-            {translate('leads.uploadDocuments')}
+            {translate('files.uploadDocuments')}
           </label>
         </div>
       </div>
@@ -70,7 +70,7 @@ export function ErrorText({ error }: { error: boolean }) {
   return (
     <div className='p-4'>
       <HelpText error={error}>
-        {translate('leads.fileValidationsError')}
+        {translate('files.fileValidationsError')}
       </HelpText>
     </div>
   );
@@ -81,7 +81,7 @@ export function FileInput({ files, setFieldValue }: Props) {
     const newFiles = Array.from(event.target.files);
     const mergeFiles = [...newFiles, ...files];
     if (mergeFiles.length > 5) {
-      toast.error(translate('leads.maxFileNumbers'));
+      toast.error(translate('files.maxFileNumbers'));
       return;
     }
     setFieldValue('files', mergeFiles);
@@ -104,7 +104,7 @@ export function UploadButton({
 }) {
   return (
     <button className='bg-transparent hover:bg-base-primary-40 text-gray-900 font-semibold hover:text-white  px-2 py-1 border border-base-primary-100 hover:border-transparent rounded  w-fit inline-flex items-center'>
-      <span className='text-body-md'>Upload</span>
+      <span className='text-body-md'>{translate("files.upload")}</span>
       <input
         max={5}
         className='cursor-pointer absolute block py-2 px-4 w-full opacity-0 pin-r pin-t'
@@ -132,11 +132,11 @@ export function EmptyFilePreview() {
             alt='no data'
           />
           <span className='text-small text-gray-500'>
-            {translate('leads.noFileSelected')}
+            {translate('files.noFileSelected')}
           </span>
           <div>
             <p className='text-small text-gray-500 ' id='file_input_help'>
-              {translate('leads.validFilesTypes')}
+              {translate('files.validFilesTypes')}
             </p>
           </div>
         </li>
