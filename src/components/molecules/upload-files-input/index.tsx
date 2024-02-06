@@ -33,7 +33,7 @@ export default function UploadFilesInput(props: Props) {
   );
 }
 
-function FileContentPreview(props: Props) {
+export function FileContentPreview(props: Props) {
   return (
     <div>
       {props?.files.length ? (
@@ -45,7 +45,7 @@ function FileContentPreview(props: Props) {
   );
 }
 
-function Header(props: Props) {
+export function Header(props: Props) {
   return (
     <div className='flex justify-between border'>
       <div className='flex flex-row p-4'>
@@ -66,7 +66,7 @@ function Header(props: Props) {
   );
 }
 
-function ErrorText({ error }: { error: boolean }) {
+export function ErrorText({ error }: { error: boolean }) {
   return (
     <div className='p-4'>
       <HelpText error={error}>
@@ -75,7 +75,8 @@ function ErrorText({ error }: { error: boolean }) {
     </div>
   );
 }
-function FileInput({ files, setFieldValue }: Props) {
+
+export function FileInput({ files, setFieldValue }: Props) {
   const handleChange = (event: any) => {
     const newFiles = Array.from(event.target.files);
     const mergeFiles = [...newFiles, ...files];
@@ -96,7 +97,7 @@ function FileInput({ files, setFieldValue }: Props) {
   );
 }
 
-function UploadButton({
+export function UploadButton({
   handleChange,
 }: {
   handleChange: (event: any) => void;
@@ -115,7 +116,7 @@ function UploadButton({
   );
 }
 
-function EmptyFilePreview() {
+export function EmptyFilePreview() {
   return (
     <>
       <ul id='gallery' className='flex flex-1 flex-wrap -m-1'>
@@ -144,7 +145,7 @@ function EmptyFilePreview() {
   );
 }
 
-function FilesPreview(props: Props) {
+export function FilesPreview(props: Props) {
   const { files } = props;
 
   return (
@@ -161,12 +162,12 @@ function FilesPreview(props: Props) {
   );
 }
 
-interface PropsFileItem extends Props {
+export interface PropsFileItem extends Props {
   index: number;
   file: File;
 }
 
-function FilePreviewItem(props: PropsFileItem) {
+export function FilePreviewItem(props: PropsFileItem) {
   const { index, file, files, setFieldError, setFieldValue } = props;
   const handleRemoveFile = () => {
     setFieldValue(
@@ -204,7 +205,7 @@ function FilePreviewItem(props: PropsFileItem) {
   );
 }
 
-function SelectIconFile(props: { fileMime: string; iconSize: number }) {
+export function SelectIconFile(props: { fileMime: string; iconSize: number }) {
   const { fileMime, iconSize } = props;
   // special case for pdf files
   if (APPLICATION_MIME[0] === fileMime)
