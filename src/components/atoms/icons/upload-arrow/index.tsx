@@ -8,12 +8,7 @@ export default function UploadArrow(props: Props) {
   const {
     size = 60,
     fill = '#A1A1A1' ,
-    stroke = '#000000',
-    strokeWidth = '2',
-    strokeLinecap = 'round',
-    strokeLinejoin = 'round',
-    className,
-    ...rest
+    className
   } = props;
   return (
     <div className={className}>

@@ -115,7 +115,7 @@ function UploadButton({
   );
 }
 
-function EmptyFilePreview(props: Props) {
+function EmptyFilePreview() {
   return (
     <>
       <ul id='gallery' className='flex flex-1 flex-wrap -m-1'>
@@ -171,7 +171,7 @@ function FilePreviewItem(props: PropsFileItem) {
   const handleRemoveFile = () => {
     setFieldValue(
       'files',
-      files.filter((f, i) => i !== index)
+      files.filter((_, i) => i !== index)
     );
     setFieldError('files', false);
   };
