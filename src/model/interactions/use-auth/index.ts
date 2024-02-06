@@ -1,7 +1,7 @@
 import { setCookie, deleteCookie } from 'cookies-next';
 import { Configuration } from '../../types';
 import { removeSubdomain } from '../remove-subdomain';
-import { InviteProcessParams } from '@kanvas/core';
+import { CreateUserParams, InviteProcessParams } from '@kanvas/core';
 
 export function useAuth({ sdk }: Configuration) {
   async function login(email: string, password: string) {
@@ -33,7 +33,8 @@ export function useAuth({ sdk }: Configuration) {
     displayname,
     password,
     password_confirmation,
-  }: Record<string, string>) {
+    custom_fields,
+  }: CreateUserParams) {
     try {
       const { models } = removeSubdomain(window.location.hostname);
       const response = await sdk!.users.register({
@@ -43,6 +44,7 @@ export function useAuth({ sdk }: Configuration) {
         displayname,
         password,
         password_confirmation,
+        custom_fields,
       });
       // TODO(Kanvas core): Fix the response type on kanvas of register
       setCookie('refresh_token', {
@@ -56,14 +58,7 @@ export function useAuth({ sdk }: Configuration) {
       setCookie('token', response.register?.token?.token, {
         domain: models.onlyDomain,
       });
-      await sdk!.customFields.setCustomField({
-        name: 'Contact Email',
-        data: '',
-        system_module_uuid: process.env.NEXT_PUBLIC_KANVAS_SYSTEM_MODULE_UUID!,
-        //@ts-ignore
-        entity_id: response.register.user.uuid,
-      });
-
+  
       return response;
     } catch (err: any) {
       throw new Error(err);
