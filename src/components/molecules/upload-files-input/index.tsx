@@ -104,7 +104,7 @@ export function UploadButton({
 }) {
   return (
     <button className='bg-transparent hover:bg-base-primary-40 text-gray-900 font-semibold hover:text-white  px-2 py-1 border border-base-primary-100 hover:border-transparent rounded  w-fit inline-flex items-center'>
-      <span className='text-body-md'>{translate("files.upload")}</span>
+      <span className='text-body-md'>{translate('files.upload')}</span>
       <input
         max={5}
         className='cursor-pointer absolute block py-2 px-4 w-full opacity-0 pin-r pin-t'
@@ -118,8 +118,8 @@ export function UploadButton({
 
 export function EmptyFilePreview() {
   return (
-    <>
-      <ul id='gallery' className='flex flex-1 flex-wrap -m-1'>
+    <div className='mb-4'>
+      <ul id='gallery' className='flex flex-1 flex-wrap'>
         <li
           id='empty'
           className='h-full w-full text-center flex flex-col items-center justify-center'
@@ -141,7 +141,7 @@ export function EmptyFilePreview() {
           </div>
         </li>
       </ul>
-    </>
+    </div>
   );
 }
 
