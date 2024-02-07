@@ -1,6 +1,4 @@
 import SettingsModal from './modals/settings';
 import Sidebar from './sidebar';
-export {
-    SettingsModal,
-    Sidebar
-}
+import UploadFilesInput from './upload-files-input';
+export { SettingsModal, Sidebar, UploadFilesInput };
