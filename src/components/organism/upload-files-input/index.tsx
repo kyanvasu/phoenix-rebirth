@@ -2,7 +2,7 @@ import { HelpText } from '../../atoms/help-text';
 import { translate } from '../../../translate';
 import React from 'react';
 import { EmptyFilePreview } from './empty-file-preview';
-import Header from '../header';
+import { Header } from './header';
 import { FilesPreview } from './files-preview';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
