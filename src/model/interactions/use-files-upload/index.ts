@@ -3,7 +3,7 @@ import { useAsyncFn } from 'react-use';
 import { useFileSystem } from '../use-file-system';
 import { UPLOAD_INTERFACE } from '@kanvas/core';
 import { useSystemModule } from '../use-system-module';
-import { useClientContext } from '../../../client';
+import { useClientContext } from '../../store/core.store/client.store';
 
 export interface UPLOAD_FILES_INTERFACE {
   entityUUID: string;
