@@ -18,7 +18,7 @@ interface props {
     name: string;
     data: any;
   }[];
-  handleCaptcha?: () => boolean;
+  handleCaptcha?: () => Promise<boolean | undefined>;
 }
 
 export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
