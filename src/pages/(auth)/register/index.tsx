@@ -18,9 +18,10 @@ interface props {
     name: string;
     data: any;
   }[];
+  handleCaptcha?: () => boolean;
 }
 
-export function useSignUp({ redirect, customFields }: props) {
+export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
   const { sdk } = useClientContext();
 
   const initialValues = {
@@ -57,6 +58,13 @@ export function useSignUp({ redirect, customFields }: props) {
 
   async function onSubmit(values: typeof initialValues) {
     try {
+      if (handleCaptcha) {
+        const captchaSuccess = await handleCaptcha();
+        if (!captchaSuccess) {
+          throw new Error(translate('invite.captchaError'));
+        }
+      }
+
       await register({
         ...values,
         custom_fields: customFields,
@@ -93,8 +101,16 @@ export function useSignUp({ redirect, customFields }: props) {
     operations: { handleChange, handleSubmit },
   };
 }
-export function RegisterPage({ redirect, customFields = [] }: props) {
-  const { models, operations } = useSignUp({ redirect, customFields });
+export function RegisterPage({
+  redirect,
+  customFields = [],
+  handleCaptcha,
+}: props) {
+  const { models, operations } = useSignUp({
+    redirect,
+    customFields,
+    handleCaptcha,
+  });
   const { theme } = useClientContext();
   return (
     <div className={theme.auth.container}>
