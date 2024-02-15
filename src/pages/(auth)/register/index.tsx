@@ -61,7 +61,7 @@ export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
       if (handleCaptcha) {
         const captchaSuccess = await handleCaptcha();
         if (!captchaSuccess) {
-          throw new Error(translate('invite.captchaError'));
+          throw new Error(translate('auth.invite.captchaError'));
         }
       }
 
