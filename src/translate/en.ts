@@ -3,6 +3,7 @@ export default {
   auth: {
     invite: {
       hashError: 'Invalid hash or state',
+      captchaError: 'Captcha failed',
     },
     email: {
       label: 'Email',
