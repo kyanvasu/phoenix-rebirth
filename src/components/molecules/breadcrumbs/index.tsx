@@ -1,10 +1,12 @@
 import classNames from 'classnames';
+import Link from 'next/link';
 import React from 'react';
 
 interface Props {
   pages: {
     name: string;
     current: false;
+    url?:string;   
   }[];
   textClass?: string;
 }
@@ -31,7 +33,13 @@ export default function Breadcrumbs(props: Props) {
                 })}
                 aria-current={page.current ? 'page' : undefined}
               >
-                {page.name}
+                {page.url ? (
+                  <Link href={page.url}>
+                    {page.name}
+                  </Link>
+                ) : (
+                  page.name
+                )}
               </div>
             </div>
           </li>
