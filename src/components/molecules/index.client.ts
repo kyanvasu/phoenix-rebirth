@@ -2,6 +2,6 @@ import Dropdown from "./dropdown";
 import Select from "./select";
 import NavItem from './nav-item';
 import EmptyState from './empty-state';
+import Breadcrumbs from './breadcrumbs';
 
-
-export  { Dropdown, Select, NavItem, EmptyState };
+export  { Dropdown, Select, NavItem, EmptyState, Breadcrumbs };
