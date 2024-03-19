@@ -3,7 +3,8 @@ import { Configuration } from '../../types';
 export class CoreContext {
   private static _instance: CoreContext | null = null;
   protected config: Configuration = {
-    sdk: undefined
+    sdk: undefined,
+    theme: undefined
   };
 
   static instance() {
