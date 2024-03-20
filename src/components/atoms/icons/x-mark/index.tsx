@@ -11,6 +11,7 @@ export default function XMark(props: Props) {
     strokeWidth = "2",
     strokeLinecap = "round",
     strokeLinejoin = "round",
+    color,
     ...rest
   } = props
 
@@ -22,6 +23,7 @@ export default function XMark(props: Props) {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       {...rest}
+      className={color ?? stroke}
     >
       <path
         d='M6 18L18 6M6 6L18 18'
