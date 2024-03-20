@@ -30,6 +30,7 @@ export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
     email: '',
     password: '',
     password_confirmation: '',
+    phone:''
   };
 
   const {
@@ -54,6 +55,9 @@ export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
       .string()
       .required(translate('auth.signUp.requiredPasswordConfirmation'))
       .oneOf([yup.ref('password')], translate('auth.signUp.passwordMatch')),
+    phone: yup
+    .string()
+    .min(10)
   });
 
   async function onSubmit(values: typeof initialValues) {
@@ -221,6 +225,16 @@ function AuthInputFields({ theme, models, operations }: FormComponentProps) {
         name='password_confirmation'
         helpText={models.errors.password_confirmation}
         error={!!models.errors.password_confirmation}
+      />
+      <Form.TextInput
+        theme={theme.textInput}
+        type='phone'
+        label={translate('auth.phone.label')}
+        placeholder={translate('auth.phone.placeholder')}
+        value={models.values.phone}
+        onChange={operations.handleChange}
+        name='phone_number'
+        
       />
     </div>
   );
