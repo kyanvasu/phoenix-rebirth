@@ -12,6 +12,8 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   setFieldValue: any;
   setFieldError: any;
   loading?: boolean;
+  titleHeader?: string;
+  iconHeader?: React.ReactNode;
 }
 
 export default function UploadFilesInput(props: Props) {
