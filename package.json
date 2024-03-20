@@ -1,6 +1,6 @@
 {
   "name": "@kanvas/phoenix",
-  "version": "1.0.43",
+  "version": "1.0.44",
   "description": "",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
