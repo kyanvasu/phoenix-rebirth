@@ -4,10 +4,12 @@ import { ThemeTypes } from "./theme.config";
 
 export interface Configuration {
   sdk?: KanvasCore;
+  theme?: ThemeTypes
 }
 
 export interface CoreProps extends PropsWithChildren {
   sdk: KanvasCore;
+  theme?: ThemeTypes
 }
 
 export interface CoreClientProps extends CoreProps {

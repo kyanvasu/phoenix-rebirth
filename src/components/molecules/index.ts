@@ -3,6 +3,5 @@ import * as Form from './form';
 import Tabs from './tabs';
 import Card from './card';
 import Profile from './profile';
-import Breadcrumbs from './breadcrumbs';
 
-export { Form, UserInfo, Tabs, Card, Profile, Breadcrumbs };
+export { Form, UserInfo, Tabs, Card, Profile };
