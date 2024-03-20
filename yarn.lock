@@ -106,10 +106,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kanvas/core@^0.0.82":
-  version "0.0.82"
-  resolved "https://registry.yarnpkg.com/@kanvas/core/-/core-0.0.82.tgz#f554b332e41ba1d67eb7474014f3556ac73efefe"
-  integrity sha512-V7m/HtuQWh20ivwu8dVBKTRpk5B1zyRaStaL6RWcxFKMefZ1X5BBj9to/FHpsI6O4v2KZJ1mropRvCcXaJHgRg==
+"@kanvas/core@^0.0.101":
+  version "0.0.101"
+  resolved "https://registry.yarnpkg.com/@kanvas/core/-/core-0.0.101.tgz#ef093c34214a8cd121ece1575c00771630704fe9"
+  integrity sha512-SYUibWTCUsV+z3xIOZB1wUsEuBttxbHmNQagm2co9cK764WJldfVCqwjbG0Omwdv3Am8kClOkHIvBj0sVN2fcw==
   dependencies:
     "@apollo/client" "^3.7.10"
     axios "^1.6.2"
