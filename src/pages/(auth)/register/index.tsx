@@ -14,7 +14,7 @@ import { AuthPageTypes } from '../../../model/types';
 
 interface props {
   redirect: () => void;
-
+  allow_phone?: boolean
   customFields?: {
     name: string;
     data: any;
@@ -110,6 +110,7 @@ export function RegisterPage({
   redirect,
   customFields = [],
   handleCaptcha,
+  allow_phone
 }: props) {
   const { models, operations } = useSignUp({
     redirect,
@@ -141,7 +142,7 @@ interface FormComponentProps {
   allow_phone?: boolean;
 }
 
-function FormComponent({ theme, models, operations }: FormComponentProps) {
+function FormComponent({ theme, models, operations,allow_phone }: FormComponentProps) {
   return (
     <form className={theme.form.container} onSubmit={operations.handleSubmit}>
       <div className={theme.group.container}>
@@ -154,6 +155,7 @@ function FormComponent({ theme, models, operations }: FormComponentProps) {
           models={models}
           operations={operations}
           theme={theme}
+          allow_phone={allow_phone}
         />
       </div>
 
