@@ -14,6 +14,7 @@ import { AuthPageTypes } from '../../../model/types';
 
 interface props {
   redirect: () => void;
+
   customFields?: {
     name: string;
     data: any;
@@ -114,6 +115,7 @@ export function RegisterPage({
     redirect,
     customFields,
     handleCaptcha,
+    allow_phone
   });
   const { theme } = useClientContext();
   return (
@@ -137,6 +139,7 @@ interface FormComponentProps {
   theme: AuthPageTypes;
   models: any;
   operations?: any;
+  allow_phone: boolean;
 }
 
 function FormComponent({ theme, models, operations }: FormComponentProps) {
@@ -188,7 +191,7 @@ function NameInputFields({ theme, models, operations }: FormComponentProps) {
   );
 }
 
-function AuthInputFields({ theme, models, operations }: FormComponentProps) {
+function AuthInputFields({ theme, models, operations,allow_phone }: FormComponentProps) {
   return (
     <div className={theme.group.columns}>
       <Form.TextInput
@@ -202,7 +205,16 @@ function AuthInputFields({ theme, models, operations }: FormComponentProps) {
         helpText={models.errors.email}
         error={!!models.errors.email}
       />
-
+      {allow_phone && (<Form.TextInput
+        theme={theme.textInput}
+        type='phone'
+        label={translate('auth.phone.label')}
+        placeholder={translate('auth.phone.placeholder')}
+        value={models.values.phone}
+        onChange={operations.handleChange}
+        name='phone_number'
+      />)}
+      
       <Form.TextInput
         theme={theme.textInput}
         type='password'
@@ -226,16 +238,7 @@ function AuthInputFields({ theme, models, operations }: FormComponentProps) {
         helpText={models.errors.password_confirmation}
         error={!!models.errors.password_confirmation}
       />
-      <Form.TextInput
-        theme={theme.textInput}
-        type='phone'
-        label={translate('auth.phone.label')}
-        placeholder={translate('auth.phone.placeholder')}
-        value={models.values.phone}
-        onChange={operations.handleChange}
-        name='phone_number'
-        
-      />
+      
     </div>
   );
 }
