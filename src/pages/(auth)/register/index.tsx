@@ -115,7 +115,6 @@ export function RegisterPage({
     redirect,
     customFields,
     handleCaptcha,
-    allow_phone
   });
   const { theme } = useClientContext();
   return (
