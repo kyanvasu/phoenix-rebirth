@@ -32,7 +32,7 @@ export function FilePreviewItem(props: PropsFileItem) {
             <div className='flex flex-row p-1'>
               <Icons.XMark
                 size={20}
-                className='stroke-base-semantic-warning-90'
+                color='stroke-base-semantic-warning-90'
               />
             </div>
           </button>
