@@ -139,10 +139,10 @@ interface FormComponentProps {
   theme: AuthPageTypes;
   models: any;
   operations?: any;
-  allow_phone: boolean;
+  allow_phone?: boolean;
 }
 
-function FormComponent({ theme, models, operations }: FormComponentProps) {
+function FormComponent({ theme, models, operations,allow_phone }: FormComponentProps) {
   return (
     <form className={theme.form.container} onSubmit={operations.handleSubmit}>
       <div className={theme.group.container}>
