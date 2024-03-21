@@ -141,7 +141,7 @@ interface FormComponentProps {
   allow_phone?: boolean;
 }
 
-function FormComponent({ theme, models, operations,allow_phone }: FormComponentProps) {
+function FormComponent({ theme, models, operations }: FormComponentProps) {
   return (
     <form className={theme.form.container} onSubmit={operations.handleSubmit}>
       <div className={theme.group.container}>
