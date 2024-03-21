@@ -14,7 +14,7 @@ import { AuthPageTypes } from '../../../model/types';
 
 interface props {
   redirect: () => void;
-  allow_phone?: boolean
+  allow_phone?: boolean;
   customFields?: {
     name: string;
     data: any;
@@ -31,7 +31,7 @@ export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
     email: '',
     password: '',
     password_confirmation: '',
-    phone:''
+    phone: '',
   };
 
   const {
@@ -56,9 +56,7 @@ export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
       .string()
       .required(translate('auth.signUp.requiredPasswordConfirmation'))
       .oneOf([yup.ref('password')], translate('auth.signUp.passwordMatch')),
-    phone: yup
-    .string()
-    .min(10)
+    phone: yup.string().min(10),
   });
 
   async function onSubmit(values: typeof initialValues) {
@@ -110,7 +108,7 @@ export function RegisterPage({
   redirect,
   customFields = [],
   handleCaptcha,
-  allow_phone
+  allow_phone,
 }: props) {
   const { models, operations } = useSignUp({
     redirect,
@@ -130,6 +128,7 @@ export function RegisterPage({
         theme={theme.auth}
         models={models}
         operations={operations}
+        allow_phone={allow_phone}
       />
     </div>
   );
@@ -142,7 +141,12 @@ interface FormComponentProps {
   allow_phone?: boolean;
 }
 
-function FormComponent({ theme, models, operations,allow_phone }: FormComponentProps) {
+function FormComponent({
+  theme,
+  models,
+  operations,
+  allow_phone,
+}: FormComponentProps) {
   return (
     <form className={theme.form.container} onSubmit={operations.handleSubmit}>
       <div className={theme.group.container}>
@@ -192,7 +196,12 @@ function NameInputFields({ theme, models, operations }: FormComponentProps) {
   );
 }
 
-function AuthInputFields({ theme, models, operations,allow_phone }: FormComponentProps) {
+function AuthInputFields({
+  theme,
+  models,
+  operations,
+  allow_phone,
+}: FormComponentProps) {
   return (
     <div className={theme.group.columns}>
       <Form.TextInput
@@ -206,16 +215,18 @@ function AuthInputFields({ theme, models, operations,allow_phone }: FormComponen
         helpText={models.errors.email}
         error={!!models.errors.email}
       />
-      {allow_phone && (<Form.TextInput
-        theme={theme.textInput}
-        type='phone'
-        label={translate('auth.phone.label')}
-        placeholder={translate('auth.phone.placeholder')}
-        value={models.values.phone}
-        onChange={operations.handleChange}
-        name='phone_number'
-      />)}
-      
+      {allow_phone && (
+        <Form.TextInput
+          theme={theme.textInput}
+          type='phone'
+          label={translate('auth.phone.label')}
+          placeholder={translate('auth.phone.placeholder')}
+          value={models.values.phone}
+          onChange={operations.handleChange}
+          name='phone_number'
+        />
+      )}
+
       <Form.TextInput
         theme={theme.textInput}
         type='password'
@@ -239,7 +250,6 @@ function AuthInputFields({ theme, models, operations,allow_phone }: FormComponen
         helpText={models.errors.password_confirmation}
         error={!!models.errors.password_confirmation}
       />
-      
     </div>
   );
 }
