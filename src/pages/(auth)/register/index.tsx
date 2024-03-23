@@ -215,17 +215,16 @@ function AuthInputFields({
         helpText={models.errors.email}
         error={!!models.errors.email}
       />
-      {allow_phone && (
-        <Form.TextInput
-          theme={theme.textInput}
-          type='phone'
-          label={translate('auth.phone.label')}
-          placeholder={translate('auth.phone.placeholder')}
-          value={models.values.phone}
-          onChange={operations.handleChange}
-          name='phone_number'
-        />
-      )}
+
+      {allow_phone && (<Form.TextInput
+        theme={theme.textInput}
+        type='text'
+        label={translate('auth.phone.label')}
+        placeholder={translate('auth.phone.placeholder')}
+        value={models.values.phone}
+        onChange={operations.handleChange}
+        name='phone'
+      />)}
 
       <Form.TextInput
         theme={theme.textInput}
