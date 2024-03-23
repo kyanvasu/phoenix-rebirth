@@ -239,7 +239,6 @@ function AuthInputFields({ theme, models, operations,allow_phone }: FormComponen
         helpText={models.errors.password_confirmation}
         error={!!models.errors.password_confirmation}
       />
-      
     </div>
   );
 }
