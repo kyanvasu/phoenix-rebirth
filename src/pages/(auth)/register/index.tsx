@@ -208,14 +208,13 @@ function AuthInputFields({ theme, models, operations,allow_phone }: FormComponen
       />
       {allow_phone && (<Form.TextInput
         theme={theme.textInput}
-        type='phone'
+        type='text'
         label={translate('auth.phone.label')}
         placeholder={translate('auth.phone.placeholder')}
         value={models.values.phone}
         onChange={operations.handleChange}
-        name='phone_number'
+        name='phone'
       />)}
-      
       <Form.TextInput
         theme={theme.textInput}
         type='password'
