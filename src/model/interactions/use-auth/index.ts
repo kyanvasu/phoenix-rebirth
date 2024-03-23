@@ -34,7 +34,7 @@ export function useAuth({ sdk }: Configuration) {
     password,
     password_confirmation,
     custom_fields,
-    phone
+    phone_number
   }: CreateUserParams) {
     try {
       const { models } = removeSubdomain(window.location.hostname);
@@ -46,8 +46,8 @@ export function useAuth({ sdk }: Configuration) {
         password,
         password_confirmation,
         custom_fields,
-        phone,
-      }); 
+        phone_number
+      });
       // TODO(Kanvas core): Fix the response type on kanvas of register
       setCookie('refresh_token', {
         // @ts-ignore
