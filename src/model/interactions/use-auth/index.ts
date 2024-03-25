@@ -2,6 +2,7 @@ import { setCookie, deleteCookie } from 'cookies-next';
 import { Configuration } from '../../types';
 import { removeSubdomain } from '../remove-subdomain';
 import { CreateUserParams, InviteProcessParams } from '@kanvas/core';
+import { string } from 'yup';
 
 export function useAuth({ sdk }: Configuration) {
   async function login(email: string, password: string) {
@@ -46,7 +47,7 @@ export function useAuth({ sdk }: Configuration) {
         password,
         password_confirmation,
         custom_fields,
-        phone_number
+        phone_number: String(phone_number)
       });
       // TODO(Kanvas core): Fix the response type on kanvas of register
       setCookie('refresh_token', {
