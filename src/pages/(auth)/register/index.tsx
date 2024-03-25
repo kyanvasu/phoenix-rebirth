@@ -218,7 +218,7 @@ function AuthInputFields({
 
       {allow_phone && (<Form.TextInput
         theme={theme.textInput}
-        type='text'
+        type='number'
         label={translate('auth.phone.label')}
         placeholder={translate('auth.phone.placeholder')}
         value={models.values.phone}
