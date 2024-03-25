@@ -21,6 +21,8 @@ interface props {
   }[];
   handleCaptcha?: () => Promise<boolean | undefined>;
 }
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
   const { sdk } = useClientContext();
@@ -31,7 +33,7 @@ export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
     email: '',
     password: '',
     password_confirmation: '',
-    phone: '',
+    phone_number: '',
   };
 
   const {
@@ -56,7 +58,10 @@ export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
       .string()
       .required(translate('auth.signUp.requiredPasswordConfirmation'))
       .oneOf([yup.ref('password')], translate('auth.signUp.passwordMatch')),
-    phone: yup.number().min(10).max(10),
+    phone_number: yup
+      .string()
+      .matches(phoneRegExp, 'Invalid Phone Format')
+      .nullable(),
   });
 
   async function onSubmit(values: typeof initialValues) {
@@ -216,15 +221,19 @@ function AuthInputFields({
         error={!!models.errors.email}
       />
 
-      {allow_phone && (<Form.TextInput
-        theme={theme.textInput}
-        type='number'
-        label={translate('auth.phone.label')}
-        placeholder={translate('auth.phone.placeholder')}
-        value={models.values.phone}
-        onChange={operations.handleChange}
-        name='phone'
-      />)}
+      {allow_phone && (
+        <Form.TextInput
+          name='phone_number'
+          type='tel'
+          theme={theme.textInput}
+          label={translate('auth.phone.label')}
+          placeholder={translate('auth.phone.placeholder')}
+          onChange={operations.handleChange}
+          value={models.values.phone_number}
+          helpText={models.errors.phone_number}
+          error={!!models.errors.phone_number}
+        />
+      )}
 
       <Form.TextInput
         theme={theme.textInput}
