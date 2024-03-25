@@ -56,7 +56,7 @@ export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
       .string()
       .required(translate('auth.signUp.requiredPasswordConfirmation'))
       .oneOf([yup.ref('password')], translate('auth.signUp.passwordMatch')),
-    phone: yup.string().min(10),
+    phone: yup.number().min(10).max(10),
   });
 
   async function onSubmit(values: typeof initialValues) {
