@@ -20,6 +20,11 @@ export default {
       resetSuccess: 'Your password has been reset successfully',
       resetError: 'Your password reset failed',
     },
+    phone: {
+      label: 'Phone Number',
+      placeholder: '(999)-999-9999',
+      validation: 'Your Number should be 10 digits long.',
+    },
     newPassword: {
       label: 'New Password',
       placeholder: 'Enter your new password',
@@ -66,6 +71,7 @@ export default {
       passwordMatch: 'Passwords must match',
       buttonLabel: 'Sign Up',
       signInLink: 'Sign In',
+      requiredPhone:'Phone is required field',
     },
     createPassword: 'Create Password',
     rememberMe: 'Remember me',
