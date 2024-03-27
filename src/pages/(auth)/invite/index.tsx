@@ -78,6 +78,7 @@ export function useInvite({ redirect, hash }: UseInviteProps) {
       password: values.password,
       lastname: values.lastname,
       firstname: values.firstname,
+      //@ts-ignore
       phone_number:values.phone_number,
     });
     const profile = await userOperations.getUserInfo();
