@@ -5,8 +5,8 @@ import { ServerCoreStore } from '@kanvas/phoenix';
 import { PropsWithChildren } from 'react';
 
 export const sdk = new KanvasCore({
-  key: 'd16459ea-71c2-4732-8f1f-5711c77a7134',
-  url: 'https://graphapi.kanvas.dev/graphql',
+  key: '',
+  url: '',
 });
 
 export default function RootLayout({ children }: PropsWithChildren) {
