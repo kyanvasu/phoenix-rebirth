@@ -24,6 +24,7 @@ interface User {
 
 interface UseInviteProps {
   redirect: () => void;
+  allow_phone?: boolean;
   hash: string;
 }
 const phoneRegExp =
@@ -123,7 +124,7 @@ export function useInvite({ redirect, hash }: UseInviteProps) {
   };
 }
 
-export function InvitePage({ redirect, hash }: UseInviteProps) {
+export function InvitePage({ redirect, hash,allow_phone }: UseInviteProps) {
   const { models, operations } = useInvite({ redirect, hash });
   const { theme } = useClientContext();
   return (
@@ -138,6 +139,7 @@ export function InvitePage({ redirect, hash }: UseInviteProps) {
         theme={theme.auth}
         models={models}
         operations={operations}
+        allow_phone={allow_phone}
       />
     </div>
   );
@@ -150,7 +152,7 @@ interface FormComponentProps {
   allow_phone?: boolean;
 }
 
-function FormComponent({ theme, models, operations }: FormComponentProps) {
+function FormComponent({ theme, models, operations,allow_phone }: FormComponentProps) {
   return (
     <form className={theme.form.container} onSubmit={operations.handleSubmit}>
       <div className={theme.group.container}>
@@ -163,6 +165,7 @@ function FormComponent({ theme, models, operations }: FormComponentProps) {
           models={models}
           operations={operations}
           theme={theme}
+          allow_phone={allow_phone}
         />
       </div>
 
@@ -215,7 +218,7 @@ function AuthInputFields({ theme, models, operations,allow_phone }: FormComponen
         disabled={true}
       />
 
-      {allow_phone?? <Form.TextInput
+      {allow_phone && <Form.TextInput
         theme={theme.textInput}
         type='text'
         label={translate('auth.phone.label')}
