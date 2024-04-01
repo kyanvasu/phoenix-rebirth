@@ -101,7 +101,7 @@ export const BaseTheme: ThemeTypes = {
   badge: {
     button:
       'bg-base-primary-100 disabled:bg-base-neutral-grey-20 hover:bg-base-primary-80 text-base-neutral-white disabled:text-base-neutral-grey-80 w-fit text-body-md font-normal flex items-center gap-1.5 px-2 py-[2px] text-body-md font-normal text-base-neutral-white',
-    variant: 'rounded-xl'
+    variant: 'rounded-xl',
   },
   card: {
     container: 'grid p-5 border rounded-md shadow-elevation-1',
@@ -118,7 +118,23 @@ export const BaseTheme: ThemeTypes = {
   label: {
     required: 'text-base-semantic-error-70 ml-1',
   },
-  statusBadge:{
-    styles:''
-  }
+  statusBadge: {
+    styles: '',
+  },
+  Select: {
+    button: {
+      container:
+        'relative flex items-center h-9 w-full rounded-md bg-base-neutral-white disabled:bg-base-neutral-grey-30 p-2 pr-10 text-left text-base-neutral-grey-80 shadow-sm ring-1 ring-inset ring-base-neutral-grey-30 focus:outline-none focus:ring-1 focus:ring-base-primary-100 focus:text-base-neutral-grey-100 text-body-md leading-6',
+      icon: 'text-base-neutral-grey-60',
+    },
+    option: {
+      container:
+        'text-base-neutral-grey-60 hover:bg-base-neutral-grey-10 hover:text-base-neutral-black relative text-body-md py-[6px] px-[10px]',
+      active: 'text-base-primary-100',
+      selected: 'absolute inset-y-0 right-0 flex items-center pr-4',
+      'text-selected': 'text-base-primary-100',
+    },
+    listbox:
+      'absolute z-10 w-full py-1 mt-3 overflow-auto bg-white rounded-md shadow-elevation-3 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none text-body-md',
+  },
 };
