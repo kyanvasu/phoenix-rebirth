@@ -19,12 +19,16 @@ interface User {
   lastname: string;
   password: string;
   password_confirmation?: string;
+  phone_number?:string;
 }
 
 interface UseInviteProps {
   redirect: () => void;
+  allow_phone?: boolean;
   hash: string;
 }
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const validationSchema = yup.object().shape({
   firstname: yup.string().required(translate('auth.signUp.requiredFirstName')),
@@ -38,6 +42,10 @@ const validationSchema = yup.object().shape({
     .string()
     .required(translate('auth.signUp.requiredPasswordConfirmation'))
     .oneOf([yup.ref('password')], translate('auth.signUp.passwordMatch')),
+  phone_number: yup
+    .string()
+    .matches(phoneRegExp, 'Invalid Phone Format')
+    .nullable(),
 });
 
 export function useInvite({ redirect, hash }: UseInviteProps) {
@@ -56,6 +64,7 @@ export function useInvite({ redirect, hash }: UseInviteProps) {
       lastname: result?.lastname as string,
       password: '',
       password_confirmation: '',
+      phone_number:'',
     };
   };
 
@@ -70,6 +79,8 @@ export function useInvite({ redirect, hash }: UseInviteProps) {
       password: values.password,
       lastname: values.lastname,
       firstname: values.firstname,
+      //@ts-ignore
+      phone_number:values.phone_number,
     });
     const profile = await userOperations.getUserInfo();
     localStorage.setItem('user', JSON.stringify(profile));
@@ -83,6 +94,7 @@ export function useInvite({ redirect, hash }: UseInviteProps) {
       lastname: '',
       password: '',
       password_confirmation: '',
+      phone_number:'',
     },
     validateOnBlur: false,
     validateOnChange: false,
@@ -112,7 +124,7 @@ export function useInvite({ redirect, hash }: UseInviteProps) {
   };
 }
 
-export function InvitePage({ redirect, hash }: UseInviteProps) {
+export function InvitePage({ redirect, hash,allow_phone }: UseInviteProps) {
   const { models, operations } = useInvite({ redirect, hash });
   const { theme } = useClientContext();
   return (
@@ -127,6 +139,7 @@ export function InvitePage({ redirect, hash }: UseInviteProps) {
         theme={theme.auth}
         models={models}
         operations={operations}
+        allow_phone={allow_phone}
       />
     </div>
   );
@@ -136,9 +149,10 @@ interface FormComponentProps {
   theme: AuthPageTypes;
   models: any;
   operations?: any;
+  allow_phone?: boolean;
 }
 
-function FormComponent({ theme, models, operations }: FormComponentProps) {
+function FormComponent({ theme, models, operations,allow_phone }: FormComponentProps) {
   return (
     <form className={theme.form.container} onSubmit={operations.handleSubmit}>
       <div className={theme.group.container}>
@@ -151,6 +165,7 @@ function FormComponent({ theme, models, operations }: FormComponentProps) {
           models={models}
           operations={operations}
           theme={theme}
+          allow_phone={allow_phone}
         />
       </div>
 
@@ -187,7 +202,7 @@ function NameInputFields({ theme, models, operations }: FormComponentProps) {
   );
 }
 
-function AuthInputFields({ theme, models, operations }: FormComponentProps) {
+function AuthInputFields({ theme, models, operations,allow_phone }: FormComponentProps) {
   return (
     <div className={theme.group.columns}>
       <Form.TextInput
@@ -202,6 +217,18 @@ function AuthInputFields({ theme, models, operations }: FormComponentProps) {
         error={!!models.errors.email}
         disabled={true}
       />
+
+      {allow_phone && <Form.TextInput
+        theme={theme.textInput}
+        type='text'
+        label={translate('auth.phone.label')}
+        placeholder={translate('auth.phone.placeholder')}
+        value={models.values.phone_number}
+        onChange={operations.handleChange}
+        name='phone_number'
+        helpText={models.errors.phone_number}
+        error={!!models.errors.phone_number}
+      />}
 
       <Form.TextInput
         theme={theme.textInput}
