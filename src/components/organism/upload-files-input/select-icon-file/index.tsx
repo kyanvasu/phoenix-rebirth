@@ -15,7 +15,7 @@ export function SelectIconFile(props: { fileMime: string; iconSize: number }) {
     return <Icons.UploadPDF size={iconSize} />;
 
   // all valid images types
-  if (IMAGES_MIME.includes(fileMime))
+  if (IMAGES_MIME.includes(fileMime) || IMAGES_MIME.some(imageMime => imageMime.split('/')[1] === fileMime))
     return <Icons.UploadImage size={iconSize} />;
 
   // all valid applications types
