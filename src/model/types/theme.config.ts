@@ -67,8 +67,8 @@ export type SidebarTypes = {
 export type AvatarTypes = {
   container: string;
   img: string;
-  "xx-small": string;
-  "x-small": string;
+  'xx-small': string;
+  'x-small': string;
   small: string;
   medium: string;
   large: string;
@@ -99,6 +99,20 @@ export type StatusBadgeTypes = {
   styles: string;
 };
 
+export type SelectTypes = {
+  button: {
+    container: string;
+    icon: string;
+  };
+  option: {
+    container: string;
+    active: string;
+    selected: string;
+    'text-selected': string;
+  };
+  listbox: string;
+};
+
 export type ThemeTypes = {
   auth: AuthPageTypes;
   textInput: InputTypes;
@@ -113,4 +127,5 @@ export type ThemeTypes = {
   helpText: HelpText;
   label: LabelTypes;
   statusBadge: StatusBadgeTypes;
+  Select?: SelectTypes;
 };

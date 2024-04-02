@@ -4,6 +4,9 @@ import { OptionsList } from './options-list';
 import { Button } from './button';
 import classNames from 'classnames';
 import { FormikErrors } from 'formik';
+import { SelectTypes } from '../../../model/types';
+import { useClientContext } from '../../../model/store/core.store/client.store';
+import { BaseTheme } from '../../../theme/base-theme';
 
 export interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   name: string;
@@ -18,6 +21,7 @@ export interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
     field: string,
     val: any
   ) => Promise<void> | Promise<FormikErrors<any>>;
+  customTheme?: SelectTypes;
 }
 
 export default function Select(props: Props) {
@@ -33,24 +37,32 @@ export default function Select(props: Props) {
     options,
     label,
     textColor,
+    customTheme
   } = props;
   const [selected, setSelected] = React.useState<string | undefined>(value);
   const handleChange = (val: string) => {
     setSelected(val);
     setFieldValue?.(name, val);
   };
+  const phoenixTheme = useClientContext();
+  const theme =
+    customTheme ??
+    phoenixTheme.theme.Select ??
+    BaseTheme.Select;
   return (
     <Listbox disabled={disabled} value={selected} onChange={handleChange}>
       {({ open }) => (
         <div className={className}>
           {label && (
-            <Listbox.Label className={classNames(
-              'block font-medium text-caption-md pb-[6px]',
-              className, {
-              'text-base-neutral-grey-80': !textColor
-            }
-            )} >
-
+            <Listbox.Label
+              className={classNames(
+                'block font-medium text-caption-md pb-[6px]',
+                className,
+                {
+                  'text-base-neutral-grey-80': !textColor,
+                }
+              )}
+            >
               {label}
             </Listbox.Label>
           )}
@@ -60,8 +72,9 @@ export default function Select(props: Props) {
               Icon={Icon}
               error={error}
               disabled={disabled}
+              custom={theme}
             />
-            <OptionsList open={open} options={options} />
+            <OptionsList open={open} options={options} custom={theme} />
           </div>
           {helpText && (
             <Listbox.Label

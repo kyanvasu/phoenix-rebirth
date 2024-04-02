@@ -78,7 +78,29 @@ export default function ClientComponent() {
         placeholder={'permissions'}
         options={STATUS_OPTIONS}
       />
-      <EmptyTable columns={columns} loading={false} text='Table is empty'  />
+      <Molecules.Select
+        name={'permissions'}
+        className='w-40'
+        placeholder={'permissions'}
+        options={STATUS_OPTIONS}
+        customTheme={{
+          button: {
+            container:
+              'relative flex items-center h-9 w-full rounded-md bg-background-100 border-[#374151] placeholder:text-white disabled:bg-base-neutral-grey-30 p-2 pr-10 text-left text-white shadow-sm ring-1 ring-inset ring-base-neutral-grey-30 focus:outline-none focus:ring-1 focus:ring-base-primary-100 focus:text-white text-body-md leading-6',
+            icon: 'text-white',
+          },
+          option: {
+            container:
+              'text-white relative text-body-md py-[6px] px-[10px] hover:bg-base-neutral-grey-80',
+            active: 'text-white',
+            selected: 'absolute inset-y-0 right-0 flex items-center pr-4',
+            'text-selected': 'text-white',
+          },
+          listbox:
+            'absolute z-10 w-full py-1 mt-3 overflow-auto bg-background-100 rounded-md shadow-elevation-3 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none text-body-md text-white',
+        }}
+      />
+      <EmptyTable columns={columns} loading={false} text='Table is empty' />
     </>
   );
 }
