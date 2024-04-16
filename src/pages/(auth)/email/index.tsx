@@ -39,7 +39,7 @@ export function EmailPage({ router, params, img }: props) {
         image={img ?? ''}
         title={translate('auth.sendEmail.sendTitle')}
         subtitle={models.message}
-        label={translate('auth.resetPassword.emailSent')}
+        label={translate('auth.resetPassword.buttonLabel')}
         onClick={operations.handleClick}
         showButton
       />
