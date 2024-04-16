@@ -84,6 +84,8 @@ export default {
     resetPassword: {
       title: 'Reset Password',
       description: 'Your password must be 8 characters long.',
+      emailSent: 'We have sent you an email with instructions to reset your password.',
+      buttonLabel: 'Sign In',
     },
   },
   files: {
