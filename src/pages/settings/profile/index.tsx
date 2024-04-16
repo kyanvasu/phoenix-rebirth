@@ -144,6 +144,7 @@ export function ProfileView({ profile, setProfile }: Props) {
         className='mb-5'
         Size='medium'
         name={`${models.profile?.firstname} ${models.profile?.lastname}`}
+        role={models.profile?.mainRole}
       />
 
       <form
