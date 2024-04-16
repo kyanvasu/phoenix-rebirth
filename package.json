@@ -1,6 +1,6 @@
 {
   "name": "@kanvas/phoenix",
-  "version": "1.0.59",
+  "version": "1.0.60",
   "description": "",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -33,7 +33,7 @@
   "homepage": "https://github.com/kyanvasu/phoenix#readme",
   "devDependencies": {
     "@headlessui/react": "^1.7.17",
-    "@kanvas/core": "^0.0.104",
+    "@kanvas/core": "^0.0.117",
     "@rollup/plugin-commonjs": "^25.0.2",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-replace": "^5.0.2",

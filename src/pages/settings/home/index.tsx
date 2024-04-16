@@ -39,6 +39,7 @@ export function SettingsView({
         <Profile
           name={`${profile?.firstname} ${profile?.lastname}`}
           Size='small'
+          role={profile?.mainRole}
         />
         <Button.Link className='outline-none'>
           <ChevronRight size={20} />
