@@ -9,9 +9,10 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
   name?: string;
   company?: string;
   textColor?: string;
+  role?: string;
 }
 export default function Profile(props: Props) {
-  const { src, className, name, company, Size = 'xx-small', ...rest } = props;
+  const { src, className, name, company, role, Size = 'xx-small', ...rest } = props;
 
   return (
     <div
@@ -33,6 +34,11 @@ export default function Profile(props: Props) {
       >
         <span>{name}</span>
 
+        {role && (
+          <span className='text-caption-md text-base-neutral-grey-60'>
+            {role}
+          </span>
+        )}
         {company && (
           <span className='text-caption-sm text-base-neutral-grey-60'>
             {company}
