@@ -52,6 +52,8 @@ export default function RoutLayout({ children }: PropsWithChildren) {
           items={items}
           Logo={<Logo />}
           pathname={getPathname()}
+          bottonPart={<div>sssss</div>}
+          bottonInfo
         />
       }
     >

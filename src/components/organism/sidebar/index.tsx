@@ -13,7 +13,8 @@ interface Props
   items: SidebarItem[];
   companies?: Record<string, any>[];
   className?: string;
-
+  bottonInfo?: boolean
+  bottonPart?:ReactNode
 }
 
 function useSidebar({ items, pathname }: Props) {
@@ -57,6 +58,11 @@ export default function Sidebar(props: Props) {
       {companies && (
         <div className={theme.sidebar.companyContainer}>
           <ChangeCompany />
+        </div>
+      )}
+      {props.bottonInfo && (
+        <div>
+          {props.bottonPart}
         </div>
       )}
     </div>
