@@ -1,7 +1,7 @@
 import React from 'react';
 import Icons from '../../../atoms/icons';
 
-const IMAGES_MIME = ['image/jpeg', 'image/png', 'image/gif', 'image/svg'];
+export const IMAGES_MIME = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg', 'image/svg+xml'];
 const APPLICATION_MIME = [
   'application/pdf',
   'application/msword',

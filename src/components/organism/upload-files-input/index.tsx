@@ -22,7 +22,7 @@ export default function UploadFilesInput(props: Props) {
   const { error } = props;
 
   return (
-    <div className='border rounded-md'>
+    <div className='rounded-md border-border-default border-2 '>
       <Header {...props} />
       <FileContentPreview {...props} />
       {error && <ErrorText error={error} />}

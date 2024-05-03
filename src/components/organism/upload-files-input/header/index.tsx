@@ -17,7 +17,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export function Header(props: Props) {
   return (
-    <div className='flex justify-between border'>
+    <div className='flex justify-between'>
       <div className='flex flex-row p-4'>
          {props.icon ?? <Icons.UploadArrow size={20} /> }
         <div>
