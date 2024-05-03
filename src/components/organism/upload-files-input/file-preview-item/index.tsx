@@ -1,6 +1,6 @@
 import React from 'react';
 import Icons from '../../../atoms/icons';
-import { SelectIconFile } from '../select-icon-file';
+import { IMAGES_MIME, SelectIconFile } from '../select-icon-file';
 
 export interface PropsFileItem {
   index: number;
@@ -38,8 +38,12 @@ export function FilePreviewItem(props: PropsFileItem) {
           </button>
         </div>
       </div>
-      <div className='flex flex-row justify-center p-2 '>
-        <SelectIconFile fileMime={file.type} iconSize={60} />
+      <div className='flex flex-row justify-center p-2  max-w-40 max-h-40'>
+        {IMAGES_MIME.includes(file.type) || IMAGES_MIME.some(imageMime => imageMime.split('/')[1] === file.type) ?(
+          <img src={(file as any)?.url ?? URL.createObjectURL(file)} alt={file.name} />
+        ) : (
+          <SelectIconFile fileMime={file.type} iconSize={60} />
+        )}
       </div>
       <div className='flex flex-row justify-center px-4 py-2'>
         <p className=' text-center break-words truncate '>{file.name}</p>
