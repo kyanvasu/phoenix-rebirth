@@ -27,7 +27,7 @@ export default function XMark(props: Props) {
     >
       <path
         d='M6 18L18 6M6 6L18 18'
-        stroke={stroke}
+        stroke={color ?? stroke}
         strokeWidth={strokeWidth}
         strokeLinecap={strokeLinecap}
         strokeLinejoin={strokeLinejoin}

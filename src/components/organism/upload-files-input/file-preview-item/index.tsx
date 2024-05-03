@@ -21,7 +21,7 @@ export function FilePreviewItem(props: PropsFileItem) {
   };
 
   return (
-    <div key={index} className='flex flex-col border '>
+    <div key={index} className='flex flex-col rounded-md border-border-default border-2 '>
       <div className='flex flex-row-reverse'>
         <div>
           <button
@@ -32,7 +32,7 @@ export function FilePreviewItem(props: PropsFileItem) {
             <div className='flex flex-row p-1'>
               <Icons.XMark
                 size={20}
-                color='stroke-base-semantic-warning-90'
+                color='stroke-base-neutral-white'
               />
             </div>
           </button>
@@ -40,7 +40,7 @@ export function FilePreviewItem(props: PropsFileItem) {
       </div>
       <div className='flex flex-row justify-center p-2  max-w-40 max-h-40'>
         {IMAGES_MIME.includes(file.type) || IMAGES_MIME.some(imageMime => imageMime.split('/')[1] === file.type) ?(
-          <img src={(file as any)?.url ?? URL.createObjectURL(file)} alt={file.name} />
+          <img src={(file as any)?.url ?? URL.createObjectURL(file)} alt={file.name} className='object-cover object-center rounded-md' />
         ) : (
           <SelectIconFile fileMime={file.type} iconSize={60} />
         )}
