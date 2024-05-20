@@ -4,6 +4,9 @@ export interface TableProps {
   data: any[];
   columns: ColumnDef<any>[];
   options?: Options;
+  actionsIcon?: React.ReactNode;
+  onEdit?: (row: any) => void;
+  onDelete?: (row: any) => void;
 }
 
 type Options = Omit<
