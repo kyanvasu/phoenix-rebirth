@@ -1,14 +1,16 @@
-import { flexRender } from '@tanstack/react-table';
 import React from 'react';
+import { flexRender } from '@tanstack/react-table';
+import classNames from 'classnames';
 import { TContainer } from './container';
 import { THeader } from './header';
 import { TRow } from './row';
 import { TBody } from './body';
 import { TCell } from './cell';
-import classNames from 'classnames';
 import { TableProps } from '../../../model/types/table.props';
 import { useTable } from '../../../model/interactions/use-table';
-export function Table({ data, columns, options = {} }: TableProps) {
+import ActionIcon from '../../atoms/action-icons';
+
+export const Table: React.FC<TableProps> = ({ data, columns, options = {}, actionsIcon, onEdit, onDelete }) => {
   const {
     models: { table },
   } = useTable({ data, columns, options });
@@ -54,6 +56,15 @@ export function Table({ data, columns, options = {} }: TableProps) {
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TCell>
               ))}
+              {actionsIcon && (onEdit || onDelete) && (
+                <TCell className='text-center'>
+                  <ActionIcon
+                    icon={actionsIcon}
+                    onEdit={onEdit ? () => onEdit(row) : undefined}
+                    onDelete={onDelete ? () => onDelete(row) : undefined}
+                  />
+                </TCell>
+              )}
             </TRow>
           ))}
         </TBody>
@@ -61,4 +72,4 @@ export function Table({ data, columns, options = {} }: TableProps) {
       <div className='h-4' />
     </>
   );
-}
+};
