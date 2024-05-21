@@ -6,12 +6,10 @@ import { Table } from "@kanvas/phoenix/client";
 
 const handleEdit = (row: any) => {
   console.log("Edit:", row);
-  // Lógica para editar la fila
 };
 
 const handleDelete = (row: any) => {
   console.log("Delete:", row);
-  // Lógica para eliminar la fila
 };
 
 const columns = [

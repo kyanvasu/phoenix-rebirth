@@ -28,15 +28,15 @@ const ActionIcon: React.FC<ActionIconProps> = ({ icon, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <button onClick={handleIconClick}>
         {icon}
       </button>
       {showMenu && (
-        <div className="absolute bg-white border mt-2 z-10">
+        <div className='absolute bg-white border mt-2 z-10'>
           <ul>
-            {onEdit && <li onClick={handleEditClick} className="cursor-pointer p-2 hover:bg-gray-100">Editar</li>}
-            {onDelete && <li onClick={handleDeleteClick} className="cursor-pointer p-2 hover:bg-gray-100">Eliminar</li>}
+            {onEdit && <li onClick={handleEditClick} className='cursor-pointer p-2 hover:bg-gray-100'>Editar</li>}
+            {onDelete && <li onClick={handleDeleteClick} className='cursor-pointer p-2 hover:bg-gray-100'>Eliminar</li>}
           </ul>
         </div>
       )}

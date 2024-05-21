@@ -23,7 +23,7 @@ export const Table: React.FC<TableProps> = ({ data, columns, options = {}, actio
             <TRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
-                  scope="col"
+                  scope='col'
                   className={`p-3 ${
                     header.index === headerGroup.headers.length - 1
                       ? 'text-right'
@@ -57,7 +57,7 @@ export const Table: React.FC<TableProps> = ({ data, columns, options = {}, actio
                 </TCell>
               ))}
               {actionsIcon && (onEdit || onDelete) && (
-                <TCell className="text-center">
+                <TCell className='text-center'>
                   <ActionIcon
                     icon={actionsIcon}
                     onEdit={onEdit ? () => onEdit(row) : undefined}
@@ -69,7 +69,7 @@ export const Table: React.FC<TableProps> = ({ data, columns, options = {}, actio
           ))}
         </TBody>
       </TContainer>
-      <div className="h-4" />
+      <div className='h-4' />
     </>
   );
 };
