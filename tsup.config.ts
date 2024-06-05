@@ -2,6 +2,10 @@ import { defineConfig } from "tsup";
 
 export default defineConfig([
   {
+    entry: ["src/global.css"],
+    outDir: "dist",
+  },
+  {
     dts: true,
     entry: [
       "src/theme",
@@ -9,6 +13,7 @@ export default defineConfig([
       "src/model",
       "src/client",
       "src/server",
+      "src/utils",
     ],
     format: ["esm", "cjs"],
     minify: true,
@@ -17,6 +22,7 @@ export default defineConfig([
     splitting: true,
     external: ["react", "react-dom"],
     tsconfig: "./tsconfig.json",
+    bundle: true,
   },
   {
     dts: true,
@@ -28,6 +34,7 @@ export default defineConfig([
     splitting: true,
     external: ["react", "react-dom"],
     tsconfig: "./tsconfig.json",
+    bundle: true,
   },
   {
     dts: false,
@@ -39,8 +46,10 @@ export default defineConfig([
     splitting: true,
     external: ["react", "react-dom"],
     tsconfig: "./tsconfig.json",
+    bundle: true,
   },
   {
+    dts: true,
     entry: ["src/components"],
     format: ["esm", "cjs"],
     minify: true,
@@ -49,6 +58,6 @@ export default defineConfig([
     splitting: true,
     external: ["react", "react-dom"],
     tsconfig: "./tsconfig.json",
-    dts: true,
+    bundle: true,
   },
 ]);
