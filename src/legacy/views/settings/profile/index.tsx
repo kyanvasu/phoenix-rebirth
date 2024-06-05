@@ -34,10 +34,10 @@ function useProfile({ profile, setProfile }: Props) {
   } = profile!;
 
   const contact_email = custom_fields.data.find(
-    ({ name }) => name === "contact_email"
+    ({ name }) => name === "contact_email",
   )?.value;
   const landing = custom_fields.data.find(
-    ({ name }) => name === "landing_page"
+    ({ name }) => name === "landing_page",
   )?.value;
 
   const initialValues = {
@@ -101,7 +101,7 @@ function useProfile({ profile, setProfile }: Props) {
     } catch (error: any) {
       if (
         error.message ===
-        "ApolloError: Validation failed for the field [updateUser]."
+          "ApolloError: Validation failed for the field [updateUser]."
       ) {
         toast.error("Display Name is already taken");
       }
@@ -206,13 +206,15 @@ export function ProfileView({ profile, setProfile }: Props) {
           error={!!models.errors.email}
           disabled
         />
-        {/* <Select
+        {
+          /* <Select
           options={[]}
           name='landing'
           label='Select Landing Page'
           value={models.values.landing}
           setFieldValue={operations.setFieldValue}
-        /> */}
+        /> */
+        }
         <TextInput
           name="contact_email"
           type="email"

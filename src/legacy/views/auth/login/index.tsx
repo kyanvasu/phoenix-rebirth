@@ -165,9 +165,7 @@ function ActionForm({ theme, operations, models }: FormComponentProps) {
           type="submit"
           disabled={models.isSubmitting}
         >
-          {models.isSubmitting ? (
-            <Spinner />
-          ) : (
+          {models.isSubmitting ? <Spinner /> : (
             translate("auth.signIn.buttonLabel")
           )}
         </Button.Solid>
