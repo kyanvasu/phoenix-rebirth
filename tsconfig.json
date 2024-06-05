@@ -3,6 +3,10 @@
   "include": ["src/**/*"],
   "exclude": ["test", "node_modules"],
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["dom", "esnext"],

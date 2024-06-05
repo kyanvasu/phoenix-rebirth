@@ -1,4 +1,4 @@
-import { IconProps } from './icon.props';
+import { IconProps } from "./icon.props";
 
 export interface Item {
   key: string;

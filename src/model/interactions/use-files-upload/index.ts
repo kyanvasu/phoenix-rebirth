@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { useAsyncFn } from 'react-use';
-import { useFileSystem } from '../use-file-system';
-import KanvasCore, { UPLOAD_INTERFACE } from '@kanvas/core';
-import { useSystemModule } from '../use-system-module';
-import { useClientContext } from '../../store/core.store/client.store';
+import { useState } from "react";
+import { useAsyncFn } from "react-use";
+import { useFileSystem } from "../use-file-system";
+import KanvasCore, { UPLOAD_INTERFACE } from "@kanvas/core";
+import { useSystemModule } from "../use-system-module";
+import { useClientContext } from "../../store/core.store/client.store";
 
 export interface UPLOAD_FILES_INTERFACE {
   entityUUID: string;
   systemModuleSlug: string;
   files: File | File[];
 }
-export function useFilesUpload( customSDK ?: KanvasCore) {
+export function useFilesUpload(customSDK?: KanvasCore) {
   const { sdk } = useClientContext();
   const {
     operations: { getSystemModuleBySlug },
@@ -30,12 +30,12 @@ export function useFilesUpload( customSDK ?: KanvasCore) {
           .map((file) => uploadFile({ data: file }));
         const uploaded = await Promise.all(uploadPromises);
         const systemModule = await getSystemModuleBySlug(systemModuleSlug);
-        const systemModuleUuid = systemModule[0]?.uuid ?? '';
+        const systemModuleUuid = systemModule[0]?.uuid ?? "";
         const attachPromises = uploaded.map((file) =>
           attachFile({
             fileSystemUUID: file.uuid,
             entityUUID,
-            fieldName: 'filesystem.field_name',
+            fieldName: "filesystem.field_name",
             systemModuleUUID: systemModuleUuid,
           })
         );
@@ -47,7 +47,7 @@ export function useFilesUpload( customSDK ?: KanvasCore) {
         throw error;
       }
     },
-    []
+    [],
   );
 
   return {

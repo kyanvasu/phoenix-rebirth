@@ -67,8 +67,8 @@ export type SidebarTypes = {
 export type AvatarTypes = {
   container: string;
   img: string;
-  'xx-small': string;
-  'x-small': string;
+  "xx-small": string;
+  "x-small": string;
   small: string;
   medium: string;
   large: string;
@@ -108,7 +108,7 @@ export type SelectTypes = {
     container: string;
     active: string;
     selected: string;
-    'text-selected': string;
+    "text-selected": string;
   };
   listbox: string;
 };

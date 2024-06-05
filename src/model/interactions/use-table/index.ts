@@ -1,9 +1,9 @@
 import {
-  useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
-} from '@tanstack/react-table';
-import { TableProps } from '../../types/table.props';
+  useReactTable,
+} from "@tanstack/react-table";
+import { TableProps } from "../../types/table.props";
 
 export function useTable({ data, columns, options }: TableProps) {
   const table = useReactTable({

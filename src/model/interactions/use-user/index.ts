@@ -1,5 +1,5 @@
-import { UpdateUserParams } from '@kanvas/core';
-import { Configuration } from '../../types';
+import { UpdateUserParams } from "@kanvas/core";
+import { Configuration } from "../../types";
 
 export function useUser({ sdk: client }: Configuration) {
   async function getUserInfo() {

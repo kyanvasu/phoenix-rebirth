@@ -1,5 +1,5 @@
-import { FILESYSTEM, UPLOAD_INTERFACE } from '@kanvas/core';
-import { Configuration } from '../../types';
+import { FILESYSTEM, UPLOAD_INTERFACE } from "@kanvas/core";
+import { Configuration } from "../../types";
 
 interface GetEntityFilesParams {
   name?: string;
@@ -42,7 +42,7 @@ export function useFileSystem({ sdk }: Configuration) {
   }
 
   async function getEntityFiles({
-    name = '',
+    name = "",
     data = [],
     systemModuleUUID,
     entityUUID,

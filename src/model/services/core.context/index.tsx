@@ -1,10 +1,10 @@
-import { Configuration } from '../../types';
+import { Configuration } from "../../types";
 
 export class CoreContext {
   private static _instance: CoreContext | null = null;
   protected config: Configuration = {
     sdk: undefined,
-    theme: undefined
+    theme: undefined,
   };
 
   static instance() {
