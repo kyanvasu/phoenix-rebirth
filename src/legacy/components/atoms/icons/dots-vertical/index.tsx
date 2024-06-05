@@ -1,5 +1,5 @@
+import { IconProps } from "@/model/types";
 import React from "react";
-import { IconProps } from "../../../../model/types";
 
 export default function DotsVertical(props: IconProps) {
   const { size = 24, className } = props;

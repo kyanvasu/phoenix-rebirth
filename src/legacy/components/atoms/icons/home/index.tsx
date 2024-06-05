@@ -1,5 +1,5 @@
+import { IconProps } from "@/model/types";
 import React from "react";
-import { IconProps } from "../../../../model/types/icon.props";
 
 export default function Home(props: IconProps) {
   const { size = 20, className } = props;

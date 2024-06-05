@@ -1,5 +1,5 @@
 import React from "react";
-import { Size } from "../../../model/types";
+import { Size } from "@/model/types";
 import classNames from "classnames";
 import { Avatar } from "../../atoms";
 

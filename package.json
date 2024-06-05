@@ -1,19 +1,18 @@
 {
   "name": "@kanvas/phoenix-rebirth",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Client and ui kit",
   "files": [
     "dist",
     "src"
   ],
   "engines": {
-    "node": ">=18.0.0",
-    "yarn": ">=1.22.17 && <2.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "prepare": "pnpm build",
-    "build": "tsup",
-    "watch": "rollup -cw"
+    "build": "NODE_OPTIONS='--max-old-space-size=16384' tsup",
+    "watch": "NODE_OPTIONS='--max-old-space-size=16384' tsup --watch"
   },
   "repository": {
     "type": "git",

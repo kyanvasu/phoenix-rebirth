@@ -1,8 +1,8 @@
-'use client';
-import { Auth } from '@kanvas/phoenix/client';
-import { useRouter } from 'next/navigation';
+"use client";
+import { RegisterPage } from "@kanvas/phoenix/views/(auth)/register";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
   const router = useRouter();
-  return <Auth.RegisterPage redirect={() => router.push('/home')} />;
+  return <RegisterPage redirect={() => router.push("/home")} />;
 }

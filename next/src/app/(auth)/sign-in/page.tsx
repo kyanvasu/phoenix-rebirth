@@ -1,9 +1,9 @@
-'use client';
-import React from 'react';
-import { Auth } from '@kanvas/phoenix/client';
-import { useRouter } from 'next/navigation';
+"use client";
+import React from "react";
+import { LoginPage } from "@kanvas/phoenix/views/(auth)/login";
+import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function LoginPagep() {
   const router = useRouter();
-  return <Auth.LoginPage redirect={() => router.push('/home')} />;
+  return <LoginPage redirect={() => router.push("/home")} />;
 }

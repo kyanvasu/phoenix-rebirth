@@ -1,5 +1,5 @@
 import React from "react";
-import { IconProps } from "../../../../model/types";
+import { IconProps } from "@/model/types";
 
 export default function Trash(props: IconProps) {
   const { size = 24, ...rest } = props;

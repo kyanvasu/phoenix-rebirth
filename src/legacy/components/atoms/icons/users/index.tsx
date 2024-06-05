@@ -1,4 +1,4 @@
-import { IconProps } from "../../../../model/types";
+import { IconProps } from "@/model/types";
 import React from "react";
 
 export default function Users(props: IconProps) {
