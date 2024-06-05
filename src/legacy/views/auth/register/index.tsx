@@ -3,102 +3,95 @@ import Link from "next/link";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import React from "react";
-import { useAsync, useUpdateEffect } from "react-use";
-import { useAuth } from "../../../model/interactions/use-auth";
-import { useClientContext } from "../../../model/store/core.store/client.store";
-import { Form } from "../../../legacy/components/molecules";
-import { Body, Button, Heading } from "../../../legacy/components/atoms";
-import Spinner from "../../../legacy/components/atoms/icons/spinner";
-import { translate } from "../../../translate";
-import { AuthPageTypes } from "../../../model/types";
-import { useUser } from "../../../model/interactions/use-user";
+import { useAuth } from "../../../../model/interactions/use-auth";
+import { useClientContext } from "../../../../model/store/core.store/client.store";
+import { Form } from "../../../../legacy/components/molecules";
+import { Body, Button, Heading } from "../../../../legacy/components/atoms";
+import { useUser } from "../../../../model/interactions/use-user";
+import Spinner from "../../../../legacy/components/atoms/icons/spinner";
+import { translate } from "../../../../translate";
+import { AuthPageTypes } from "../../../../model/types";
 
-interface User {
-  email: string;
-  firstname: string;
-  lastname: string;
-  password: string;
-  password_confirmation?: string;
-  phone_number?: string;
-}
-
-interface UseInviteProps {
+interface props {
   redirect: () => void;
   allow_phone?: boolean;
-  hash: string;
+  customFields?: {
+    name: string;
+    data: any;
+  }[];
+  handleCaptcha?: () => Promise<boolean | undefined>;
 }
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-const validationSchema = yup.object().shape({
-  firstname: yup.string().required(translate("auth.signUp.requiredFirstName")),
-  lastname: yup.string(),
-  email: yup.string().email().required(translate("auth.signUp.requiredEmail")),
-  password: yup
-    .string()
-    .min(8)
-    .required(translate("auth.signUp.requiredPassword")),
-  password_confirmation: yup
-    .string()
-    .required(translate("auth.signUp.requiredPasswordConfirmation"))
-    .oneOf([yup.ref("password")], translate("auth.signUp.passwordMatch")),
-  phone_number: yup
-    .string()
-    .matches(phoneRegExp, "Invalid Phone Format")
-    .nullable(),
-});
-
-export function useInvite({ redirect, hash }: UseInviteProps) {
+export function useSignUp({ redirect, customFields, handleCaptcha }: props) {
   const { sdk } = useClientContext();
-  const { operations: authOperations } = useAuth({ sdk });
+
+  const initialValues = {
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    phone_number: "",
+  };
+
+  const {
+    operations: { register },
+  } = useAuth({ sdk });
   const { operations: userOperations } = useUser({ sdk });
 
-  const fetchUser = async (): Promise<User> => {
-    if (!hash) {
-      throw new Error(translate("auth.invite.hashError"));
-    }
-    const result = await userOperations.getInviteUserByHash(hash);
-    return {
-      email: result?.email as string,
-      firstname: result?.firstname as string,
-      lastname: result?.lastname as string,
-      password: "",
-      password_confirmation: "",
-      phone_number: "",
-    };
-  };
+  const validationSchema = yup.object().shape({
+    firstname: yup
+      .string()
+      .required(translate("auth.signUp.requiredFirstName")),
+    lastname: yup.string(),
+    email: yup
+      .string()
+      .email()
+      .required(translate("auth.signUp.requiredEmail")),
+    password: yup
+      .string()
+      .min(8)
+      .required(translate("auth.signUp.requiredPassword")),
+    password_confirmation: yup
+      .string()
+      .required(translate("auth.signUp.requiredPasswordConfirmation"))
+      .oneOf([yup.ref("password")], translate("auth.signUp.passwordMatch")),
+    phone_number: yup
+      .string()
+      .matches(phoneRegExp, "Invalid Phone Format")
+      .nullable(),
+  });
 
-  const userState = useAsync(fetchUser, [hash]);
+  async function onSubmit(values: typeof initialValues) {
+    try {
+      if (handleCaptcha) {
+        const captchaSuccess = await handleCaptcha();
+        if (!captchaSuccess) {
+          throw new Error(translate("auth.invite.captchaError"));
+        }
+      }
 
-  const onSubmit = async (values: User) => {
-    if (!hash || !userState.value) {
-      throw new Error(translate("auth.invite.hashError"));
+      await register({
+        ...values,
+        custom_fields: customFields,
+      });
+      const profile = await userOperations.getUserInfo();
+      localStorage.setItem("user", JSON.stringify(profile));
+      redirect();
+    } catch (err: any) {
+      setErrors({
+        email: err.message,
+      });
     }
-    await authOperations.processInvite({
-      invite_hash: hash,
-      password: values.password,
-      lastname: values.lastname,
-      firstname: values.firstname,
-      //@ts-ignore
-      phone_number: values.phone_number,
-    });
-    const profile = await userOperations.getUserInfo();
-    localStorage.setItem("user", JSON.stringify(profile));
-    redirect();
-  };
+  }
 
   const formikProps = useFormik({
-    initialValues: userState.value || {
-      email: "",
-      firstname: "",
-      lastname: "",
-      password: "",
-      password_confirmation: "",
-      phone_number: "",
-    },
+    initialValues,
     validateOnBlur: false,
     validateOnChange: false,
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit,
   });
 
@@ -109,23 +102,24 @@ export function useInvite({ redirect, hash }: UseInviteProps) {
     errors,
     setErrors,
     isSubmitting,
-    setValues,
   } = formikProps;
 
-  useUpdateEffect(() => {
-    if (userState.value) {
-      setValues(userState.value);
-    }
-  }, [userState.value]);
-
   return {
-    models: { values, errors, loading: isSubmitting || userState.loading },
-    operations: { handleChange, handleSubmit, setErrors },
+    models: { values, errors, loading: isSubmitting },
+    operations: { handleChange, handleSubmit },
   };
 }
-
-export function InvitePage({ redirect, hash, allow_phone }: UseInviteProps) {
-  const { models, operations } = useInvite({ redirect, hash });
+export function RegisterPage({
+  redirect,
+  customFields = [],
+  handleCaptcha,
+  allow_phone,
+}: props) {
+  const { models, operations } = useSignUp({
+    redirect,
+    customFields,
+    handleCaptcha,
+  });
   const { theme } = useClientContext();
   return (
     <div className={theme.auth.container}>
@@ -152,9 +146,12 @@ interface FormComponentProps {
   allow_phone?: boolean;
 }
 
-function FormComponent(
-  { theme, models, operations, allow_phone }: FormComponentProps,
-) {
+function FormComponent({
+  theme,
+  models,
+  operations,
+  allow_phone,
+}: FormComponentProps) {
   return (
     <form className={theme.form.container} onSubmit={operations.handleSubmit}>
       <div className={theme.group.container}>
@@ -204,9 +201,12 @@ function NameInputFields({ theme, models, operations }: FormComponentProps) {
   );
 }
 
-function AuthInputFields(
-  { theme, models, operations, allow_phone }: FormComponentProps,
-) {
+function AuthInputFields({
+  theme,
+  models,
+  operations,
+  allow_phone,
+}: FormComponentProps) {
   return (
     <div className={theme.group.columns}>
       <Form.TextInput
@@ -219,18 +219,17 @@ function AuthInputFields(
         name="email"
         helpText={models.errors.email}
         error={!!models.errors.email}
-        disabled={true}
       />
 
       {allow_phone && (
         <Form.TextInput
+          name="phone_number"
+          type="tel"
           theme={theme.textInput}
-          type="text"
           label={translate("auth.phone.label")}
           placeholder={translate("auth.phone.placeholder")}
-          value={models.values.phone_number}
           onChange={operations.handleChange}
-          name="phone_number"
+          value={models.values.phone_number}
           helpText={models.errors.phone_number}
           error={!!models.errors.phone_number}
         />

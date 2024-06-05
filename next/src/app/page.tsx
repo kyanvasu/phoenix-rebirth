@@ -1,4 +1,4 @@
-import { useServerContext } from "@kanvas/phoenix/model/store/core.store/server.store";
+import { useServerContext } from "@kanvas/phoenix/server";
 
 export default function Home() {
   const { sdk } = useServerContext();

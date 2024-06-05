@@ -1,12 +1,12 @@
 import React from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useClientContext } from "../../../model/store/core.store/client.store";
-import { useAuth } from "../../../model/interactions/use-auth";
-import { Body, Button, Heading } from "../../../legacy/components/atoms";
-import { Form } from "../../../legacy/components/molecules";
+import { useClientContext } from "../../../../model/store/core.store/client.store";
+import { useAuth } from "../../../../model/interactions/use-auth";
+import { Body, Button, Heading } from "../../../../legacy/components/atoms";
+import { Form } from "../../../../legacy/components/molecules";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { translate } from "../../../translate";
+import { translate } from "../../../../translate";
 import { toast } from "react-hot-toast";
 
 interface props {

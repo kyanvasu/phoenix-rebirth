@@ -1,11 +1,11 @@
 import React from "react";
-import { Profile } from "../../../legacy/components/molecules";
-import { Body, Button } from "../../../legacy/components/atoms";
-import ChevronRight from "../../../legacy/components/atoms/icons/chevron-right";
-import Icons from "../../../legacy/components/atoms/icons";
+import ChevronRight from "../../../../legacy/components/atoms/icons/chevron-right";
+import { useClientContext } from "../../../../model/store/core.store/client.store";
+import { Body, Button } from "../../../../legacy/components/atoms";
+import { Profile } from "../../../../legacy/components/molecules";
+import { useAuth } from "../../../../model/interactions/use-auth";
+import Icons from "../../../../legacy/components/atoms/icons";
 import { UserData } from "@kanvas/core";
-import { useAuth } from "../../../model/interactions/use-auth";
-import { useClientContext } from "../../../model/store/core.store/client.store";
 
 export interface ViewsProps {
   view: number;

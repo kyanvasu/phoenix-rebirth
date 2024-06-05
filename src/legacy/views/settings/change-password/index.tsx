@@ -1,14 +1,12 @@
 import React from "react";
-
-import { useFormik } from "formik";
-
-import * as yup from "yup";
+import { useClientContext } from "../../../../model/store/core.store/client.store";
+import { TextInput } from "../../../../legacy/components/molecules/form";
+import Spinner from "../../../../legacy/components/atoms/icons/spinner";
+import { useAuth } from "../../../../model/interactions/use-auth";
+import { Body, Button } from "../../../../legacy/components/atoms";
 import { toast, Toaster } from "react-hot-toast";
-import { useAuth } from "../../../model/interactions/use-auth";
-import { useClientContext } from "../../../model/store/core.store/client.store";
-import { Body, Button } from "../../../legacy/components/atoms";
-import { TextInput } from "../../../legacy/components/molecules/form";
-import Spinner from "../../../legacy/components/atoms/icons/spinner";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 function useChangePassword() {
   const { sdk } = useClientContext();
@@ -22,12 +20,14 @@ function useChangePassword() {
   } = useAuth({ sdk });
 
   const validationSchema = yup.object().shape({
-    current_password: yup.string().min(8).required(
-      "Current password is a required field",
-    ),
-    new_password: yup.string().min(8).required(
-      "New password must be at least 8 characters",
-    ),
+    current_password: yup
+      .string()
+      .min(8)
+      .required("Current password is a required field"),
+    new_password: yup
+      .string()
+      .min(8)
+      .required("New password must be at least 8 characters"),
     confirm_new_password: yup
       .string()
       .required("Confirm and new password must be equals")

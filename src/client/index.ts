@@ -12,8 +12,8 @@ import {
   RegisterPage,
   RESET_PASSWORD_SUCCESSFUL,
   ResetPasswordPage,
-} from "../views/auth";
-import * as Pages from "../views/index.client";
+} from "../legacy/views/auth";
+import * as Pages from "../legacy/views/index.client";
 import EmptyTable from "../legacy/components/organism/table/empty";
 
 const { useTable, useAuth } = Interactions;

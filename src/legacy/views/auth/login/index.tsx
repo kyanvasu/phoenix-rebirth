@@ -1,16 +1,16 @@
-import Link from "next/link";
-import React from "react";
-import { useState } from "react";
-import { Body, Button, Heading } from "../../../legacy/components/atoms";
-import { Form } from "../../../legacy/components/molecules";
+import { useClientContext } from "../../../../model/store/core.store/client.store";
+import { Body, Button, Heading } from "../../../../legacy/components/atoms";
+import Spinner from "../../../../legacy/components/atoms/icons/spinner";
+import { useUser } from "../../../../model/interactions/use-user";
+import { useAuth } from "../../../../model/interactions/use-auth";
+import { Form } from "../../../../legacy/components/molecules";
+import { AuthPageTypes } from "../../../../model/types";
+import { translate } from "../../../../translate";
 import { useFormik } from "formik";
+import { useState } from "react";
+import Link from "next/link";
 import * as yup from "yup";
-import { useAuth } from "../../../model/interactions/use-auth";
-import { useClientContext } from "../../../model/store/core.store/client.store";
-import { useUser } from "../../../model/interactions/use-user";
-import Spinner from "../../../legacy/components/atoms/icons/spinner";
-import { translate } from "../../../translate";
-import { AuthPageTypes } from "../../../model/types";
+import React from "react";
 
 interface props {
   redirect: () => void;
@@ -165,7 +165,9 @@ function ActionForm({ theme, operations, models }: FormComponentProps) {
           type="submit"
           disabled={models.isSubmitting}
         >
-          {models.isSubmitting ? <Spinner /> : (
+          {models.isSubmitting ? (
+            <Spinner />
+          ) : (
             translate("auth.signIn.buttonLabel")
           )}
         </Button.Solid>

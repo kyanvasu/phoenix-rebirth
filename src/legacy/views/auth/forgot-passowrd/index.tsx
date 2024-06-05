@@ -1,14 +1,19 @@
-import { useClientContext } from "../../../model/store/core.store/client.store";
-import { Body, Button, Heading, Icons } from "../../../legacy/components/atoms";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { useAuth } from "../../../model/interactions/use-auth";
-import { Form } from "../../../legacy/components/molecules";
-import { translate } from "../../../translate";
+import { Form } from "../../../../legacy/components/molecules";
+import { useAuth } from "@/model/interactions";
+import { useClientContext } from "@/client";
 import { toast } from "react-hot-toast";
+import { translate } from "@/translate";
 import { useFormik } from "formik";
 import Link from "next/link";
 import * as yup from "yup";
 import React from "react";
+import {
+  Body,
+  Button,
+  Heading,
+  Icons,
+} from "../../../../legacy/components/atoms";
 
 interface props {
   router: AppRouterInstance;

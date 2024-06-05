@@ -2,7 +2,7 @@
 import "./globals.css";
 import KanvasCore from "@kanvas/core";
 import RootClientLayout from "./client";
-import { ServerCoreStore } from "@kanvas/phoenix/model/store/core.store/server.store";
+import { ServerCoreStore } from "@kanvas/phoenix/server";
 import { PropsWithChildren } from "react";
 
 export const sdk = new KanvasCore({

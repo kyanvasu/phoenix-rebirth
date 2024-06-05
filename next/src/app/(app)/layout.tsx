@@ -6,6 +6,8 @@ import { Organism as Client } from '@kanvas/phoenix/client';
 import { Organism, SidebarItem, Atoms, Templates } from '@kanvas/phoenix'
 const { Icons } = Atoms;
 
+import {  } from "@kanvas/phoenix/ui/icons";
+
 const items: SidebarItem[] = [
   {
     key: 'dashboard',

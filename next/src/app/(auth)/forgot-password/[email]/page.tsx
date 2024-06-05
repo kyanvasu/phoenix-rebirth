@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter, useParams } from "next/navigation";
-import { EmailPage } from "@kanvas/phoenix/views/(auth)/email";
+import { EmailPage } from "@kanvas/phoenix/views/auth/email";
 
 export default function EmailPagE() {
   const router = useRouter();

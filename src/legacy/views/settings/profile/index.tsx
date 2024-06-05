@@ -2,18 +2,19 @@ import React from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
-import { useUser } from "../../../model/interactions/use-user";
-import { useClientContext } from "../../../model/store/core.store/client.store";
-import Profile from "../../../legacy/components/molecules/profile";
-import { TextInput } from "../../../legacy/components/molecules/form";
+import { useUser } from "../../../../model/interactions/use-user";
+import { useClientContext } from "../../../../model/store/core.store/client.store";
+import Profile from "../../../../legacy/components/molecules/profile";
+import { TextInput } from "../../../../legacy/components/molecules/form";
 // import Select from '../../../components/molecules/select';
-import { Button } from "../../../legacy/components/atoms";
+import { Button } from "../../../../legacy/components/atoms";
 import { UserData } from "@kanvas/core";
 
 export interface Props {
   profile?: UserData;
   setProfile?: any;
 }
+
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -33,10 +34,10 @@ function useProfile({ profile, setProfile }: Props) {
   } = profile!;
 
   const contact_email = custom_fields.data.find(
-    ({ name }) => name === "contact_email",
+    ({ name }) => name === "contact_email"
   )?.value;
   const landing = custom_fields.data.find(
-    ({ name }) => name === "landing_page",
+    ({ name }) => name === "landing_page"
   )?.value;
 
   const initialValues = {
@@ -100,7 +101,7 @@ function useProfile({ profile, setProfile }: Props) {
     } catch (error: any) {
       if (
         error.message ===
-          "ApolloError: Validation failed for the field [updateUser]."
+        "ApolloError: Validation failed for the field [updateUser]."
       ) {
         toast.error("Display Name is already taken");
       }
@@ -205,15 +206,13 @@ export function ProfileView({ profile, setProfile }: Props) {
           error={!!models.errors.email}
           disabled
         />
-        {
-          /* <Select
+        {/* <Select
           options={[]}
           name='landing'
           label='Select Landing Page'
           value={models.values.landing}
           setFieldValue={operations.setFieldValue}
-        /> */
-        }
+        /> */}
         <TextInput
           name="contact_email"
           type="email"
