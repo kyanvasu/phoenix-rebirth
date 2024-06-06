@@ -1,11 +1,11 @@
 {
   "name": "@kanvas/phoenix-rebirth",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "Client and ui kit",
-  "type": "module",
   "files": [
     "dist/**/*"
   ],
+  "main": "dist/main.mjs",
   "engines": {
     "node": ">=20.0.0"
   },
