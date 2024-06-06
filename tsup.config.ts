@@ -14,8 +14,9 @@ export default defineConfig([
       "src/client",
       "src/server",
       "src/utils",
+      "src/config"
     ],
-    format: ["esm", "cjs"],
+    format: ["esm"],
     minify: true,
     target: "esnext",
     outDir: "dist",
@@ -27,7 +28,7 @@ export default defineConfig([
   {
     dts: true,
     entry: ["src/legacy/views"],
-    format: ["esm", "cjs"],
+    format: ["esm"],
     minify: true,
     target: "esnext",
     outDir: "dist/legacy/views",
@@ -39,7 +40,7 @@ export default defineConfig([
   {
     dts: true,
     entry: ["src/legacy"],
-    format: ["esm", "cjs"],
+    format: ["esm"],
     minify: true,
     target: "esnext",
     outDir: "dist/legacy",
@@ -51,7 +52,7 @@ export default defineConfig([
   {
     dts: true,
     entry: ["src/components/ui"],
-    format: ["esm", "cjs"],
+    format: ["esm"],
     minify: true,
     target: "esnext",
     outDir: "dist/components/base",
@@ -63,7 +64,7 @@ export default defineConfig([
   {
     dts: true,
     entry: ["src/components/icons"],
-    format: ["esm", "cjs"],
+    format: ["esm"],
     minify: true,
     target: "esnext",
     outDir: "dist/components/icons",
