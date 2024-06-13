@@ -10,6 +10,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
+    "prepare": "pnpm build",
     "build": "NODE_OPTIONS='--max-old-space-size=16384' tsup",
     "watch": "NODE_OPTIONS='--max-old-space-size=16384' tsup --watch"
   },
