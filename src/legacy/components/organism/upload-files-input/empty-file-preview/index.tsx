@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { translate } from "../../../../../translate";
-import React from "react";
 
 interface Props {
   icon?: React.ReactNode;

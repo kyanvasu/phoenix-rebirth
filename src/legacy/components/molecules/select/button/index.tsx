@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import React from "react";
+
 import classNames from "classnames";
 import ChevronDown from "../../../atoms/icons/chevron-down";
 import { SelectTypes } from "../../../../../model/types";

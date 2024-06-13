@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+
 import { BaseTheme } from "../../../../theme";
 import { CardTypes } from "../../../../model/types";
 

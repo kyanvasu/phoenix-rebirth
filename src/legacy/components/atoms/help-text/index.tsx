@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+
 import { PropsWithChildren } from "react";
 import { HelpText as IHelpText } from "../../../../model/types";
 import { BaseTheme } from "../../../../theme";

@@ -1,5 +1,4 @@
 import { IconProps } from "@/model/types";
-import React from "react";
 
 export default function Archive(props: IconProps) {
   const { size = 24, ...rest } = props;

@@ -2,7 +2,6 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import EmptyState from "@/legacy/components/molecules/empty-state";
 import { useClientContext } from "@/client";
 import { translate } from "@/translate";
-import React from "react";
 
 interface props {
   router: AppRouterInstance;

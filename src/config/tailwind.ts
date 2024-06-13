@@ -92,7 +92,7 @@ function deepMerge(base: any, custom: any): any {
 
 // Function to create the Tailwind configuration
 export function createTailwindConfig(
-  customConfig: Partial<Config> = {}
+  customConfig: Partial<Config> = {},
 ): Config {
   const mergedConfig = deepMerge(baseConfig, customConfig);
   return {

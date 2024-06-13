@@ -1,6 +1,6 @@
 import { HelpText } from "../../atoms/help-text";
 import { translate } from "../../../../translate";
-import React from "react";
+
 import { EmptyFilePreview } from "./empty-file-preview";
 import { Header } from "./header";
 import { FilesPreview } from "./files-preview";

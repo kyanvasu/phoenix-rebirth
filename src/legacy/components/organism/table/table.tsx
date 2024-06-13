@@ -1,4 +1,3 @@
-import React from "react";
 import { flexRender } from "@tanstack/react-table";
 import classNames from "classnames";
 import { TContainer } from "./container";

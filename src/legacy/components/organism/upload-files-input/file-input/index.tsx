@@ -1,5 +1,5 @@
 import { translate } from "../../../../../translate";
-import React from "react";
+
 import toast, { Toaster } from "react-hot-toast";
 import { UploadButton } from "../upload-button";
 

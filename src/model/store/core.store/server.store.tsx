@@ -1,4 +1,3 @@
-import React from "react";
 import { Configuration, CoreProps } from "../../types";
 import { CoreContext } from "../../services/core.context";
 import { BaseTheme } from "../../../theme";

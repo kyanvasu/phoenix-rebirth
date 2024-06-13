@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import React from "react";
+
 import { OptionsList } from "./options-list";
 import { Button } from "./button";
 import classNames from "classnames";
@@ -7,6 +7,7 @@ import { FormikErrors } from "formik";
 import { SelectTypes } from "../../../../model/types";
 import { useClientContext } from "../../../../model/store/core.store/client.store";
 import { BaseTheme } from "../../../../theme/base-theme";
+import { useState } from "react";
 
 export interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   name: string;
@@ -40,15 +41,13 @@ export default function Select(props: Props) {
     textColor,
     customTheme,
   } = props;
-  const [selected, setSelected] = React.useState<string | undefined>(value);
+  const [selected, setSelected] = useState<string | undefined>(value);
   const handleChange = (val: string) => {
     setSelected(val);
     setFieldValue?.(name, val);
   };
   const phoenixTheme = useClientContext();
-  const theme = customTheme ??
-    phoenixTheme.theme.Select ??
-    BaseTheme.Select;
+  const theme = customTheme ?? phoenixTheme.theme.Select ?? BaseTheme.Select;
   return (
     <Listbox disabled={disabled} value={selected} onChange={handleChange}>
       {({ open }) => (
@@ -68,7 +67,7 @@ export default function Select(props: Props) {
           )}
           <div className="relative">
             <Button
-              placeholder={selected ? selected : (props?.placeholder ?? "")}
+              placeholder={selected ? selected : props?.placeholder ?? ""}
               Icon={Icon}
               error={error}
               disabled={disabled}

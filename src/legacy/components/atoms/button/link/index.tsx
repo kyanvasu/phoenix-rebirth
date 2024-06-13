@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Button } from "../base";
 import { ButtonProps } from "@/model/types/button.props";
 

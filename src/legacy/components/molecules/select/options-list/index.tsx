@@ -1,8 +1,8 @@
-import { Listbox, Transition } from "@headlessui/react";
-import { Option } from "../option";
-import React from "react";
-import { SelectTypes } from "../../../../../model/types";
 import { BaseTheme } from "../../../../../theme/base-theme";
+import { Listbox, Transition } from "@headlessui/react";
+import { SelectTypes } from "../../../../../model/types";
+import { Option } from "../option";
+import { Fragment } from "react";
 
 export function OptionsList({
   options,
@@ -17,7 +17,7 @@ export function OptionsList({
   return (
     <Transition
       show={open}
-      as={React.Fragment}
+      as={Fragment}
       leave="transition ease-in duration-100"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
