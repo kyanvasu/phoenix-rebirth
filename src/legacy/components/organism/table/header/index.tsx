@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import React from "react";
 
 export function THeader(props: React.HTMLAttributes<HTMLElement>) {
   const { className, children } = props;

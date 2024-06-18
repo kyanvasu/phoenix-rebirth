@@ -1,4 +1,3 @@
-import React from "react";
 import Icons from "../../../atoms/icons";
 
 export const IMAGES_MIME = [

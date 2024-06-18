@@ -1,4 +1,3 @@
-import React from "react";
 import { useClientContext } from "../../../../model/store/core.store/client.store";
 import { TextInput } from "../../../../legacy/components/molecules/form";
 import Spinner from "../../../../legacy/components/atoms/icons/spinner";

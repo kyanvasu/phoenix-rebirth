@@ -1,4 +1,3 @@
-import React from "react";
 import { type Table } from "@tanstack/react-table";
 import { Button } from "../../../atoms";
 

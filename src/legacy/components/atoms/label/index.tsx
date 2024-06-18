@@ -1,4 +1,4 @@
-import React, { LabelHTMLAttributes } from "react";
+import { LabelHTMLAttributes } from "react";
 import { LabelTypes } from "../../../../model/types";
 import { BaseTheme } from "../../../../theme";
 

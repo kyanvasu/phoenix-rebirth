@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import { ButtonProps } from "../../../../../model/types/button.props";
 import { useButton } from "../../../../../model/interactions/use-button";

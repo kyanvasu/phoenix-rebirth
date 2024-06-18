@@ -1,7 +1,6 @@
 "use client";
 
 import { Fragment, JSX, startTransition, useEffect, useState } from "react";
-import React from "react";
 
 async function fn() {
   return <hr />;

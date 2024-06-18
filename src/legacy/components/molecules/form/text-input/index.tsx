@@ -1,4 +1,3 @@
-import React from "react";
 import { HelpText, Label } from "../../../atoms";
 import { InputTypes } from "../../../../../model/types";
 import { BaseTheme } from "../../../../../theme";

@@ -1,4 +1,3 @@
-import React from "react";
 import Icons from "../../../atoms/icons";
 import { translate } from "../../../../../translate";
 import { FileInput } from "../file-input";

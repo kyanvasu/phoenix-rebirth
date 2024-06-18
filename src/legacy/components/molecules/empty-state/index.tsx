@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { Body, Button } from "../../atoms";
 import { EmptyStateTypes } from "../../../../model/types";
 import { BaseTheme } from "../../../../theme";

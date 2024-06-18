@@ -1,6 +1,6 @@
-import React from "react";
 import { CardButtonTypes } from "../../../../model/types";
 import { BaseTheme } from "../../../../theme";
+import { cloneElement } from "react";
 
 interface Props {
   icon: JSX.Element;
@@ -14,7 +14,7 @@ export function CardButton(props: Props) {
 
   return (
     <div className={styles.container}>
-      {React.cloneElement(icon, {
+      {cloneElement(icon, {
         size: 24,
         className: styles.icon,
       })}

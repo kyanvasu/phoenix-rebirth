@@ -1,5 +1,4 @@
 import { translate } from "../../../../../translate";
-import React from "react";
 
 export function UploadButton({
   handleChange,

@@ -1,5 +1,4 @@
 import { Fragment, JSX, useMemo } from "react";
-import React from "react";
 
 const isSSR = globalThis?.window === undefined || globalThis?.window === null;
 

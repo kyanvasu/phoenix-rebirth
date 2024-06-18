@@ -1,4 +1,3 @@
-import React from "react";
 import Spinner from "../../../atoms/icons/spinner";
 import { Table } from "../table";
 import ListEmptyMessage from "../../../atoms/icons/list-empty-message";

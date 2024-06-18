@@ -1,5 +1,4 @@
 import { IconProps } from "@/model/types";
-import React from "react";
 
 export default function ChevronRight(props: IconProps) {
   const { className, size = 20 } = props;

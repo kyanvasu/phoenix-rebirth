@@ -1,7 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { useClientContext } from "../../../../model/store/core.store/client.store";
 import { DropdwonItemInterface } from "../../../../model/types";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import classNames from "classnames";
 
 interface Props extends PropsWithChildren {

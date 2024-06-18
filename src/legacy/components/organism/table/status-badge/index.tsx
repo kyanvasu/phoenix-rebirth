@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from "react";
-import { Badge } from "../../../atoms/badge";
 import { StatusBadgeTypes } from "../../../../../model/types";
-import classNames from "classnames";
 import { BaseTheme } from "../../../../../theme";
+import { Badge } from "../../../atoms/badge";
+import { PropsWithChildren } from "react";
+import classNames from "classnames";
 
 interface Props extends PropsWithChildren {
   icon?: any;

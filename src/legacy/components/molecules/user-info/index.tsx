@@ -1,4 +1,3 @@
-import React from "react";
 import { Body } from "../../atoms";
 
 export default function UserInfo() {

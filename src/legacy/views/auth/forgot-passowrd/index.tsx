@@ -7,7 +7,7 @@ import { translate } from "@/translate";
 import { useFormik } from "formik";
 import Link from "next/link";
 import * as yup from "yup";
-import React from "react";
+
 import {
   Body,
   Button,

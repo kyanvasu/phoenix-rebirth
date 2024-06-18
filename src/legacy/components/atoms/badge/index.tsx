@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import { BadgeTypes } from "../../../../model/types";
 import { BaseTheme } from "../../../../theme";

@@ -1,4 +1,3 @@
-import React from "react";
 import { FilePreviewItem } from "../file-preview-item";
 
 export interface Props {

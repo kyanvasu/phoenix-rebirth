@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import React from "react";
 
 interface Props extends React.SVGProps<SVGSVGElement> {
   size?: number;

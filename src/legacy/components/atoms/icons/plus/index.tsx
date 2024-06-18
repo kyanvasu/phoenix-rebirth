@@ -1,4 +1,3 @@
-import React from "react";
 import { IconProps } from "@/model/types";
 
 export default function Plus(props: IconProps) {

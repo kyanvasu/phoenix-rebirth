@@ -1,5 +1,4 @@
 import { IconProps } from "@/model/types";
-import React from "react";
 
 export default function DotsHorizontal(props: IconProps) {
   const { size = 24, className } = props;

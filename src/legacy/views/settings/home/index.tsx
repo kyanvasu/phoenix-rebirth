@@ -1,4 +1,3 @@
-import React from "react";
 import ChevronRight from "../../../../legacy/components/atoms/icons/chevron-right";
 import { useClientContext } from "../../../../model/store/core.store/client.store";
 import { Body, Button } from "../../../../legacy/components/atoms";

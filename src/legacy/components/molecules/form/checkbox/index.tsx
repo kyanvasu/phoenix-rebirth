@@ -1,4 +1,3 @@
-import React from "react";
 import { Label } from "../../../atoms";
 import Icons from "../../../atoms/icons";
 import { InputTypes } from "../../../../../model/types";

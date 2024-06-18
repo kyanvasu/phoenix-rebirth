@@ -1,4 +1,3 @@
-import React from "react";
 import { Body } from "../../../atoms";
 import classNames from "classnames";
 

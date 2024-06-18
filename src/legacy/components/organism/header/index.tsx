@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import classnames from "classnames";
 import Icons from "../../atoms/icons";
 import { UserInfo } from "../../molecules";

@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import React from "react";
 
 export function TRow(props: React.TableHTMLAttributes<HTMLTableRowElement>) {
   const { className, children } = props;

@@ -10,7 +10,6 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import Link from "next/link";
 import * as yup from "yup";
-import React from "react";
 
 interface props {
   redirect: () => void;

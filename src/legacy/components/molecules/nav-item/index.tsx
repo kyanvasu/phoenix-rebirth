@@ -1,4 +1,3 @@
-import React from "react";
 import { SidebarItem } from "../../../../model/types";
 import classnames from "classnames";
 import { Body, Icons } from "../../atoms";

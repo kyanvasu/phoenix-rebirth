@@ -1,5 +1,3 @@
-import React from "react";
-
 export function TContainer({ children }: { children: React.ReactNode }) {
   return (
     <div className="flow-root">

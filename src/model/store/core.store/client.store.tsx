@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 import { ConfigurationClient, CoreClientProps } from "../../types";
 import { BaseTheme } from "../../../theme";
 

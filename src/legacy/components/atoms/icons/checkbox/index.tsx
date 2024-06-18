@@ -1,4 +1,3 @@
-import React from "react";
 import { IconProps } from "@/model/types";
 
 interface Props extends IconProps {

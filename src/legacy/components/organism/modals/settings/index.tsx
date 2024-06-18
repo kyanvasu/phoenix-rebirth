@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 interface Props extends PropsWithChildren {
   isOpen: boolean;

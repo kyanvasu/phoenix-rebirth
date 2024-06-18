@@ -1,6 +1,6 @@
 {
   "name": "@kanvas/phoenix-rebirth",
-  "version": "0.0.7",
+  "version": "0.0.10",
   "description": "Client and ui kit",
   "files": [
     "**/*"
@@ -10,13 +10,9 @@
     "node": ">=20.0.0"
   },
   "scripts": {
+    "prepare": "pnpm build",
     "build": "NODE_OPTIONS='--max-old-space-size=16384' tsup",
-    "watch": "NODE_OPTIONS='--max-old-space-size=16384' tsup --watch",
-    "copy-dist": "cp -r dist/* ./",
-    "prepublishOnly": "npm run clean",
-    "clean": "rm -rf dist/*",
-    "postpublish": "npm run clean-published",
-    "clean-published": "find . -maxdepth 1 ! -name 'dist' ! -name 'next' ! -name 'node_modules' ! -name '.git' ! -name 'src' ! -name '.gitignore' ! -name 'components.json' ! -name 'LICENSE.md' ! -name 'package.json' ! -name 'pnpm-lock.yaml' ! -name 'postcss.config.js' ! -name 'README.md' ! -name 'tailwind.config.js' ! -name 'tsconfig.json' !  -name '.npmignore' ! -name 'tsup.config.ts' ! -name 'USAGE.md' ! -name '.' ! -name '..' -exec rm -rf {} +"
+    "watch": "NODE_OPTIONS='--max-old-space-size=16384' tsup --watch"
   },
   "repository": {
     "type": "git",

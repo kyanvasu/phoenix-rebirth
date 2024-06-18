@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import React from "react";
+
 import Check from "../../../atoms/icons/check";
 import classNames from "classnames";
 import { SelectTypes } from "../../../../../model/types";
