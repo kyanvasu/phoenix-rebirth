@@ -3,7 +3,7 @@
   "version": "0.0.11",
   "description": "Client and ui kit",
   "files": [
-    "**/*"
+    "dist/**/*"
   ],
   "main": "dist/main.mjs",
   "engines": {
