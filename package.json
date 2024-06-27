@@ -1,6 +1,6 @@
 {
   "name": "@kanvas/phoenix-rebirth",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Client and ui kit",
   "files": [
     "**/*"
@@ -74,6 +74,7 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@types/node": "^20.14.2",
     "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
