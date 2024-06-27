@@ -146,8 +146,8 @@ in your main css file:
 
 > _Note_: The variables within the global CSS file are those that control the behavior of the components such as their colors and border radius. To avoid conflicts between phoenix-rebirth and your tailwind configuration, it is recommended that you use other names to name your colors and other configurations.
 
-```json
-  ...
+
+```css
   theme: {
     container: {
       center: /* Reserved do not modify in tailwind */,
@@ -211,7 +211,6 @@ in your main css file:
       },
     },
   },
-  ...
 ```
 
 If you need to modify any of these parameters you must do so using CSS variables
