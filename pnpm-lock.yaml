@@ -137,6 +137,9 @@ importers:
       react-resizable-panels:
         specifier: ^2.0.19
         version: 2.0.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-store-js:
+        specifier: ^1.0.0
+        version: 1.0.0
       react-use:
         specifier: ^17.5.0
         version: 17.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2639,6 +2642,10 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  react-store-js@1.0.0:
+    resolution: {integrity: sha512-ggFHRb3VCELfS9E8AJQ4EZ3nzXCU92GZRcBEBTZOZlHBK5dVevypoN8SpEzgfIVmKqOn5ktJ47mxujZJxw057Q==}
+    engines: {node: '>=10'}
 
   react-style-singleton@2.2.1:
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
@@ -5695,6 +5702,10 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
+  react-store-js@1.0.0:
+    dependencies:
+      react: 18.3.1
 
   react-style-singleton@2.2.1(@types/react@18.3.3)(react@18.3.1):
     dependencies:

@@ -63,3 +63,4 @@ node_modules
 !.yarn/versions
 
 dist
+/example-app/*
