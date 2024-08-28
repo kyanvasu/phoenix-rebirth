@@ -545,3 +545,13 @@ export function Component() {
   );
 }
 ```
+
+to use `server` need to create a api route:
+
+`src/app/api/threads/route.ts`
+
+```typescript
+import { POST } from "@kanvas/phoenix-rebirth/lib/threads-api";
+
+export { POST };
+```
