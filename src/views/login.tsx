@@ -71,7 +71,7 @@ const defaults: LoginProps = {
     height: "1080",
     src: "https://ui.shadcn.com/placeholder.svg",
     className:
-      "h-full w-full object-cover dark:brightness-[0.2] dark:grayscale",
+      "h-full w-full object-cover",
   },
   card: {
     logo: {
@@ -111,7 +111,7 @@ const validationSchema = Yup.object().shape({
 
 export function Login(props: LoginProps) {
   return (
-    <div className="w-dvw lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] h-dvh">
+    <div className="w-svw lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] h-svh">
       <div className="hidden bg-muted lg:block">
         <Image
           className={cn(defaults.image?.className, props.image?.className)}

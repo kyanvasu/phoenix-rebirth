@@ -146,7 +146,6 @@ in your main css file:
 
 > _Note_: The variables within the global CSS file are those that control the behavior of the components such as their colors and border radius. To avoid conflicts between phoenix-rebirth and your tailwind configuration, it is recommended that you use other names to name your colors and other configurations.
 
-
 ```css
   theme: {
     container: {
@@ -464,4 +463,85 @@ You can now use the warning utility class in your components.
 
 ```html
 <div className="bg-warning text-warning-foreground" />
+```
+
+## Advance utilities
+
+### useEvents Hook
+
+allows you to emit and listen to client-side events in a simple way, similar to frameworks like vue or svelte
+
+```jsx
+import { useEvents } from "@kanvas/phoenix-rebirth/dist/lib";
+
+
+export default Home(props) {
+  // events can be typed
+  const  { emit }  = useEvents<number>()
+
+  return <button onClick={() => emit('random', Math.random())}> random </button>
+}
+
+
+export default Home2(props) {
+  const  { on }  = useEvents<number>();
+
+  useEffect(() => {
+
+    return on('random', ({ detail }) => console.log(detail)); // 0.96362
+  }, []);
+
+  return <button>...</button>
+}
+```
+
+### useThreads Hook
+
+allows you to run code in a thread separate from the main one, either on the server (nodejs) or on the client (browser).
+
+```tsx
+"use client";
+
+import { useEvents } from "@kanvas/phoenix-rebirth/dist/lib";
+
+export function Component() {
+  const { client, server } = useThread();
+
+  // this use browser threads .....
+  const clientHandler = client(async () => {
+    // this code will execute on browser new thread
+
+    console.log("hello from browser thread", self); // threads not have access to 'window' context
+
+    return 2 + 2;
+  });
+
+  // this use node threads .....
+  const serverHandler = server(
+    // can pass data
+    async (port, data) => {
+      // this code will execute on nodejs new thread
+
+      console.log("hello from node thread", data);
+
+      return 2 + 2;
+    },
+    { hello: "world" }
+  );
+
+  return (
+    <>
+      <button
+        onClick={() => clientHandler().then((value) => console.log(value))}
+      >
+        client
+      </button>
+      <button
+        onClick={() => serverHandler().then((value) => console.log(value))}
+      >
+        server
+      </button>
+    </>
+  );
+}
 ```

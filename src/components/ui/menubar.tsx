@@ -7,10 +7,12 @@ import {
   DotFilledIcon,
 } from "@radix-ui/react-icons";
 import * as MenubarPrimitive from "@radix-ui/react-menubar";
-
+import { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
-const MenubarMenu = MenubarPrimitive.Menu;
+type MenubarMenuProps = ComponentProps<typeof MenubarPrimitive.Menu>;
+
+const MenubarMenu: React.FC<MenubarMenuProps> = MenubarPrimitive.Menu;
 
 const MenubarGroup = MenubarPrimitive.Group;
 

@@ -106,3 +106,13 @@ export function useThread(name?: string) {
     client,
   };
 }
+
+export type Leaves<T> = T extends Array<infer U>
+  ? `${number}.${Leaves<U>}` | `[${number}].${Leaves<U>}`
+  : T extends object
+  ? {
+      [K in keyof T]: `${Exclude<K, symbol>}${Leaves<T[K]> extends never
+        ? ""
+        : `.${Leaves<T[K]>}`}`;
+    }[keyof T]
+  : never;
