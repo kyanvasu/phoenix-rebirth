@@ -11,7 +11,7 @@
   },
   "scripts": {
     "prepare": "pnpm build",
-    "build": "NODE_OPTIONS='--max-old-space-size=16384' tsup",
+    "build": "tsup",
     "watch": "NODE_OPTIONS='--max-old-space-size=16384' tsup --watch",
     "add": "pnpm dlx shadcn-ui@latest add"
   },
@@ -90,7 +90,7 @@
     "react-hook-form": "^7.51.5",
     "react-resizable-panels": "^2.0.19",
     "react-store-js": "^1.0.0",
-    "react-use": "^17.5.0",
+    "react-use": "^17.5.1",
     "recharts": "^2.12.7",
     "rollup": "^3.26.0",
     "sonner": "^1.4.41",
