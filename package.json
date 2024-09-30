@@ -94,7 +94,6 @@
     "recharts": "^2.12.7",
     "rollup": "^3.26.0",
     "sonner": "^1.4.41",
-    "tailwind": "^4.0.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
