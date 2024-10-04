@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
         success: false,
         message: "Error processing application",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

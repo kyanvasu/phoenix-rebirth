@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
-
 //@ts-ignore
 import {
   NameType,

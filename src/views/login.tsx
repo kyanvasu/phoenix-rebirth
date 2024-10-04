@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Show } from "@/lib/server";
 import { cn } from "@/lib/utils";
 
 import {
@@ -70,8 +71,7 @@ const defaults: LoginProps = {
     width: "1920",
     height: "1080",
     src: "https://ui.shadcn.com/placeholder.svg",
-    className:
-      "h-full w-full object-cover",
+    className: "h-full w-full object-cover",
   },
   card: {
     logo: {
@@ -197,11 +197,14 @@ function LoginCard(props: LoginProps) {
               value={formik.values.email}
             />
 
-            {formik.touched.email && formik.errors.email ? (
+            <Show
+              when={formik.touched.email && formik.errors.email}
+              deps={[formik.touched.email, formik.errors.email]}
+            >
               <div className="text-destructive text-sm">
                 {formik.errors.email}
               </div>
-            ) : null}
+            </Show>
           </div>
 
           <div className="grid gap-2">
@@ -225,11 +228,14 @@ function LoginCard(props: LoginProps) {
               value={formik.values.password}
             />
 
-            {formik.touched.password && formik.errors.password ? (
+            <Show
+              when={formik.touched.password && formik.errors.password}
+              deps={[formik.touched.password, formik.errors.password]}
+            >
               <div className="text-destructive text-sm">
                 {formik.errors.password}
               </div>
-            ) : null}
+            </Show>
           </div>
 
           <div className="flex flex-row justify-between">

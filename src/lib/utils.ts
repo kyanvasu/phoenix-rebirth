@@ -7,7 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 
 /**
  * dispatch custom dom events
- *
  */
 export function useEvents<T extends any = any>() {
   /**
@@ -109,10 +108,8 @@ export function useThread(name?: string) {
 
 export type Leaves<T> = T extends Array<infer U>
   ? `${number}.${Leaves<U>}` | `[${number}].${Leaves<U>}`
-  : T extends object
-  ? {
-      [K in keyof T]: `${Exclude<K, symbol>}${Leaves<T[K]> extends never
-        ? ""
+  : T extends object ? {
+      [K in keyof T]: `${Exclude<K, symbol>}${Leaves<T[K]> extends never ? ""
         : `.${Leaves<T[K]>}`}`;
     }[keyof T]
   : never;
