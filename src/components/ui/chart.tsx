@@ -1,7 +1,8 @@
 "use client";
 
-import * as React from "react";
 import * as RechartsPrimitive from "recharts";
+import * as React from "react";
+
 //@ts-ignore
 import {
   NameType,

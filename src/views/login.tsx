@@ -163,7 +163,7 @@ function LoginCard(props: LoginProps) {
           <Image
             className={cn(
               defaults.card?.logo?.className,
-              props.card?.logo?.className
+              props.card?.logo?.className,
             )}
             height={props.card?.logo?.height ?? defaults.card?.logo?.height}
             width={props.card?.logo?.width ?? defaults.card?.logo?.width}
@@ -188,10 +188,8 @@ function LoginCard(props: LoginProps) {
               id="email"
               name="email"
               type="email"
-              placeholder={
-                props.card?.inputs?.email.placeholder ??
-                defaults.card?.inputs?.email.placeholder
-              }
+              placeholder={props.card?.inputs?.email.placeholder ??
+                defaults.card?.inputs?.email.placeholder}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
@@ -219,10 +217,8 @@ function LoginCard(props: LoginProps) {
               id="password"
               name="password"
               type="password"
-              placeholder={
-                props.card?.inputs?.password.placeholder ??
-                defaults.card?.inputs?.password.placeholder
-              }
+              placeholder={props.card?.inputs?.password.placeholder ??
+                defaults.card?.inputs?.password.placeholder}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}

@@ -1,3 +1,5 @@
+// @ts-ignore
+import tailwindMotion from "tailwindcss-motion";
 import { Config } from "tailwindcss";
 
 // Define the base Tailwind CSS configuration
@@ -72,7 +74,7 @@ const baseConfig: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindMotion],
 };
 
 // Utility function to deeply merge two objects, preserving base properties
