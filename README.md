@@ -2,24 +2,30 @@
 
 ## Description
 
-Kanvas Phoenix rebirth is a powerful library of pre-built components and features designed to simplify and expedite the development. Kanvas Phoenix rebirth streamlines the creation of attractive and functional user interfaces, allowing frontend developers to focus on business logic rather than reinventing the wheel in each project.
+Kanvas Phoenix rebirth is a powerful library of pre-built components and
+features designed to simplify and expedite the development. Kanvas Phoenix
+rebirth streamlines the creation of attractive and functional user interfaces,
+allowing frontend developers to focus on business logic rather than reinventing
+the wheel in each project.
 
 ## Installation
 
-To start using Kanvas Phoenix rebirth in your project, follow these simple steps:
+To start using Kanvas Phoenix rebirth in your project, follow these simple
+steps:
 
-1.  Ensure you have installed [Kanvas Core JS](https://github.com/bakaphp/kanvas-core-js#kanvas-core-js)
-2.  Install Kanvas Phoenix rebirth using npm or yarn:
+1. Ensure you have installed
+   [Kanvas Core JS](https://github.com/bakaphp/kanvas-core-js#kanvas-core-js)
+2. Install Kanvas Phoenix rebirth using npm or yarn:
 
 ```bash
- npm install @kanvas/phoenix-rebirth
- # or
- pnpm add @kanvas/phoenix-rebirth
- # or
- yarn add @kanvas/phoenix-rebirth
+npm install @kanvas/phoenix-rebirth
+# or
+pnpm add @kanvas/phoenix-rebirth
+# or
+yarn add @kanvas/phoenix-rebirth
 ```
 
-3.  Import the necessary components into your project and start using them.
+3. Import the necessary components into your project and start using them.
 
 ```javascript
 import { Button } from "@kanvas/phoenix-rebirth/dist/components/base/button";
@@ -29,7 +35,8 @@ import { Button } from "@kanvas/phoenix-rebirth/dist/components/base/button";
 
 ## Basic Usage
 
-Kanvas Phoenix rebirth integrates seamlessly into your project. Here's a quick example of how to use a button component:
+Kanvas Phoenix rebirth integrates seamlessly into your project. Here's a quick
+example of how to use a button component:
 
 ```jsx
 import { PlusIcon } from "@kanvas/phoenix-rebirth/dist/components/base/icons";
@@ -48,7 +55,9 @@ function MyPage() {
 }
 ```
 
-> _Note_: All components come from [shadcn/ui](https://ui.shadcn.com/docs/components/accordion) you can check all of then.
+> _Note_: All components come from
+> [shadcn/ui](https://ui.shadcn.com/docs/components/accordion) you can check all
+> of then.
 
 ## How configure tailwind with phoenix-rebirth
 
@@ -144,79 +153,84 @@ in your main css file:
 }
 ```
 
-> _Note_: The variables within the global CSS file are those that control the behavior of the components such as their colors and border radius. To avoid conflicts between phoenix-rebirth and your tailwind configuration, it is recommended that you use other names to name your colors and other configurations.
+> _Note_: The variables within the global CSS file are those that control the
+> behavior of the components such as their colors and border radius. To avoid
+> conflicts between phoenix-rebirth and your tailwind configuration, it is
+> recommended that you use other names to name your colors and other
+> configurations.
 
 ```css
-  theme: {
-    container: {
-      center: /* Reserved do not modify in tailwind */,
-      padding: /* Reserved do not modify in tailwind */,
-      screens: {
-        "2xl": /* Reserved do not modify in tailwind */,
-      },
-    },
-    extend: {
-      colors: {
-        border: "Reserved do not modify in tailwind",
-        input: "Reserved do not modify in tailwind",
-        ring: "Reserved do not modify in tailwind",
-        background: "Reserved do not modify in tailwind",
-        foreground: "Reserved do not modify in tailwind",
-        primary: {
-          DEFAULT: "Reserved do not modify in tailwind",
-          foreground: "Reserved do not modify in tailwind",
-        },
-        secondary: {
-          DEFAULT: "Reserved do not modify in tailwind",
-          foreground: "Reserved do not modify in tailwind",
-        },
-        destructive: {
-          DEFAULT: "Reserved do not modify in tailwind",
-          foreground: "Reserved do not modify in tailwind",
-        },
-        muted: {
-          DEFAULT: "Reserved do not modify in tailwind",
-          foreground: "Reserved do not modify in tailwind",
-        },
-        accent: {
-          DEFAULT: "Reserved do not modify in tailwind",
-          foreground: "Reserved do not modify in tailwind",
-        },
-        popover: {
-          DEFAULT: "Reserved do not modify in tailwind",
-          foreground: "Reserved do not modify in tailwind",
-        },
-        card: {
-          DEFAULT: "Reserved do not modify in tailwind",
-          foreground: "Reserved do not modify in tailwind",
-        },
-      },
-      borderRadius: {
-        lg: "Reserved do not modify in tailwind",
-        md: "Reserved do not modify in tailwind",
-        sm: "Reserved do not modify in tailwind",
-      },
-      keyframes: {
-        "accordion-down": {
-          // Reserved do not modify in tailwind
-        },
-        "accordion-up": {
-          // Reserved do not modify in tailwind
-        },
-      },
-      animation: {
-        "accordion-down": "Reserved do not modify in tailwind",
-        "accordion-up": "Reserved do not modify in tailwind",
-      },
+theme: {
+  container: {
+    center: /* Reserved do not modify in tailwind */,
+    padding: /* Reserved do not modify in tailwind */,
+    screens: {
+      "2xl": /* Reserved do not modify in tailwind */,
     },
   },
+  extend: {
+    colors: {
+      border: "Reserved do not modify in tailwind",
+      input: "Reserved do not modify in tailwind",
+      ring: "Reserved do not modify in tailwind",
+      background: "Reserved do not modify in tailwind",
+      foreground: "Reserved do not modify in tailwind",
+      primary: {
+        DEFAULT: "Reserved do not modify in tailwind",
+        foreground: "Reserved do not modify in tailwind",
+      },
+      secondary: {
+        DEFAULT: "Reserved do not modify in tailwind",
+        foreground: "Reserved do not modify in tailwind",
+      },
+      destructive: {
+        DEFAULT: "Reserved do not modify in tailwind",
+        foreground: "Reserved do not modify in tailwind",
+      },
+      muted: {
+        DEFAULT: "Reserved do not modify in tailwind",
+        foreground: "Reserved do not modify in tailwind",
+      },
+      accent: {
+        DEFAULT: "Reserved do not modify in tailwind",
+        foreground: "Reserved do not modify in tailwind",
+      },
+      popover: {
+        DEFAULT: "Reserved do not modify in tailwind",
+        foreground: "Reserved do not modify in tailwind",
+      },
+      card: {
+        DEFAULT: "Reserved do not modify in tailwind",
+        foreground: "Reserved do not modify in tailwind",
+      },
+    },
+    borderRadius: {
+      lg: "Reserved do not modify in tailwind",
+      md: "Reserved do not modify in tailwind",
+      sm: "Reserved do not modify in tailwind",
+    },
+    keyframes: {
+      "accordion-down": {
+        // Reserved do not modify in tailwind
+      },
+      "accordion-up": {
+        // Reserved do not modify in tailwind
+      },
+    },
+    animation: {
+      "accordion-down": "Reserved do not modify in tailwind",
+      "accordion-up": "Reserved do not modify in tailwind",
+    },
+  },
+},
 ```
 
 If you need to modify any of these parameters you must do so using CSS variables
 
 ## How use components and icons
 
-To use the base components you just have to call the component or icon you want to use.
+To use the base components you just have to call the component or icon you want
+to use.
 
 `example`:
 
@@ -226,7 +240,10 @@ import { Button } from "@kanvas/phoenix-rebirth/dist/components/base/button";
 import { Input } from "@kanvas/phoenix-rebirth/dist/components/base/input";
 ```
 
-The components are designed to work on client side as server side, with `nextjs 13^` app router, it is necessary to specify whether the client component, if nextjs throws you an error using a component for not specifying that it is client, you only have to change its import:
+The components are designed to work on client side as server side, with
+`nextjs 13^` app router, it is necessary to specify whether the client
+component, if nextjs throws you an error using a component for not specifying
+that it is client, you only have to change its import:
 
 ```typescript
 // with out "use client"
@@ -238,7 +255,8 @@ import { Select } from "@kanvas/phoenix-rebirth/dist/components/base/input.mjs";
 
 ## Utilitie Components
 
-phoenix-rebirth includes utility components to improve the development experience, these components are:
+phoenix-rebirth includes utility components to improve the development
+experience, these components are:
 
 - For
 - Show
@@ -267,7 +285,9 @@ phoenix-rebirth includes utility components to improve the development experienc
 </ul>
 ```
 
-With the `For` component, each element within it is rendered individually to the previous or next one, so if any element throws an error this does not break the application and an error message can be displayed.
+With the `For` component, each element within it is rendered individually to the
+previous or next one, so if any element throws an error this does not break the
+application and an error message can be displayed.
 
 `Example` How to use `Show` Component:
 
@@ -289,7 +309,8 @@ With the `For` component, each element within it is rendered individually to the
 </ul>
 ```
 
-The `Show` component improves the experience of using conditionals within jsx, making the code more readable and maintainable when you have nested conditions.
+The `Show` component improves the experience of using conditionals within jsx,
+making the code more readable and maintainable when you have nested conditions.
 
 `Example` How to use `Show` Component:
 
@@ -321,13 +342,17 @@ The `Show` component improves the experience of using conditionals within jsx, m
 </ul>
 ```
 
-`Switch` and `Match` improve the experience when multiple cases must be evaluated for a single output, just like Switch in javascript.
+`Switch` and `Match` improve the experience when multiple cases must be
+evaluated for a single output, just like Switch in javascript.
 
 ## How to make themes
 
-We use a simple `background` and `foreground` convention for colors. The `background` variable is used for the background color of the component and the `foreground` variable is used for the text color.
+We use a simple `background` and `foreground` convention for colors. The
+`background` variable is used for the background color of the component and the
+`foreground` variable is used for the text color.
 
-> The background suffix is omitted when the variable is used for the background color of the component.
+> The background suffix is omitted when the variable is used for the background
+> color of the component.
 
 Given the following CSS variables:
 
@@ -336,7 +361,8 @@ Given the following CSS variables:
 --primary-foreground: 210 40% 98%;
 ```
 
-The `background` color of the following component will be `hsl(var(--primary))` and the `foreground` color will be `hsl(var(--primary-foreground))`.
+The `background` color of the following component will be `hsl(var(--primary))`
+and the `foreground` color will be `hsl(var(--primary-foreground))`.
 
 ```html
 <div className="bg-primary text-primary-foreground">Hello</div>
@@ -365,7 +391,8 @@ Background color for `<Card />`
 --card-foreground: 222.2 47.4% 11.2%;
 ```
 
-Background color for popovers such as `<DropdownMenu />, <HoverCard />, <Popover />`
+Background color for popovers such as
+`<DropdownMenu />, <HoverCard />, <Popover />`
 
 ```css
 --popover: 0 0% 100%;
@@ -398,7 +425,8 @@ Secondary colors for `<Button />`
 --secondary-foreground: 222.2 47.4% 11.2%;
 ```
 
-Used for accents such as hover effects on `<DropdownMenuItem>, <SelectItem>`...etc
+Used for accents such as hover effects on
+`<DropdownMenuItem>, <SelectItem>`...etc
 
 ```css
 --accent: 210 40% 96.1%;
@@ -428,7 +456,8 @@ Border radius for card, input and buttons
 
 ### Adding new colors
 
-To add new colors, you need to add them to your CSS file and to your `tailwind.config.js` file.
+To add new colors, you need to add them to your CSS file and to your
+`tailwind.config.js` file.
 
 `app/globals.css`
 
@@ -469,7 +498,8 @@ You can now use the warning utility class in your components.
 
 ### useEvents Hook
 
-allows you to emit and listen to client-side events in a simple way, similar to frameworks like vue or svelte
+allows you to emit and listen to client-side events in a simple way, similar to
+frameworks like vue or svelte
 
 ```jsx
 import { useEvents } from "@kanvas/phoenix-rebirth/dist/lib";
@@ -497,7 +527,8 @@ export default Home2(props) {
 
 ### useThreads Hook
 
-allows you to run code in a thread separate from the main one, either on the server (nodejs) or on the client (browser).
+allows you to run code in a thread separate from the main one, either on the
+server (nodejs) or on the client (browser).
 
 ```tsx
 "use client";
@@ -526,7 +557,7 @@ export function Component() {
 
       return 2 + 2;
     },
-    { hello: "world" }
+    { hello: "world" },
   );
 
   return (

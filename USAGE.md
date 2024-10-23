@@ -1,7 +1,7 @@
 ## Running the Project
 
-
-Follow these steps to run the Phoenix project and the Next.js project. These commands should be executed in a Bash terminal:
+Follow these steps to run the Phoenix project and the Next.js project. These
+commands should be executed in a Bash terminal:
 
 1. Clone the project repository:
 
@@ -27,7 +27,8 @@ Follow these steps to run the Phoenix project and the Next.js project. These com
    yarn build
    ```
 
-5. Now, navigate to the Next.js project directory that is in the same repository:
+5. Now, navigate to the Next.js project directory that is in the same
+   repository:
 
    ```bash
    cd ./next/
@@ -50,7 +51,10 @@ Follow these steps to run the Phoenix project and the Next.js project. These com
    yarn dev
    ```
 
-Now you should be able to see your Next.js application running at `localhost:3000` in your browser.
+Now you should be able to see your Next.js application running at
+`localhost:3000` in your browser.
 
-> [!NOTE]  
-> Please note that these steps are general and may vary depending on the specific configuration of your project. Be sure to replace `next` with the actual name of your Next.js project directory.
+> [!NOTE]\
+> Please note that these steps are general and may vary depending on the
+> specific configuration of your project. Be sure to replace `next` with the
+> actual name of your Next.js project directory.
