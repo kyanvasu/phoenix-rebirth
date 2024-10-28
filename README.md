@@ -557,7 +557,7 @@ export function Component() {
 
       return 2 + 2;
     },
-    { hello: "world" },
+    { hello: "world" }
   );
 
   return (
@@ -586,3 +586,264 @@ import { POST } from "@kanvas/phoenix-rebirth/lib/threads-api";
 
 export { POST };
 ```
+
+## Slots
+
+A type-safe implementation of the slots pattern for React, supporting both Server and Client Components in Next.js.
+
+### Table of Contents
+
+- [Basic Usage](#basic-usage)
+- [Type Safety](#type-safety)
+- [Server & Client Components](#server--client-components)
+- [Advanced Patterns](#advanced-patterns)
+
+### Basic Usage
+
+1. Define Your Slots
+
+```tsx
+// Define slots as a const array for both type and runtime usage
+const LAYOUT_SLOTS = ["header", "main", "footer"] as const;
+
+// Create type from the const array
+type LayoutSlots = (typeof LAYOUT_SLOTS)[number];
+```
+
+2. Create Your Component
+
+```tsx
+interface Props extends WithSlotsProps<LayoutSlots> {
+  app: string; // Additional props
+}
+
+const Layout = ({ slots, app }: Props) => (
+  <div>
+    <header>{slots.header}</header>
+    <main>{slots.main}</main>
+    <footer>{slots.footer}</footer>
+  </div>
+);
+
+// Create the wrapped version
+const LayoutWithSlots = WithSlots(Layout, LAYOUT_SLOTS);
+```
+
+3. Create Type-Safe Slot Component
+
+```tsx
+function LayoutSlot(props: { name: LayoutSlots; children: React.ReactNode }) {
+  return <Slot<LayoutSlots> {...props} />;
+}
+```
+
+4. Use The Component
+
+```tsx
+export default function App() {
+  return (
+    <LayoutWithSlots app="myApp">
+      <LayoutSlot name="header">
+        <h1>Header Content</h1>
+      </LayoutSlot>
+
+      <LayoutSlot name="main">
+        <div>Main Content</div>
+      </LayoutSlot>
+
+      <LayoutSlot name="footer">
+        <div>Footer Content</div>
+      </LayoutSlot>
+    </LayoutWithSlots>
+  );
+}
+```
+
+### Server & Client Components
+
+Server Component Usage
+
+```tsx
+// page.tsx
+import { WithSlots } from "...";
+
+const ServerLayout = ({ slots }: WithSlotsProps<LayoutSlots>) => (
+  <div>
+    {slots.header}
+    {slots.content}
+  </div>
+);
+
+const ServerLayoutWithSlots = WithSlots(ServerLayout, LAYOUT_SLOTS);
+
+// This can be a Server Component
+export default function Page() {
+  return (
+    <ServerLayoutWithSlots>
+      <LayoutSlot name="header">
+        <h1>Server Rendered Header</h1>
+      </LayoutSlot>
+      <LayoutSlot name="content">
+        <div>Server Rendered Content</div>
+      </LayoutSlot>
+    </ServerLayoutWithSlots>
+  );
+}
+```
+
+Client Component Usage
+
+```tsx
+// client-component.tsx
+"use client";
+
+import { WithSlotsProps } from "...";
+
+const INTERACTIVE_SLOTS = ["header", "content"] as const;
+type InteractiveSlots = (typeof INTERACTIVE_SLOTS)[number];
+
+interface ClientProps extends WithSlotsProps<InteractiveSlots> {
+  onClick: () => void;
+}
+
+function InteractiveSlot(props: {
+  name: InteractiveSlots;
+  children: React.ReactNode;
+}) {
+  return <Slot<InteractiveSlots> {...props} />;
+}
+
+export function ClientComponent({ slots, onClick }: ClientProps) {
+  return (
+    <div onClick={onClick}>
+      {slots.header}
+      {slots.content}
+    </div>
+  );
+}
+
+const ClientWithSlots = WithSlots(ClientComponent, INTERACTIVE_SLOTS);
+
+// Usage in a Server Component
+function Page() {
+  return (
+    <ClientWithSlots onClick={() => console.log("clicked")}>
+      <InteractiveSlot name="header">
+        <button>Interactive Header</button>
+      </InteractiveSlot>
+      <InteractiveSlot name="content">
+        <div>Interactive Content</div>
+      </InteractiveSlot>
+    </ClientWithSlots>
+  );
+}
+```
+
+Mixing Client and Server Components
+
+```tsx
+// server-component.tsx
+import { ClientComponent } from "./client-component";
+
+export function ServerComponent() {
+  return (
+    <LayoutWithSlots app="myApp">
+      <LayoutSlot name="header">
+        <ClientComponent /> {/* Client Component in Server Component slot */}
+      </LayoutSlot>
+      <LayoutSlot name="main">
+        <div>Server Rendered Content</div>
+      </LayoutSlot>
+    </LayoutWithSlots>
+  );
+}
+```
+
+Advanced Patterns
+
+Optional Slots
+
+```tsx
+const CARD_SLOTS = ["title", "content", "footer?"] as const;
+
+type CardSlots = (typeof CARD_SLOTS)[number];
+type RequiredCardSlots = Exclude<CardSlots, `${string}?`>;
+type OptionalCardSlots = Extract<CardSlots, `${string}?`>;
+
+interface CardProps extends WithSlotsProps<RequiredCardSlots> {
+  slots: Record<RequiredCardSlots, ReactNode> &
+    Partial<Record<OptionalCardSlots, ReactNode>>;
+}
+```
+
+Nested Slots
+
+```tsx
+const NESTED_SLOTS = [
+  "header",
+  "header.title",
+  "header.subtitle",
+  "content",
+  "footer",
+] as const;
+
+type NestedSlots = (typeof NESTED_SLOTS)[number];
+
+const NestedLayout = ({ slots }: WithSlotsProps<NestedSlots>) => (
+  <div>
+    <header>
+      {slots["header"]}
+      <div>
+        {slots["header.title"]}
+        {slots["header.subtitle"]}
+      </div>
+    </header>
+    {slots.content}
+    {slots.footer}
+  </div>
+);
+```
+
+Best Practices
+
+1. **Define Slots Once**: Use a const array to define slots and derive types from it
+
+   ```tsx
+   const SLOTS = ["header", "main", "footer"] as const;
+   type Slots = (typeof SLOTS)[number];
+   ```
+
+2. **Create Typed Slot Components**: Make slot usage type-safe
+
+   ```tsx
+   function TypedSlot(props: { name: Slots; children: ReactNode }) {
+     return <Slot<Slots> {...props} />;
+   }
+   ```
+
+3. **Mark Client Components**: Always mark interactive components with "use client"
+
+   ```tsx
+   "use client";
+   export function Interactive({ slots }: Props) {
+     // Interactive component code
+   }
+   ```
+
+4. **Validate Required Slots**: Use TypeScript to enforce required slots
+
+   ```tsx
+   interface Props extends WithSlotsProps<RequiredSlots> {
+     // Additional props
+   }
+   ```
+
+5. **Document Slot Purpose**: Comment what each slot is for
+   ```tsx
+   const DASHBOARD_SLOTS = [
+     "nav", // Navigation area
+     "sidebar", // Side configuration panel
+     "content", // Main content area
+     "footer", // Footer with actions
+   ] as const;
+   ```

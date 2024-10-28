@@ -1,6 +1,44 @@
-import { Fragment, JSX, useMemo } from "react";
+import React, {
+  Fragment,
+  JSX,
+  useMemo,
+  PropsWithChildren,
+  ReactNode,
+} from "react";
 
 const isSSR = globalThis?.window === undefined || globalThis?.window === null;
+
+function transformChildrenToSlots<T extends string>(
+  children: ReactNode,
+  expectedSlots: readonly T[]
+): Record<T, ReactNode> {
+  const childrenArray = React.Children.toArray(children);
+  const slots = childrenArray.reduce((acc, child) => {
+    if (React.isValidElement(child) && "name" in child.props) {
+      return {
+        ...acc,
+        [child.props.name]: child.props.children,
+      };
+    }
+    return acc;
+  }, {} as Record<T, ReactNode>);
+
+  expectedSlots.forEach((slotName) => {
+    if (!(slotName in slots)) {
+      console.warn(`Missing required slot: ${slotName}`);
+    }
+  });
+
+  return slots;
+}
+
+export interface WithSlotsProps<T extends string> {
+  slots: Record<T, ReactNode>;
+}
+
+export interface SlotProps<T extends string> extends PropsWithChildren {
+  name: T;
+}
 
 export function For<T extends readonly any[], U extends JSX.Element>(props: {
   error?: JSX.Element;
@@ -18,6 +56,21 @@ export function For<T extends readonly any[], U extends JSX.Element>(props: {
 
       return !!items.length
         ? items.map((item, index) => {
+            try {
+              return props.children(item, {
+                index,
+                key: `${index}`,
+              });
+            } catch (e) {
+              return <ErrorFragment index={index} />;
+            }
+          })
+        : props.fallback;
+    }
+
+    // fallback for SSR
+    return !!props.each.length
+      ? props.each.map((item, index) => {
           try {
             return props.children(item, {
               index,
@@ -27,21 +80,6 @@ export function For<T extends readonly any[], U extends JSX.Element>(props: {
             return <ErrorFragment index={index} />;
           }
         })
-        : props.fallback;
-    }
-
-    // fallback for SSR
-    return !!props.each.length
-      ? props.each.map((item, index) => {
-        try {
-          return props.children(item, {
-            index,
-            key: `${index}`,
-          });
-        } catch (e) {
-          return <ErrorFragment index={index} />;
-        }
-      })
       : props.fallback;
   }
 
@@ -58,7 +96,7 @@ export function Show<T>(props: {
 }): JSX.Element {
   const condition = useMemo(
     () => props.when,
-    Array.isArray(props.deps) ? [...props.deps] : [],
+    Array.isArray(props.deps) ? [...props.deps] : []
   );
 
   if (condition) {
@@ -95,9 +133,11 @@ export function Switch(props: {
     const children = props.children as JSX.Element;
     const condition = children.props.when;
 
-    return condition
-      ? <Fragment>{children}</Fragment>
-      : <Fragment>{props.fallback ?? null}</Fragment>;
+    return condition ? (
+      <Fragment>{children}</Fragment>
+    ) : (
+      <Fragment>{props.fallback ?? null}</Fragment>
+    );
   }
 }
 
@@ -106,4 +146,23 @@ export function Match(props: {
   children: JSX.Element[] | JSX.Element;
 }) {
   return props.when ? props.children : null;
+}
+
+export function WithSlots<T extends string, P extends WithSlotsProps<T>>(
+  WrappedComponent: React.ComponentType<P>,
+  expectedSlots: readonly T[]
+) {
+  return function WithSlotsWrapper(
+    props: Omit<P, keyof WithSlotsProps<T>> & { children: ReactNode }
+  ) {
+    const { children, ...rest } = props;
+
+    const slots = transformChildrenToSlots(children, expectedSlots);
+
+    return <WrappedComponent {...(rest as unknown as P)} slots={slots} />;
+  };
+}
+
+export function Slot<T extends string>({ children }: SlotProps<T>) {
+  return <>{children}</>;
 }
