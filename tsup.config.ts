@@ -3,7 +3,11 @@ import { defineConfig } from "tsup";
 export default defineConfig([
   {
     entry: ["src/global.css"],
-    outDir: "dist",
+    outDir: "dist/components",
+  },
+  {
+    entry: ["src/lib/tour.css"],
+    outDir: "dist/lib",
   },
   {
     dts: true,
