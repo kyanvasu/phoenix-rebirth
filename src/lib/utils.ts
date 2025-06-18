@@ -1,5 +1,8 @@
+"use client";
+
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useState } from "react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -108,8 +111,154 @@ export function useThread(name?: string) {
 
 export type Leaves<T> = T extends Array<infer U>
   ? `${number}.${Leaves<U>}` | `[${number}].${Leaves<U>}`
-  : T extends object ? {
-      [K in keyof T]: `${Exclude<K, symbol>}${Leaves<T[K]> extends never ? ""
+  : T extends object
+  ? {
+      [K in keyof T]: `${Exclude<K, symbol>}${Leaves<T[K]> extends never
+        ? ""
         : `.${Leaves<T[K]>}`}`;
     }[keyof T]
   : never;
+
+export function useSet<T>(initialValues: T[] = []) {
+  const [set, setSetState] = useState(new Set(initialValues));
+
+  type UnionSet = typeof set;
+
+  const add = (value: T) => {
+    setSetState((prevSet) => {
+      const newSet = new Set(prevSet);
+      newSet.add(value);
+      return newSet;
+    });
+  };
+
+  const remove = (value: T) => {
+    setSetState((prevSet) => {
+      const newSet = new Set(prevSet);
+      newSet.delete(value);
+      return newSet;
+    });
+  };
+
+  const has = (value: T) => {
+    return set.has(value);
+  };
+
+  const clear = () => {
+    setSetState(new Set());
+  };
+
+  const size = () => {
+    return set.size;
+  };
+
+  const values = () => {
+    return Array.from(set);
+  };
+
+  const union = (otherSet: UnionSet) => {
+    setSetState((prevSet) => {
+      const newSet = new Set(prevSet);
+      otherSet.forEach((value) => newSet.add(value));
+      return newSet;
+    });
+  };
+
+  const intersection = (otherSet: UnionSet) => {
+    setSetState((prevSet) => {
+      const newSet = new Set([...prevSet].filter((x) => otherSet.has(x)));
+      return newSet;
+    });
+  };
+
+  const difference = (otherSet: UnionSet) => {
+    setSetState((prevSet) => {
+      const newSet = new Set([...prevSet].filter((x) => !otherSet.has(x)));
+      return newSet;
+    });
+  };
+
+  return {
+    add,
+    has,
+    clear,
+    size,
+    values,
+    union,
+    value: set,
+    difference,
+    intersection,
+    delete: remove,
+  };
+}
+
+export function useMap<
+  T extends string | number | symbol = string,
+  E extends unknown = any
+>(initialEntries: Iterable<readonly [T, E]> | null | undefined) {
+  const [map, setMapState] = useState(new Map<T, E>(initialEntries));
+
+  const set = (key: T, value: E) => {
+    setMapState((prevMap) => {
+      const newMap = new Map(prevMap);
+      newMap.set(key, value);
+
+      return newMap;
+    });
+  };
+
+  const get = (key: T) => {
+    return map.get(key);
+  };
+
+  const remove = (key: T) => {
+    setMapState((prevMap) => {
+      const newMap = new Map(prevMap);
+      newMap.delete(key);
+      return newMap;
+    });
+  };
+
+  const has = (key: T) => {
+    return map.has(key);
+  };
+
+  const clear = () => {
+    setMapState(new Map());
+  };
+
+  const size = () => {
+    return map.size;
+  };
+
+  const keys = () => {
+    return Array.from(map.keys());
+  };
+
+  const values = () => {
+    return Array.from(map.values());
+  };
+
+  const entries = () => {
+    return Array.from(map.entries());
+  };
+
+  return {
+    set,
+    get,
+    has,
+    clear,
+    size,
+    keys,
+    values,
+    entries,
+    value: map,
+    delete: remove,
+  };
+}
+
+export const toListValues = (values: string) =>
+  values.split(",").map((v) => v.trim());
+
+export const fromListValues = (values: string[] = []) =>
+  values.map((v) => v.trim()).join(",");
