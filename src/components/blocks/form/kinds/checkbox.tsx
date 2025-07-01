@@ -52,14 +52,14 @@ export function FormCheckboxField({
           {
             "flex flex-row space-x-2": isError,
             "flex flex-col space-x-2 items-start relative": isTopError,
-          }
+          },
         )}
         htmlFor={name}
       >
         <span>{label}</span>
 
         <Show when={isOptional} deps={[optional]}>
-          <span className="text-foreground/60"> (optional)</span>
+          <span className="text-foreground/60">(optional)</span>
         </Show>
 
         <Show when={isError} deps={[error]}>

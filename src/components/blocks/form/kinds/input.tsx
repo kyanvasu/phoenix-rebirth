@@ -59,7 +59,7 @@ export function FormInputField({
         </p>
 
         <Show when={isOptional} deps={[optional]}>
-          <span className="text-foreground/60 ml-1"> (optional)</span>
+          <span className="text-foreground/60 ml-1">(optional)</span>
         </Show>
       </label>
 

@@ -51,13 +51,9 @@ export function DialogAlert(props: DialogAlertProps) {
             <Show
               when={!props.action.disable || props.action.pending}
               deps={[props.action.disable, props.action.pending]}
-              fallback={
-                props.pendingSpinner ? (
-                  <props.pendingSpinner />
-                ) : (
-                  <>{props.action.title}</>
-                )
-              }
+              fallback={props.pendingSpinner
+                ? <props.pendingSpinner />
+                : <>{props.action.title}</>}
             >
               <p>{props.action.title}</p>
             </Show>

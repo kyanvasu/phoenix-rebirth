@@ -11,7 +11,7 @@ export default defineConfig([
   },
   {
     dts: true,
-    entry: ["src/config", "src/lib", "src/store", "src/views", "src/hooks"],
+    entry: ["src/lib", "src/store", "src/views", "src/hooks"],
     format: ["esm", "cjs"],
     minify: true,
     target: "esnext",

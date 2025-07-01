@@ -46,7 +46,7 @@ export function FormSelectField({
         <SelectTrigger
           className={cn(
             { "border border-destructive animate-shake": isError },
-            "w-full"
+            "w-full",
           )}
         >
           <SelectValue placeholder={placeholder} />

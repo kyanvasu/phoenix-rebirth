@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  DialogHeader,
   Dialog,
   DialogContent,
-  DialogTitle,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 
 import {
@@ -54,7 +54,7 @@ export function ModalDialog(props: Props) {
       deps={[isWide]}
       fallback={
         <Drawer open={props.open} onOpenChange={props.onOpenChange}>
-          <DrawerContent className="!bg-background md:hidden">
+          <DrawerContent className="bg-background! md:hidden">
             <DrawerHeader>
               <DrawerTitle>{props.title}</DrawerTitle>
             </DrawerHeader>
@@ -66,15 +66,15 @@ export function ModalDialog(props: Props) {
                 disabled={props.action?.disable || props.action.pending}
                 onClick={() => props?.onAction?.()}
               >
-                {props.action.pending ? (
-                  !!props.pendingSpinner ? (
-                    <props.pendingSpinner />
-                  ) : (
-                    props.action.title
+                {props.action.pending
+                  ? (
+                    !!props.pendingSpinner ? <props.pendingSpinner /> : (
+                      props.action.title
+                    )
                   )
-                ) : (
-                  props.action.title
-                )}
+                  : (
+                    props.action.title
+                  )}
               </Button>
               <DrawerClose asChild>
                 <Button variant="outline">

@@ -109,10 +109,8 @@ export function useThread(name?: string) {
 
 export type Leaves<T> = T extends Array<infer U>
   ? `${number}.${Leaves<U>}` | `[${number}].${Leaves<U>}`
-  : T extends object
-  ? {
-      [K in keyof T]: `${Exclude<K, symbol>}${Leaves<T[K]> extends never
-        ? ""
+  : T extends object ? {
+      [K in keyof T]: `${Exclude<K, symbol>}${Leaves<T[K]> extends never ? ""
         : `.${Leaves<T[K]>}`}`;
     }[keyof T]
   : never;
@@ -192,7 +190,7 @@ export function useSet<T>(initialValues: T[] = []) {
 
 export function useMap<
   T extends string | number | symbol = string,
-  E extends unknown = any
+  E extends unknown = any,
 >(initialEntries: Iterable<readonly [T, E]> | null | undefined) {
   const [map, setMapState] = useState(new Map<T, E>(initialEntries));
 

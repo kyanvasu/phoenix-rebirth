@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { PhoneInputProps, PhoneInput } from "@/components/blocks/phone-input";
+import { PhoneInput, PhoneInputProps } from "@/components/blocks/phone-input";
 import { InfoIcon } from "lucide-react";
 import { Show } from "@/lib/server";
 import { cn } from "@/lib/utils";
@@ -56,7 +56,7 @@ export function FormPhoneInput({
         </p>
 
         <Show when={isOptional} deps={[optional]}>
-          <span className="text-foreground/60 ml-1"> (optional)</span>
+          <span className="text-foreground/60 ml-1">(optional)</span>
         </Show>
       </label>
 
