@@ -35,7 +35,7 @@ export default defineConfig([
     format: ["esm", "cjs"],
     minify: true,
     target: "esnext",
-    outDir: "dist/components/base",
+    outDir: "dist/components/ui",
     splitting: true,
     external: [
       "react",
