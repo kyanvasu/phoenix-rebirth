@@ -3,11 +3,7 @@
 import * as React from "react";
 import { Menubar as MenubarPrimitive } from "radix-ui";
 import { cn } from "@/lib/utils";
-import {
-  CheckIcon,
-  ChevronRightIcon,
-  DotFilledIcon,
-} from "@radix-ui/react-icons";
+import { CheckIcon, ChevronRightIcon, DotIcon } from "lucide-react";
 
 function MenubarMenu({
   ...props
@@ -185,7 +181,7 @@ const MenubarRadioItem = React.forwardRef<
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <MenubarPrimitive.ItemIndicator>
-        <DotFilledIcon className="h-4 w-4 fill-current" />
+        <DotIcon className="h-4 w-4 fill-current" />
       </MenubarPrimitive.ItemIndicator>
     </span>
     {children}
