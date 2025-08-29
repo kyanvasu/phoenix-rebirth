@@ -45,6 +45,7 @@ Kanvas Phoenix Rebirth is a comprehensive React component library built on top o
 - ♿ **Accessible by Default** following WAI-ARIA standards
 - 🌙 **Dark Mode Support** out of the box
 - 📱 **Responsive Design** mobile-first approach
+- ⚡ **Tailwind CSS v4** with latest features
 
 ## Installation
 
@@ -67,31 +68,16 @@ yarn add @kanvas/phoenix-rebirth
 
 ## Configuration
 
-### 1. Tailwind Configuration
+### 1. PostCSS Configuration
 
-Create or update your `tailwind.config.js`:
+Create `postcss.config.mjs`:
 
-```typescript
-import { createTailwindConfig } from "@kanvas/phoenix-rebirth/dist/config/tailwind";
-
-module.exports = createTailwindConfig({
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@kanvas/phoenix-rebirth/dist/**/*.{js,mjs}",
-  ],
-  // Your custom configurations (optional)
-  theme: {
-    extend: {
-      colors: {
-        brand: {
-          50: "hsl(var(--brand-50))",
-          500: "hsl(var(--brand-500))",
-          900: "hsl(var(--brand-900))",
-        },
-      },
-    },
+```javascript
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
   },
-});
+};
 ```
 
 ### 2. Global CSS Setup
@@ -99,48 +85,49 @@ module.exports = createTailwindConfig({
 In your main CSS file (e.g., `app/globals.css`):
 
 ```css
-/* Required Tailwind directives */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import Tailwind CSS v4 */
+@import "tailwindcss";
 
 /* Import Phoenix Rebirth styles */
 @import "@kanvas/phoenix-rebirth/global.css";
+
 /* Optional: Import tour styles if using tour functionality */
 @import "@kanvas/phoenix-rebirth/tour.css";
 
-/* Custom theme variables (optional) */
-@layer base {
-  :root {
-    /* Override default theme variables */
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    
-    /* Add custom colors */
-    --brand-50: 210 40% 96.1%;
-    --brand-500: 217 91% 60%;
-    --brand-900: 224 71% 20%;
-  }
+/* Import animations */
+@import "tw-animate-css";
 
-  .dark {
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    
-    --brand-50: 224 71% 20%;
-    --brand-500: 217 91% 60%;
-    --brand-900: 210 40% 96.1%;
-  }
+/* Custom theme overrides (optional) */
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Add custom theme tokens if needed */
+  --color-brand-50: oklch(0.95 0.01 210);
+  --color-brand-500: oklch(0.6 0.2 210);
+  --color-brand-900: oklch(0.3 0.15 210);
+}
+
+/* Custom CSS variables (optional) */
+:root {
+  /* Override Phoenix Rebirth variables if needed */
+  --primary: oklch(0.8009 0.1995 124.29);
+  --primary-foreground: oklch(0.985 0 0);
+}
+
+.dark {
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
 }
 ```
 
 ### 3. Next.js App Router Setup
 
-For Next.js applications, create a root layout:
+For Next.js applications, simply import the CSS in your root layout:
 
 ```tsx
 // app/layout.tsx
-import { ThemeProvider } from "@kanvas/phoenix-rebirth/lib/theme-provider";
 import "@kanvas/phoenix-rebirth/global.css";
+import "./globals.css"; // Your custom styles
 
 export default function RootLayout({
   children,
@@ -148,16 +135,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
-          {children}
-        </ThemeProvider>
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }
@@ -173,7 +152,11 @@ All base components are imported from shadcn/ui and are fully customizable:
 import { Button } from "@kanvas/phoenix-rebirth/ui/button";
 import { Input } from "@kanvas/phoenix-rebirth/ui/input";
 import { Card, CardContent, CardHeader } from "@kanvas/phoenix-rebirth/ui/card";
-import { Select, SelectContent, SelectItem } from "@kanvas/phoenix-rebirth/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+} from "@kanvas/phoenix-rebirth/ui/select";
 ```
 
 #### Available Components
@@ -204,29 +187,36 @@ A pre-styled alert dialog with action handlers:
 
 ```tsx
 import { DialogAlert } from "@kanvas/phoenix-rebirth/blocks/dialog";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function DeleteConfirmation() {
   const [open, setOpen] = useState(false);
 
   return (
-    <DialogAlert
-      open={open}
-      onOpenChange={setOpen}
-      title="Delete Item"
-      description="Are you sure you want to delete this item? This action cannot be undone."
-      dangerAction={true}
-      action={{
-        title: "Delete",
-        pending: isDeleting,
-      }}
-      cancel={{
-        title: "Cancel",
-      }}
-      onAction={async () => {
-        await deleteItem();
-        setOpen(false);
-      }}
-    />
+    <>
+      <Button onClick={() => setOpen(true)}>Delete Item</Button>
+
+      <Show when={open} deps={[open]}>
+        <DialogAlert
+          open={open}
+          onOpenChange={setOpen}
+          title="Delete Item"
+          description="Are you sure you want to delete this item? This action cannot be undone."
+          dangerAction={true}
+          action={{
+            title: "Delete",
+            pending: isDeleting,
+          }}
+          cancel={{
+            title: "Cancel",
+          }}
+          onAction={async () => {
+            await deleteItem();
+            setOpen(false);
+          }}
+        />
+      </Show>
+    </>
   );
 }
 ```
@@ -237,47 +227,32 @@ Responsive modal that adapts to mobile (drawer) and desktop (dialog):
 
 ```tsx
 import { ModalDialog } from "@kanvas/phoenix-rebirth/blocks/modal";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function CreateUserModal() {
-  return (
-    <ModalDialog
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      title="Create New User"
-      action={{
-        title: "Create",
-        disable: !isValid,
-        pending: isCreating,
-        type: "submit"
-      }}
-      onAction={handleCreate}
-    >
-      <form className="space-y-4">
-        <Input name="name" placeholder="Enter name" />
-        <Input name="email" type="email" placeholder="Enter email" />
-      </form>
-    </ModalDialog>
-  );
-}
-```
-
-#### PhoneInput
-
-International phone number input with country selection:
-
-```tsx
-import { PhoneInput } from "@kanvas/phoenix-rebirth/blocks/phone-input";
-
-function ContactForm() {
-  const [phone, setPhone] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
   return (
-    <PhoneInput
-      value={phone}
-      onChange={setPhone}
-      addInternationalOption
-      placeholder="Enter phone number"
-    />
+    <Show when={isOpen} deps={[isOpen]}>
+      <ModalDialog
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        title="Create New User"
+        action={{
+          title: "Create",
+          disable: !isValid,
+          pending: isCreating,
+          type: "submit",
+        }}
+        onAction={handleCreate}
+      >
+        <form className="space-y-4">
+          <Input name="name" placeholder="Enter name" />
+          <Input name="email" type="email" placeholder="Enter email" />
+        </form>
+      </ModalDialog>
+    </Show>
   );
 }
 ```
@@ -287,29 +262,44 @@ function ContactForm() {
 Data table with built-in sorting, filtering, and pagination:
 
 ```tsx
-import { Table, columnsBuilder, useTable, TableSlot } from "@kanvas/phoenix-rebirth/blocks/table";
+import {
+  Table,
+  columnsBuilder,
+  useTable,
+  TableSlot,
+} from "@kanvas/phoenix-rebirth/blocks/table";
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function UserTable() {
-  const columns = columnsBuilder([
-    {
-      accessorKey: "name",
-      header: "Name",
-      cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
-    },
-    {
-      accessorKey: "email",
-      header: "Email",
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => (
-        <Badge variant={row.getValue("status") === "active" ? "default" : "secondary"}>
-          {row.getValue("status")}
-        </Badge>
-      ),
-    },
-  ], []);
+  const columns = columnsBuilder(
+    [
+      {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue("name")}</div>
+        ),
+      },
+      {
+        accessorKey: "email",
+        header: "Email",
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => (
+          <Badge
+            variant={
+              row.getValue("status") === "active" ? "default" : "secondary"
+            }
+          >
+            {row.getValue("status")}
+          </Badge>
+        ),
+      },
+    ],
+    []
+  );
 
   const { table } = useTable({
     data: users,
@@ -334,7 +324,7 @@ function UserTable() {
 
 ### Control Flow Components
 
-React components for declarative rendering logic:
+React components for declarative rendering logic - **use these instead of traditional React patterns**:
 
 #### For Component
 
@@ -364,6 +354,9 @@ function ProductList({ products }) {
     </div>
   );
 }
+
+// ❌ Don't use traditional map
+// products.map(product => ...)
 ```
 
 #### Show Component
@@ -387,6 +380,9 @@ function UserProfile({ user, isLoading }) {
     </Show>
   );
 }
+
+// ❌ Don't use ternary operators
+// isLoading ? <Skeleton /> : <Card>...</Card>
 ```
 
 #### Switch/Match Components
@@ -411,6 +407,9 @@ function StatusIndicator({ status }) {
     </Switch>
   );
 }
+
+// ❌ Don't use multiple ternaries or if-else chains
+// status === "active" ? ... : status === "pending" ? ... : ...
 ```
 
 ## Hooks
@@ -422,9 +421,10 @@ Display toast notifications:
 ```tsx
 import { useToast } from "@kanvas/phoenix-rebirth/hooks";
 import { Toaster } from "@kanvas/phoenix-rebirth/ui/toaster";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function App() {
-  const { toast } = useToast();
+  const { toast, toasts } = useToast();
 
   const handleSave = async () => {
     try {
@@ -445,7 +445,9 @@ function App() {
   return (
     <>
       <Button onClick={handleSave}>Save</Button>
-      <Toaster />
+      <Show when={toasts.length > 0} deps={[toasts]}>
+        <Toaster />
+      </Show>
     </>
   );
 }
@@ -457,13 +459,16 @@ Detect mobile viewport:
 
 ```tsx
 import { useIsMobile } from "@kanvas/phoenix-rebirth/hooks";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function ResponsiveLayout() {
   const isMobile = useIsMobile();
 
   return (
     <div className={isMobile ? "grid-cols-1" : "grid-cols-3"}>
-      {isMobile ? <MobileNav /> : <DesktopNav />}
+      <Show when={isMobile} deps={[isMobile]} fallback={<DesktopNav />}>
+        <MobileNav />
+      </Show>
     </div>
   );
 }
@@ -475,6 +480,7 @@ Custom event emitter for cross-component communication:
 
 ```tsx
 import { useEvents } from "@kanvas/phoenix-rebirth/lib/utils";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 // Component A - Emitter
 function SearchBar() {
@@ -498,7 +504,11 @@ function SearchResults() {
     });
   }, []);
 
-  return <div>Searching for: {query}</div>;
+  return (
+    <Show when={query} deps={[query]} fallback={<div>No search query</div>}>
+      <div>Searching for: {query}</div>
+    </Show>
+  );
 }
 ```
 
@@ -508,6 +518,7 @@ State management for Set data structure:
 
 ```tsx
 import { useSet } from "@kanvas/phoenix-rebirth/lib/utils";
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function TagSelector() {
   const selectedTags = useSet<string>(["react", "typescript"]);
@@ -515,21 +526,24 @@ function TagSelector() {
   return (
     <div>
       <div className="flex gap-2">
-        {tags.map(tag => (
-          <Badge
-            key={tag}
-            variant={selectedTags.has(tag) ? "default" : "outline"}
-            onClick={() => {
-              if (selectedTags.has(tag)) {
-                selectedTags.delete(tag);
-              } else {
-                selectedTags.add(tag);
-              }
-            }}
-          >
-            {tag}
-          </Badge>
-        ))}
+        <For each={tags}>
+          {(tag, { key }) => (
+            <Badge
+              key={key}
+              variant={selectedTags.has(tag) ? "default" : "outline"}
+              onClick={() => {
+                <Show when={selectedTags.has(tag)} deps={[selectedTags.value]}>
+                  {() => selectedTags.delete(tag)}
+                </Show>
+                <Show when={!selectedTags.has(tag)} deps={[selectedTags.value]}>
+                  {() => selectedTags.add(tag)}
+                </Show>
+              }}
+            >
+              {tag}
+            </Badge>
+          )}
+        </For>
       </div>
       <p>Selected: {selectedTags.values().join(", ")}</p>
       <Button onClick={() => selectedTags.clear()}>Clear All</Button>
@@ -544,6 +558,7 @@ State management for Map data structure:
 
 ```tsx
 import { useMap } from "@kanvas/phoenix-rebirth/lib/utils";
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function ShoppingCart() {
   const cart = useMap<string, number>();
@@ -560,15 +575,20 @@ function ShoppingCart() {
   return (
     <div>
       <h3>Cart Items: {cart.size()}</h3>
-      {cart.entries().map(([id, quantity]) => (
-        <div key={id} className="flex justify-between">
-          <span>Item {id}</span>
-          <span>Qty: {quantity}</span>
-          <Button size="sm" onClick={() => removeItem(id)}>
-            Remove
-          </Button>
-        </div>
-      ))}
+      <For each={cart.entries()}>
+        {([id, quantity], { key }) => (
+          <div key={key} className="flex justify-between">
+            <span>Item {id}</span>
+            <span>Qty: {quantity}</span>
+            <Button size="sm" onClick={() => removeItem(id)}>
+              Remove
+            </Button>
+          </div>
+        )}
+      </For>
+      <Show when={cart.size() === 0} deps={[cart.value]}>
+        <p>Your cart is empty</p>
+      </Show>
     </div>
   );
 }
@@ -582,13 +602,16 @@ Execute heavy computations in Web Workers:
 
 ```tsx
 import { useThread } from "@kanvas/phoenix-rebirth/lib/utils";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function DataProcessor() {
   const { client, server } = useThread();
   const [result, setResult] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Client-side threading (browser)
   const processInBrowser = async () => {
+    setIsProcessing(true);
     const handler = client(async () => {
       // This runs in a Web Worker
       let sum = 0;
@@ -600,15 +623,17 @@ function DataProcessor() {
 
     const result = await handler();
     setResult(result);
+    setIsProcessing(false);
   };
 
   // Server-side threading (Node.js)
   const processOnServer = async () => {
+    setIsProcessing(true);
     const handler = server(
       async (port, data) => {
         // This runs in a Node.js Worker Thread
         const { items } = data;
-        const processed = items.map(item => item * 2);
+        const processed = items.map((item) => item * 2);
         return processed;
       },
       { items: [1, 2, 3, 4, 5] }
@@ -616,13 +641,25 @@ function DataProcessor() {
 
     const result = await handler();
     setResult(result);
+    setIsProcessing(false);
   };
 
   return (
     <div>
-      <Button onClick={processInBrowser}>Process in Browser</Button>
-      <Button onClick={processOnServer}>Process on Server</Button>
-      {result && <div>Result: {JSON.stringify(result)}</div>}
+      <Button onClick={processInBrowser} disabled={isProcessing}>
+        Process in Browser
+      </Button>
+      <Button onClick={processOnServer} disabled={isProcessing}>
+        Process on Server
+      </Button>
+
+      <Show when={isProcessing} deps={[isProcessing]}>
+        <div>Processing...</div>
+      </Show>
+
+      <Show when={result && !isProcessing} deps={[result, isProcessing]}>
+        <div>Result: {JSON.stringify(result)}</div>
+      </Show>
     </div>
   );
 }
@@ -636,22 +673,6 @@ import { POST } from "@kanvas/phoenix-rebirth/lib/threads-api";
 export { POST };
 ```
 
-### List Value Helpers
-
-Convert between strings and arrays:
-
-```typescript
-import { toListValues, fromListValues } from "@kanvas/phoenix-rebirth/lib/utils";
-
-// String to array
-const tags = toListValues("react, vue, angular");
-// Result: ["react", "vue", "angular"]
-
-// Array to string
-const tagString = fromListValues(["react", "vue", "angular"]);
-// Result: "react, vue, angular"
-```
-
 ## Advanced Features
 
 ### Slots Pattern
@@ -659,7 +680,12 @@ const tagString = fromListValues(["react", "vue", "angular"]);
 Build composable components with named slots:
 
 ```tsx
-import { WithSlots, Slot, WithSlotsProps } from "@kanvas/phoenix-rebirth/lib/server";
+import {
+  WithSlots,
+  Slot,
+  WithSlotsProps,
+} from "@kanvas/phoenix-rebirth/lib/server";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 // 1. Define your slots
 const DASHBOARD_SLOTS = ["header", "sidebar", "content", "footer"] as const;
@@ -668,13 +694,24 @@ type DashboardSlots = (typeof DASHBOARD_SLOTS)[number];
 // 2. Create your component
 interface DashboardProps extends WithSlotsProps<DashboardSlots> {
   theme?: "light" | "dark";
+  collapsed?: boolean;
 }
 
-const Dashboard = ({ slots, theme = "light" }: DashboardProps) => (
+const Dashboard = ({
+  slots,
+  theme = "light",
+  collapsed = false,
+}: DashboardProps) => (
   <div className={`dashboard theme-${theme}`}>
     <header className="h-16 border-b">{slots.header}</header>
     <div className="flex">
-      <aside className="w-64 border-r">{slots.sidebar}</aside>
+      <Show
+        when={!collapsed}
+        deps={[collapsed]}
+        fallback={<aside className="w-16 border-r">{slots.sidebar}</aside>}
+      >
+        <aside className="w-64 border-r">{slots.sidebar}</aside>
+      </Show>
       <main className="flex-1 p-6">{slots.content}</main>
     </div>
     <footer className="h-12 border-t">{slots.footer}</footer>
@@ -685,14 +722,17 @@ const Dashboard = ({ slots, theme = "light" }: DashboardProps) => (
 const DashboardWithSlots = WithSlots(Dashboard, DASHBOARD_SLOTS);
 
 // 4. Create typed slot component
-function DashboardSlot(props: { name: DashboardSlots; children: React.ReactNode }) {
+function DashboardSlot(props: {
+  name: DashboardSlots;
+  children: React.ReactNode;
+}) {
   return <Slot<DashboardSlots> {...props} />;
 }
 
 // 5. Use the component
 export default function App() {
   return (
-    <DashboardWithSlots theme="dark">
+    <DashboardWithSlots theme="dark" collapsed={false}>
       <DashboardSlot name="header">
         <nav className="flex items-center px-4">
           <h1>My Application</h1>
@@ -720,11 +760,12 @@ export default function App() {
 Create dynamic forms with validation:
 
 ```tsx
-import { 
-  useSimpleFormBuilder, 
-  SimpleFormBuilder, 
-  SimpleFormBuilderFieldDefinition 
+import {
+  useSimpleFormBuilder,
+  SimpleFormBuilder,
+  SimpleFormBuilderFieldDefinition,
 } from "@kanvas/phoenix-rebirth/blocks/form";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function UserForm() {
   const formFields: SimpleFormBuilderFieldDefinition = [
@@ -843,7 +884,7 @@ function UserForm() {
   return (
     <form onSubmit={handleSubmit}>
       <SimpleFormBuilder definitions={definitions} hook={hook} />
-      
+
       <div className="flex gap-2 mt-6">
         <Button type="submit" disabled={!hook.formState.isValid}>
           Submit
@@ -852,6 +893,12 @@ function UserForm() {
           Reset
         </Button>
       </div>
+
+      <Show when={hook.formState.errors} deps={[hook.formState.errors]}>
+        <Alert variant="destructive" className="mt-4">
+          <AlertDescription>Please fix the errors above</AlertDescription>
+        </Alert>
+      </Show>
     </form>
   );
 }
@@ -863,9 +910,12 @@ Create interactive onboarding tours:
 
 ```tsx
 import { useTourBuilder } from "@kanvas/phoenix-rebirth/lib/tour";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 import "@kanvas/phoenix-rebirth/tour.css";
 
 function OnboardingTour() {
+  const [tourStarted, setTourStarted] = useState(false);
+
   const { TourComponents, Driver } = useTourBuilder({
     steps: [
       {
@@ -902,10 +952,12 @@ function OnboardingTour() {
       nextBtnText: "Next",
       prevBtnText: "Previous",
       doneBtnText: "Finish",
+      onDestroyed: () => setTourStarted(false),
     },
   });
 
   const startTour = () => {
+    setTourStarted(true);
     Driver.drive();
   };
 
@@ -931,7 +983,9 @@ function OnboardingTour() {
         <Avatar />
       </TourComponents.ProfileStep>
 
-      <Button onClick={startTour}>Start Tour</Button>
+      <Show when={!tourStarted} deps={[tourStarted]}>
+        <Button onClick={startTour}>Start Tour</Button>
+      </Show>
     </div>
   );
 }
@@ -945,65 +999,69 @@ Pre-built authentication view with Formik validation:
 
 ```tsx
 import { Login } from "@kanvas/phoenix-rebirth/views/login";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function LoginPage() {
+  const [error, setError] = useState(null);
+
   return (
-    <Login
-      image={{
-        src: "/login-background.jpg",
-        alt: "Login Background",
-        className: "object-cover",
-      }}
-      card={{
-        logo: {
-          src: "/logo.svg",
-          alt: "Company Logo",
-          width: 150,
-          height: 50,
-        },
-        title: "Welcome Back",
-        inputs: {
-          email: {
-            label: "Email Address",
-            placeholder: "john@example.com",
+    <>
+      <Login
+        image={{
+          src: "/login-background.jpg",
+          alt: "Login Background",
+          className: "object-cover",
+        }}
+        card={{
+          logo: {
+            src: "/logo.svg",
+            alt: "Company Logo",
+            width: 150,
+            height: 50,
           },
-          password: {
-            label: "Password",
-            placeholder: "Enter your password",
+          title: "Welcome Back",
+          inputs: {
+            email: {
+              label: "Email Address",
+              placeholder: "john@example.com",
+            },
+            password: {
+              label: "Password",
+              placeholder: "Enter your password",
+            },
+            check: "Keep me signed in",
           },
-          check: "Keep me signed in",
-        },
-        forgot: {
-          text: "Forgot Password?",
-          url: "/auth/forgot-password",
-        },
-        action: "Sign In",
-      }}
-      onLogin={async (values) => {
-        // values: { email, password, remember }
-        const response = await authenticate(values);
-        if (response.success) {
-          router.push("/dashboard");
-        }
-      }}
-      onError={(error) => {
-        toast({
-          title: "Authentication Failed",
-          description: error.message,
-          variant: "destructive",
-        });
-      }}
-    />
+          forgot: {
+            text: "Forgot Password?",
+            url: "/auth/forgot-password",
+          },
+          action: "Sign In",
+        }}
+        onLogin={async (values) => {
+          // values: { email, password, remember }
+          const response = await authenticate(values);
+          <Show when={response.success} deps={[response]}>
+            {() => router.push("/dashboard")}
+          </Show>;
+        }}
+        onError={(error) => {
+          setError(error);
+          toast({
+            title: "Authentication Failed",
+            description: error.message,
+            variant: "destructive",
+          });
+        }}
+      />
+
+      <Show when={error} deps={[error]}>
+        <Alert variant="destructive">
+          <AlertDescription>{error.message}</AlertDescription>
+        </Alert>
+      </Show>
+    </>
   );
 }
-```
-
-Or use a custom form:
-
-```tsx
-<Login>
-  <CustomLoginForm />
-</Login>
 ```
 
 ## API Reference
@@ -1014,26 +1072,56 @@ Or use a custom form:
 <summary>View detailed component props</summary>
 
 #### DialogAlert Props
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `open` | `boolean` | Yes | Control dialog visibility |
-| `onOpenChange` | `(open: boolean) => void` | No | Handle open state changes |
-| `title` | `string` | Yes | Dialog title |
-| `description` | `string` | Yes | Dialog description |
-| `dangerAction` | `boolean` | Yes | Style as destructive action |
-| `action` | `{ title: string; disable?: boolean; pending?: boolean }` | Yes | Action button config |
-| `cancel` | `{ title: string }` | No | Cancel button config |
-| `onAction` | `() => void \| Promise<void>` | No | Action handler |
-| `pendingSpinner` | `() => JSX.Element` | No | Custom loading spinner |
+
+| Prop             | Type                                                      | Required | Description                 |
+| ---------------- | --------------------------------------------------------- | -------- | --------------------------- |
+| `open`           | `boolean`                                                 | Yes      | Control dialog visibility   |
+| `onOpenChange`   | `(open: boolean) => void`                                 | No       | Handle open state changes   |
+| `title`          | `string`                                                  | Yes      | Dialog title                |
+| `description`    | `string`                                                  | Yes      | Dialog description          |
+| `dangerAction`   | `boolean`                                                 | Yes      | Style as destructive action |
+| `action`         | `{ title: string; disable?: boolean; pending?: boolean }` | Yes      | Action button config        |
+| `cancel`         | `{ title: string }`                                       | No       | Cancel button config        |
+| `onAction`       | `() => void \| Promise<void>`                             | No       | Action handler              |
+| `pendingSpinner` | `() => JSX.Element`                                       | No       | Custom loading spinner      |
 
 #### Table Props
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `table` | `Table<T>` | Yes | TanStack table instance |
-| `isFetching` | `boolean` | Yes | Loading state |
-| `empty` | `JSX.Element` | No | Custom empty state |
-| `oneElement` | `boolean` | No | Single column mode |
-| `spinner` | `() => JSX.Element` | No | Custom loading spinner |
+
+| Prop         | Type                | Required | Description             |
+| ------------ | ------------------- | -------- | ----------------------- |
+| `table`      | `Table<T>`          | Yes      | TanStack table instance |
+| `isFetching` | `boolean`           | Yes      | Loading state           |
+| `empty`      | `JSX.Element`       | No       | Custom empty state      |
+| `oneElement` | `boolean`           | No       | Single column mode      |
+| `spinner`    | `() => JSX.Element` | No       | Custom loading spinner  |
+
+#### Control Flow Component Props
+
+##### For Component
+
+| Prop       | Type                                                              | Required | Description                 |
+| ---------- | ----------------------------------------------------------------- | -------- | --------------------------- |
+| `each`     | `T[] \| undefined \| null \| false`                               | Yes      | Array to iterate            |
+| `fallback` | `JSX.Element`                                                     | No       | Show when array is empty    |
+| `error`    | `JSX.Element`                                                     | No       | Show when item render fails |
+| `children` | `(item: T, props: { index: number; key: string }) => JSX.Element` | Yes      | Render function             |
+
+##### Show Component
+
+| Prop       | Type                                        | Required | Description                  |
+| ---------- | ------------------------------------------- | -------- | ---------------------------- |
+| `when`     | `T \| undefined \| null \| false`           | Yes      | Condition to check           |
+| `deps`     | `any[]`                                     | Yes      | Dependencies for memoization |
+| `fallback` | `JSX.Element`                               | No       | Show when condition is false |
+| `children` | `JSX.Element \| ((item: T) => JSX.Element)` | Yes      | Content to show              |
+
+##### Switch/Match Components
+
+| Prop       | Type          | Required    | Description         |
+| ---------- | ------------- | ----------- | ------------------- |
+| `fallback` | `JSX.Element` | No          | Default case        |
+| `when`     | `boolean`     | Yes (Match) | Condition for Match |
+| `children` | `JSX.Element` | Yes         | Content to render   |
 
 </details>
 
@@ -1043,6 +1131,7 @@ Or use a custom form:
 <summary>View hook return types</summary>
 
 #### useToast
+
 ```typescript
 {
   toast: (props: ToastProps) => {
@@ -1056,6 +1145,7 @@ Or use a custom form:
 ```
 
 #### useSet
+
 ```typescript
 {
   add: (value: T) => void;
@@ -1072,6 +1162,7 @@ Or use a custom form:
 ```
 
 #### useMap
+
 ```typescript
 {
   set: (key: K, value: V) => void;
@@ -1091,10 +1182,50 @@ Or use a custom form:
 
 ## Best Practices
 
-### 1. Component Composition
+### 1. Always Use Control Flow Components
 
 ```tsx
-// ✅ Good: Compose smaller components
+// ✅ Good: Use For, Show, Switch/Match
+import { For, Show, Switch, Match } from "@kanvas/phoenix-rebirth/lib/server";
+
+function UserList({ users, loading }) {
+  return (
+    <Show
+      when={!loading}
+      deps={[loading]}
+      fallback={<Skeleton className="h-40" />}
+    >
+      <For
+        each={users}
+        fallback={<div>No users found</div>}
+        error={<Alert>Error loading user</Alert>}
+      >
+        {(user, { key }) => (
+          <Card key={key}>
+            <CardContent>{user.name}</CardContent>
+          </Card>
+        )}
+      </For>
+    </Show>
+  );
+}
+
+// ❌ Bad: Traditional React patterns
+function UserList({ users, loading }) {
+  if (loading) return <Skeleton />;
+
+  return users.map((user) => (
+    <Card key={user.id}>
+      <CardContent>{user.name}</CardContent>
+    </Card>
+  ));
+}
+```
+
+### 2. Component Composition with Control Flow
+
+```tsx
+// ✅ Good: Compose with control flow components
 function UserCard({ user }) {
   return (
     <Card>
@@ -1103,107 +1234,102 @@ function UserCard({ user }) {
         <CardTitle>{user.name}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Badge>{user.role}</Badge>
+        <Switch fallback={<Badge variant="secondary">No Role</Badge>}>
+          <Match when={user.role === "admin"}>
+            <Badge variant="destructive">Admin</Badge>
+          </Match>
+          <Match when={user.role === "user"}>
+            <Badge variant="default">User</Badge>
+          </Match>
+        </Switch>
+
+        <Show when={user.bio} deps={[user.bio]}>
+          <p className="mt-2">{user.bio}</p>
+        </Show>
       </CardContent>
     </Card>
   );
 }
+```
 
-// ❌ Bad: Monolithic component
-function UserCard({ user }) {
+### 3. Type Safety with Control Flow
+
+```tsx
+// ✅ Good: Full type safety with control flow
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role?: "admin" | "user" | "moderator";
+}
+
+function UserTable({ users }: { users: User[] }) {
   return (
-    <div className="border rounded-lg p-4">
-      <div className="flex items-center mb-4">
-        <img src={user.avatar} className="w-10 h-10 rounded-full" />
-        <h3 className="text-lg font-semibold">{user.name}</h3>
-      </div>
-      <div>
-        <span className="px-2 py-1 bg-gray-100 rounded">{user.role}</span>
-      </div>
-    </div>
+    <Table>
+      <TableBody>
+        <For<User[]>
+          each={users}
+          fallback={
+            <TableRow>
+              <TableCell colSpan={3}>No users</TableCell>
+            </TableRow>
+          }
+        >
+          {(user, { key }) => (
+            <TableRow key={key}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>
+                <Show when={user.role} deps={[user.role]}>
+                  {(role) => <Badge>{role}</Badge>}
+                </Show>
+              </TableCell>
+            </TableRow>
+          )}
+        </For>
+      </TableBody>
+    </Table>
   );
 }
 ```
 
-### 2. Type Safety
+### 4. Performance with Control Flow
 
 ```tsx
-// ✅ Good: Use TypeScript for props
-interface UserListProps {
-  users: User[];
-  onSelect: (user: User) => void;
-  loading?: boolean;
-}
-
-function UserList({ users, onSelect, loading = false }: UserListProps) {
-  // Component implementation
-}
-
-// ❌ Bad: No type definitions
-function UserList(props) {
-  // Component implementation
-}
-```
-
-### 3. Performance Optimization
-
-```tsx
-// ✅ Good: Memoize expensive computations
+// ✅ Good: Optimized with deps and memoization
 import { useMemo } from "react";
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
 
 function DataTable({ data, filters }) {
   const filteredData = useMemo(() => {
-    return data.filter(item => 
-      filters.every(filter => filter(item))
-    );
+    return data.filter((item) => filters.every((filter) => filter(item)));
   }, [data, filters]);
 
-  const columns = columnsBuilder([
-    // column definitions
-  ], []); // Empty deps for static columns
+  const columns = columnsBuilder(
+    [
+      // column definitions
+    ],
+    []
+  ); // Empty deps for static columns
 
-  return <Table data={filteredData} columns={columns} />;
-}
-
-// ❌ Bad: Recalculate on every render
-function DataTable({ data, filters }) {
-  const filteredData = data.filter(item => 
-    filters.every(filter => filter(item))
+  return (
+    <Show
+      when={filteredData.length > 0}
+      deps={[filteredData]}
+      fallback={<EmptyState />}
+    >
+      <Table data={filteredData} columns={columns} />
+    </Show>
   );
-
-  const columns = [ // Recreated on every render
-    // column definitions
-  ];
-
-  return <Table data={filteredData} columns={columns} />;
 }
 ```
 
-### 4. Accessibility
+### 5. Error Handling with Control Flow
 
 ```tsx
-// ✅ Good: Include accessibility attributes
-<Button
-  aria-label="Delete user"
-  aria-describedby="delete-description"
-  onClick={handleDelete}
->
-  <TrashIcon />
-</Button>
-<span id="delete-description" className="sr-only">
-  This will permanently delete the user
-</span>
+// ✅ Good: Graceful error handling
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
 
-// ❌ Bad: Missing accessibility context
-<Button onClick={handleDelete}>
-  <TrashIcon />
-</Button>
-```
-
-### 5. Error Handling
-
-```tsx
-// ✅ Good: Handle errors gracefully
 function DataFetcher() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -1217,21 +1343,23 @@ function DataFetcher() {
   }, []);
 
   return (
-    <Show
-      when={!loading && !error}
-      deps={[loading, error]}
-      fallback={
-        error ? (
-          <Alert variant="destructive">
-            <AlertDescription>{error.message}</AlertDescription>
-          </Alert>
-        ) : (
-          <Skeleton className="h-40" />
-        )
-      }
-    >
-      <DataDisplay data={data} />
-    </Show>
+    <Switch>
+      <Match when={loading}>
+        <Skeleton className="h-40" />
+      </Match>
+
+      <Match when={error}>
+        <Alert variant="destructive">
+          <AlertDescription>{error.message}</AlertDescription>
+        </Alert>
+      </Match>
+
+      <Match when={data}>
+        <For each={data} error={<div>Failed to render item</div>}>
+          {(item, { key }) => <DataItem key={key} item={item} />}
+        </For>
+      </Match>
+    </Switch>
   );
 }
 ```
@@ -1246,7 +1374,9 @@ function DataFetcher() {
 
 ```tsx
 // Old
-import { Button, Input, Card } from "@kanvas/phoenix-rebirth";
+import { Button } from "@kanvas/phoenix-rebirth/dist/components/ui/button";
+import { Input } from "@kanvas/phoenix-rebirth/dist/components/ui/input";
+import { Card } from "@kanvas/phoenix-rebirth/dist/components/ui/card";
 
 // New
 import { Button } from "@kanvas/phoenix-rebirth/ui/button";
@@ -1254,36 +1384,30 @@ import { Input } from "@kanvas/phoenix-rebirth/ui/input";
 import { Card } from "@kanvas/phoenix-rebirth/ui/card";
 ```
 
-2. **CSS Import**: Global styles must be imported explicitly
+2. **CSS Imports**: Must be explicit in your application
 
 ```tsx
-// Old - Automatic
-// Styles were bundled
+// Old - Bundled styles
+// Styles were automatically included
 
-// New - Explicit
+// New - Explicit imports
 import "@kanvas/phoenix-rebirth/global.css";
 ```
 
-3. **Form Builder API**: Simplified field definitions
+3. **Control Flow Components**: Replace React patterns
 
 ```tsx
-// Old
-const fields = {
-  firstname: {
-    type: "input",
-    validation: Yup.string().required(),
-  }
-};
+// Old - Traditional React
+{items.map(item => <Item key={item.id} {...item} />)}
+{isLoading ? <Loader /> : <Content />}
 
-// New
-const fields: SimpleFormBuilderFieldDefinition = [
-  {
-    kind: "input",
-    name: "firstname",
-    label: "First Name",
-    rules: { required: "First name is required" },
-  }
-];
+// New - Control Flow Components
+<For each={items}>
+  {(item, { key }) => <Item key={key} {...item} />}
+</For>
+<Show when={!isLoading} deps={[isLoading]} fallback={<Loader />}>
+  <Content />
+</Show>
 ```
 
 ### From shadcn/ui
@@ -1291,8 +1415,9 @@ const fields: SimpleFormBuilderFieldDefinition = [
 Phoenix Rebirth is built on shadcn/ui, so migration is straightforward:
 
 1. Replace shadcn/ui imports with Phoenix Rebirth equivalents
-2. Update theme variables to match Phoenix Rebirth's structure
+2. Add Control Flow Components for rendering logic
 3. Use Phoenix Rebirth's enhanced components for additional features
+4. Update to Tailwind CSS v4 syntax
 
 ## Contributing
 
@@ -1315,29 +1440,6 @@ pnpm build
 cd example-app
 pnpm dev
 ```
-
-### Testing
-
-```bash
-# Run tests
-pnpm test
-
-# Run tests in watch mode
-pnpm test:watch
-
-# Run linting
-pnpm lint
-
-# Type checking
-pnpm type-check
-```
-
-## Support
-
-- 📚 [Documentation](https://docs.kanvas.dev/phoenix-rebirth)
-- 💬 [Discord Community](https://discord.gg/kanvas)
-- 🐛 [Issue Tracker](https://github.com/kyanvasu/phoenix-rebirth/issues)
-- 📧 [Email Support](mailto:support@kanvas.dev)
 
 ## License
 
