@@ -1,21 +1,62 @@
-# Kanvas Phoenix rebirth
+# Kanvas Phoenix Rebirth
 
-## Description
+<p align="center">
+  <img src="https://img.shields.io/npm/v/@kanvas/phoenix-rebirth" alt="npm version" />
+  <img src="https://img.shields.io/npm/l/@kanvas/phoenix-rebirth" alt="license" />
+  <img src="https://img.shields.io/npm/dm/@kanvas/phoenix-rebirth" alt="downloads" />
+</p>
 
-Kanvas Phoenix rebirth is a powerful library of pre-built components and
-features designed to simplify and expedite the development. Kanvas Phoenix
-rebirth streamlines the creation of attractive and functional user interfaces,
-allowing frontend developers to focus on business logic rather than reinventing
-the wheel in each project.
+## 📖 Table of Contents
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Core Components](#core-components)
+  - [Base UI Components](#base-ui-components)
+  - [Block Components](#block-components)
+  - [Control Flow Components](#control-flow-components)
+- [Hooks](#hooks)
+- [Utilities](#utilities)
+- [Advanced Features](#advanced-features)
+  - [Slots Pattern](#slots-pattern)
+  - [Form Builder](#form-builder)
+  - [Tour System](#tour-system)
+  - [Threading](#threading)
+- [Views](#views)
+- [API Reference](#api-reference)
+- [Best Practices](#best-practices)
+- [Migration Guide](#migration-guide)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Overview
+
+Kanvas Phoenix Rebirth is a comprehensive React component library built on top of shadcn/ui, designed to accelerate enterprise application development. It provides a rich set of pre-built components, hooks, utilities, and patterns that streamline the creation of modern, accessible, and performant user interfaces.
+
+### Key Features
+
+- 🎨 **40+ Customizable UI Components** based on shadcn/ui
+- 🪝 **Advanced React Hooks** for state management and side effects
+- 🔧 **Utility Functions** for common patterns
+- 📝 **Form Builder System** with validation
+- 🎭 **Slots Pattern** for flexible component composition
+- 🧵 **Web Worker Support** for heavy computations
+- 🚀 **TypeScript First** with full type safety
+- ♿ **Accessible by Default** following WAI-ARIA standards
+- 🌙 **Dark Mode Support** out of the box
+- 📱 **Responsive Design** mobile-first approach
+- ⚡ **Tailwind CSS v4** with latest features
 
 ## Installation
 
-To start using Kanvas Phoenix rebirth in your project, follow these simple
-steps:
+### Prerequisites
 
-1. Ensure you have installed
-   [Kanvas Core JS](https://github.com/bakaphp/kanvas-core-js#kanvas-core-js)
-2. Install Kanvas Phoenix rebirth using npm or yarn:
+- Node.js >= 21.0.0
+- React >= 18.3.0
+- Next.js >= 15.0.0 (recommended)
+- [Kanvas Core JS](https://github.com/bakaphp/kanvas-core-js#kanvas-core-js) installed
+
+### Package Installation
 
 ```bash
 npm install @kanvas/phoenix-rebirth
@@ -25,825 +66,1387 @@ pnpm add @kanvas/phoenix-rebirth
 yarn add @kanvas/phoenix-rebirth
 ```
 
-3. Import the necessary components into your project and start using them.
+## Configuration
+
+### 1. PostCSS Configuration
+
+Create `postcss.config.mjs`:
 
 ```javascript
-import { Button } from "@kanvas/phoenix-rebirth/dist/components/base/button";
-```
-
-> Start building your dashboard!
-
-## Basic Usage
-
-Kanvas Phoenix rebirth integrates seamlessly into your project. Here's a quick
-example of how to use a button component:
-
-```jsx
-import { PlusIcon } from "@kanvas/phoenix-rebirth/dist/components/base/icons";
-import { Button } from "@kanvas/phoenix-rebirth/dist/components/base/button";
-import { Input } from "@kanvas/phoenix-rebirth/dist/components/base/input";
-
-function MyPage() {
-  return (
-    <div>
-      <Button onClick={doSomething}>
-        Do something <PlusIcon />
-      </Button>
-      <Input placeholder="Type..." value="some text" />
-    </div>
-  );
-}
-```
-
-> _Note_: All components come from
-> [shadcn/ui](https://ui.shadcn.com/docs/components/accordion) you can check all
-> of then.
-
-## How configure tailwind with phoenix-rebirth
-
-```ts
-import { createTailwindConfig } from "@kanvas/phoenix-rebirth/dist/config/tailwind";
-
-module.exports = createTailwindConfig({
-  // ... your tailwind config
-});
-```
-
-in your main css file:
-
-```css
-/* dont forget this ;) */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  /* base ligth theme */
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-
-    --radius: 0.5rem;
-  }
-
-  /* base dark theme */
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-```
-
-> _Note_: The variables within the global CSS file are those that control the
-> behavior of the components such as their colors and border radius. To avoid
-> conflicts between phoenix-rebirth and your tailwind configuration, it is
-> recommended that you use other names to name your colors and other
-> configurations.
-
-```css
-theme: {
-  container: {
-    center: /* Reserved do not modify in tailwind */,
-    padding: /* Reserved do not modify in tailwind */,
-    screens: {
-      "2xl": /* Reserved do not modify in tailwind */,
-    },
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
   },
-  extend: {
-    colors: {
-      border: "Reserved do not modify in tailwind",
-      input: "Reserved do not modify in tailwind",
-      ring: "Reserved do not modify in tailwind",
-      background: "Reserved do not modify in tailwind",
-      foreground: "Reserved do not modify in tailwind",
-      primary: {
-        DEFAULT: "Reserved do not modify in tailwind",
-        foreground: "Reserved do not modify in tailwind",
-      },
-      secondary: {
-        DEFAULT: "Reserved do not modify in tailwind",
-        foreground: "Reserved do not modify in tailwind",
-      },
-      destructive: {
-        DEFAULT: "Reserved do not modify in tailwind",
-        foreground: "Reserved do not modify in tailwind",
-      },
-      muted: {
-        DEFAULT: "Reserved do not modify in tailwind",
-        foreground: "Reserved do not modify in tailwind",
-      },
-      accent: {
-        DEFAULT: "Reserved do not modify in tailwind",
-        foreground: "Reserved do not modify in tailwind",
-      },
-      popover: {
-        DEFAULT: "Reserved do not modify in tailwind",
-        foreground: "Reserved do not modify in tailwind",
-      },
-      card: {
-        DEFAULT: "Reserved do not modify in tailwind",
-        foreground: "Reserved do not modify in tailwind",
-      },
-    },
-    borderRadius: {
-      lg: "Reserved do not modify in tailwind",
-      md: "Reserved do not modify in tailwind",
-      sm: "Reserved do not modify in tailwind",
-    },
-    keyframes: {
-      "accordion-down": {
-        // Reserved do not modify in tailwind
-      },
-      "accordion-up": {
-        // Reserved do not modify in tailwind
-      },
-    },
-    animation: {
-      "accordion-down": "Reserved do not modify in tailwind",
-      "accordion-up": "Reserved do not modify in tailwind",
-    },
-  },
-},
+};
 ```
 
-If you need to modify any of these parameters you must do so using CSS variables
+### 2. Global CSS Setup
 
-## How use components and icons
-
-To use the base components you just have to call the component or icon you want
-to use.
-
-`example`:
-
-```typescript
-import { PlusIcon } from "@kanvas/phoenix-rebirth/dist/components/base/icons";
-import { Button } from "@kanvas/phoenix-rebirth/dist/components/base/button";
-import { Input } from "@kanvas/phoenix-rebirth/dist/components/base/input";
-```
-
-The components are designed to work on client side as server side, with
-`nextjs 13^` app router, it is necessary to specify whether the client
-component, if nextjs throws you an error using a component for not specifying
-that it is client, you only have to change its import:
-
-```typescript
-// with out "use client"
-import { Select } from "@kanvas/phoenix-rebirth/dist/components/base/input";
-
-// with "use client"
-import { Select } from "@kanvas/phoenix-rebirth/dist/components/base/input.mjs";
-```
-
-## Utilitie Components
-
-phoenix-rebirth includes utility components to improve the development
-experience, these components are:
-
-- For
-- Show
-- Switch
-- Match
-
-`Example` How to use `For` Component:
-
-```html
-// with out For
-<ul>
-  [...].map((item, index) => (<li key="{index}">{item}</li>))
-</ul>
-
-// with For
-<ul>
-  <For
-    each={[...]}
-    fallback={<> not elements </>}
-    error={<> some element throw an error </>}
-  >
-    {
-      (item, { key }) => (<li key={key}>{item}</li>)
-    }
-  </For>
-</ul>
-```
-
-With the `For` component, each element within it is rendered individually to the
-previous or next one, so if any element throws an error this does not break the
-application and an error message can be displayed.
-
-`Example` How to use `Show` Component:
-
-```html
-// with out Show
-<ul>
-  { (counter === 4) ? <li> true </li>  :  <li> false </li>}
-</ul>
-
-// with Show
-<ul>
-  <Show
-    when={(counter === 4)}
-    deps={[counter]}
-    fallback={<li> false </li>}
-  >
-    <li> true </li>
-  </For>
-</ul>
-```
-
-The `Show` component improves the experience of using conditionals within jsx,
-making the code more readable and maintainable when you have nested conditions.
-
-`Example` How to use `Show` Component:
-
-```html
-// with out Switch/Match
-<ul>
-  {(counter === 4) && <li> 4 </li>}
-  {(counter === 5) && <li> 5 </li>}
-  {(counter === 6) && <li> 6 </li>}
-</ul>
-
-// with Switch/Match
-<ul>
-  <Switch
-    fallback={<li> no one </li>}
-  >
-    <Match when={counter === 4}>
-      <li> 4 </li>
-    </Match>
-
-    <Match when={counter === 5}>
-      <li> 5 </li>
-    </Match>
-
-    <Match when={counter === 6}>
-      <li> 6 </li>
-    </Match>
-  </Switch>
-</ul>
-```
-
-`Switch` and `Match` improve the experience when multiple cases must be
-evaluated for a single output, just like Switch in javascript.
-
-## How to make themes
-
-We use a simple `background` and `foreground` convention for colors. The
-`background` variable is used for the background color of the component and the
-`foreground` variable is used for the text color.
-
-> The background suffix is omitted when the variable is used for the background
-> color of the component.
-
-Given the following CSS variables:
+In your main CSS file (e.g., `app/globals.css`):
 
 ```css
---primary: 222.2 47.4% 11.2%;
---primary-foreground: 210 40% 98%;
-```
+/* Import Tailwind CSS v4 */
+@import "tailwindcss";
 
-The `background` color of the following component will be `hsl(var(--primary))`
-and the `foreground` color will be `hsl(var(--primary-foreground))`.
+/* Import Phoenix Rebirth styles */
+@import "@kanvas/phoenix-rebirth/global.css";
 
-```html
-<div className="bg-primary text-primary-foreground">Hello</div>
-```
+/* Optional: Import tour styles if using tour functionality */
+@import "@kanvas/phoenix-rebirth/tour.css";
 
-### List of variables
+/* Import animations */
+@import "tw-animate-css";
 
-Default background color of `<body />`...etc
+/* Custom theme overrides (optional) */
+@custom-variant dark (&:is(.dark *));
 
-```css
---background: 0 0% 100%;
---foreground: 222.2 47.4% 11.2%;
-```
+@theme inline {
+  /* Add custom theme tokens if needed */
+  --color-brand-50: oklch(0.95 0.01 210);
+  --color-brand-500: oklch(0.6 0.2 210);
+  --color-brand-900: oklch(0.3 0.15 210);
+}
 
-Muted backgrounds such as `<TabsList />, <Skeleton /> and <Switch />`
-
-```css
---muted: 210 40% 96.1%;
---muted-foreground: 215.4 16.3% 46.9%;
-```
-
-Background color for `<Card />`
-
-```css
---card: 0 0% 100%;
---card-foreground: 222.2 47.4% 11.2%;
-```
-
-Background color for popovers such as
-`<DropdownMenu />, <HoverCard />, <Popover />`
-
-```css
---popover: 0 0% 100%;
---popover-foreground: 222.2 47.4% 11.2%;
-```
-
-Default border color
-
-```css
---border: 214.3 31.8% 91.4%;
-```
-
-Border color for inputs such as `<Input />, <Select />, <Textarea />`
-
-```css
---input: 214.3 31.8% 91.4%;
-```
-
-Primary colors for `<Button />`
-
-```css
---primary: 222.2 47.4% 11.2%;
---primary-foreground: 210 40% 98%;
-```
-
-Secondary colors for `<Button />`
-
-```css
---secondary: 210 40% 96.1%;
---secondary-foreground: 222.2 47.4% 11.2%;
-```
-
-Used for accents such as hover effects on
-`<DropdownMenuItem>, <SelectItem>`...etc
-
-```css
---accent: 210 40% 96.1%;
---accent-foreground: 222.2 47.4% 11.2%;
-```
-
-Used for destructive actions such as `<Button variant="destructive">`
-
-```css
---destructive: 0 100% 50%;
---destructive-foreground: 210 40% 98%;
-```
-
-Used for focus ring
-
-```css
---ring: 215 20.2% 65.1%;
-```
-
-Border radius for card, input and buttons
-
-```css
---radius: 0.5rem;
-```
-
-> _Note_: for css use HSL color format
-
-### Adding new colors
-
-To add new colors, you need to add them to your CSS file and to your
-`tailwind.config.js` file.
-
-`app/globals.css`
-
-```css
+/* Custom CSS variables (optional) */
 :root {
-  --warning: 38 92% 50%;
-  --warning-foreground: 48 96% 89%;
+  /* Override Phoenix Rebirth variables if needed */
+  --primary: oklch(0.8009 0.1995 124.29);
+  --primary-foreground: oklch(0.985 0 0);
 }
 
 .dark {
-  --warning: 48 96% 89%;
-  --warning-foreground: 38 92% 50%;
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
 }
 ```
 
-`tailwind.config.js`
+### 3. Next.js App Router Setup
 
-```typescript
-module.exports = createTailwindConfig({
-  theme: {
-    extend: {
-      colors: {
-        warning: "hsl(var(--warning))",
-        "warning-foreground": "hsl(var(--warning-foreground))",
-      },
-    },
-  },
-});
-```
-
-You can now use the warning utility class in your components.
-
-```html
-<div className="bg-warning text-warning-foreground" />
-```
-
-## Advance utilities
-
-### useEvents Hook
-
-allows you to emit and listen to client-side events in a simple way, similar to
-frameworks like vue or svelte
-
-```jsx
-import { useEvents } from "@kanvas/phoenix-rebirth/dist/lib";
-
-
-export default Home(props) {
-  // events can be typed
-  const  { emit }  = useEvents<number>()
-
-  return <button onClick={() => emit('random', Math.random())}> random </button>
-}
-
-
-export default Home2(props) {
-  const  { on }  = useEvents<number>();
-
-  useEffect(() => {
-
-    return on('random', ({ detail }) => console.log(detail)); // 0.96362
-  }, []);
-
-  return <button>...</button>
-}
-```
-
-### useThreads Hook
-
-allows you to run code in a thread separate from the main one, either on the
-server (nodejs) or on the client (browser).
+For Next.js applications, simply import the CSS in your root layout:
 
 ```tsx
-"use client";
+// app/layout.tsx
+import "@kanvas/phoenix-rebirth/global.css";
+import "./globals.css"; // Your custom styles
 
-import { useEvents } from "@kanvas/phoenix-rebirth/dist/lib";
-
-export function Component() {
-  const { client, server } = useThread();
-
-  // this use browser threads .....
-  const clientHandler = client(async () => {
-    // this code will execute on browser new thread
-
-    console.log("hello from browser thread", self); // threads not have access to 'window' context
-
-    return 2 + 2;
-  });
-
-  // this use node threads .....
-  const serverHandler = server(
-    // can pass data
-    async (port, data) => {
-      // this code will execute on nodejs new thread
-
-      console.log("hello from node thread", data);
-
-      return 2 + 2;
-    },
-    { hello: "world" }
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
   );
+}
+```
+
+## Core Components
+
+### Base UI Components
+
+All base components are imported from shadcn/ui and are fully customizable:
+
+```tsx
+import { Button } from "@kanvas/phoenix-rebirth/ui/button";
+import { Input } from "@kanvas/phoenix-rebirth/ui/input";
+import { Card, CardContent, CardHeader } from "@kanvas/phoenix-rebirth/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+} from "@kanvas/phoenix-rebirth/ui/select";
+```
+
+#### Available Components
+
+<details>
+<summary>View all 40+ components</summary>
+
+- **Layout**: Card, Separator, Sheet, Sidebar
+- **Forms**: Input, Textarea, Select, Checkbox, Radio, Switch, Slider, Calendar, DatePicker
+- **Buttons**: Button, Toggle, ToggleGroup
+- **Navigation**: Tabs, NavigationMenu, Breadcrumb, Pagination
+- **Data Display**: Table, Badge, Avatar, Progress, Skeleton
+- **Feedback**: Alert, Toast, Dialog, AlertDialog, Tooltip, Popover
+- **Typography**: Label, Badge
+- **Media**: AspectRatio, Avatar
+- **Overlays**: Dialog, Drawer, HoverCard, Popover, Sheet, Tooltip
+- **Utilities**: Collapsible, ScrollArea, Separator
+
+</details>
+
+### Block Components
+
+Enhanced composite components for complex use cases:
+
+#### DialogAlert
+
+A pre-styled alert dialog with action handlers:
+
+```tsx
+import { DialogAlert } from "@kanvas/phoenix-rebirth/blocks/dialog";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+function DeleteConfirmation() {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <button
-        onClick={() => clientHandler().then((value) => console.log(value))}
-      >
-        client
-      </button>
-      <button
-        onClick={() => serverHandler().then((value) => console.log(value))}
-      >
-        server
-      </button>
+      <Button onClick={() => setOpen(true)}>Delete Item</Button>
+
+      <Show when={open} deps={[open]}>
+        <DialogAlert
+          open={open}
+          onOpenChange={setOpen}
+          title="Delete Item"
+          description="Are you sure you want to delete this item? This action cannot be undone."
+          dangerAction={true}
+          action={{
+            title: "Delete",
+            pending: isDeleting,
+          }}
+          cancel={{
+            title: "Cancel",
+          }}
+          onAction={async () => {
+            await deleteItem();
+            setOpen(false);
+          }}
+        />
+      </Show>
     </>
   );
 }
 ```
 
-to use `server` need to create a api route:
+#### ModalDialog
 
-`src/app/api/threads/route.ts`
-
-```typescript
-import { POST } from "@kanvas/phoenix-rebirth/lib/threads-api";
-
-export { POST };
-```
-
-## Slots
-
-A type-safe implementation of the slots pattern for React, supporting both Server and Client Components in Next.js.
-
-### Table of Contents
-
-- [Basic Usage](#basic-usage)
-- [Type Safety](#type-safety)
-- [Server & Client Components](#server--client-components)
-- [Advanced Patterns](#advanced-patterns)
-
-### Basic Usage
-
-1. Define Your Slots
+Responsive modal that adapts to mobile (drawer) and desktop (dialog):
 
 ```tsx
-// Define slots as a const array for both type and runtime usage
-const LAYOUT_SLOTS = ["header", "main", "footer"] as const;
+import { ModalDialog } from "@kanvas/phoenix-rebirth/blocks/modal";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
-// Create type from the const array
-type LayoutSlots = (typeof LAYOUT_SLOTS)[number];
-```
+function CreateUserModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
-2. Create Your Component
-
-```tsx
-interface Props extends WithSlotsProps<LayoutSlots> {
-  app: string; // Additional props
-}
-
-const Layout = ({ slots, app }: Props) => (
-  <div>
-    <header>{slots.header}</header>
-    <main>{slots.main}</main>
-    <footer>{slots.footer}</footer>
-  </div>
-);
-
-// Create the wrapped version
-const LayoutWithSlots = WithSlots(Layout, LAYOUT_SLOTS);
-```
-
-3. Create Type-Safe Slot Component
-
-```tsx
-function LayoutSlot(props: { name: LayoutSlots; children: React.ReactNode }) {
-  return <Slot<LayoutSlots> {...props} />;
-}
-```
-
-4. Use The Component
-
-```tsx
-export default function App() {
   return (
-    <LayoutWithSlots app="myApp">
-      <LayoutSlot name="header">
-        <h1>Header Content</h1>
-      </LayoutSlot>
-
-      <LayoutSlot name="main">
-        <div>Main Content</div>
-      </LayoutSlot>
-
-      <LayoutSlot name="footer">
-        <div>Footer Content</div>
-      </LayoutSlot>
-    </LayoutWithSlots>
+    <Show when={isOpen} deps={[isOpen]}>
+      <ModalDialog
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        title="Create New User"
+        action={{
+          title: "Create",
+          disable: !isValid,
+          pending: isCreating,
+          type: "submit",
+        }}
+        onAction={handleCreate}
+      >
+        <form className="space-y-4">
+          <Input name="name" placeholder="Enter name" />
+          <Input name="email" type="email" placeholder="Enter email" />
+        </form>
+      </ModalDialog>
+    </Show>
   );
 }
 ```
 
-### Server & Client Components
+#### Advanced Table
 
-Server Component Usage
+Data table with built-in sorting, filtering, and pagination:
 
 ```tsx
-// page.tsx
-import { WithSlots } from "...";
+import {
+  Table,
+  columnsBuilder,
+  useTable,
+  TableSlot,
+} from "@kanvas/phoenix-rebirth/blocks/table";
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
 
-const ServerLayout = ({ slots }: WithSlotsProps<LayoutSlots>) => (
-  <div>
-    {slots.header}
-    {slots.content}
-  </div>
-);
+function UserTable() {
+  const columns = columnsBuilder(
+    [
+      {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => (
+          <div className="font-medium">{row.getValue("name")}</div>
+        ),
+      },
+      {
+        accessorKey: "email",
+        header: "Email",
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => (
+          <Badge
+            variant={
+              row.getValue("status") === "active" ? "default" : "secondary"
+            }
+          >
+            {row.getValue("status")}
+          </Badge>
+        ),
+      },
+    ],
+    []
+  );
 
-const ServerLayoutWithSlots = WithSlots(ServerLayout, LAYOUT_SLOTS);
+  const { table } = useTable({
+    data: users,
+    columns,
+  });
 
-// This can be a Server Component
-export default function Page() {
   return (
-    <ServerLayoutWithSlots>
-      <LayoutSlot name="header">
-        <h1>Server Rendered Header</h1>
-      </LayoutSlot>
-      <LayoutSlot name="content">
-        <div>Server Rendered Content</div>
-      </LayoutSlot>
-    </ServerLayoutWithSlots>
+    <Table table={table} isFetching={isLoading}>
+      <TableSlot name="top">
+        <div className="flex justify-between p-4">
+          <Input placeholder="Search users..." />
+          <Button>Add User</Button>
+        </div>
+      </TableSlot>
+      <TableSlot name="bottom">
+        <Pagination />
+      </TableSlot>
+    </Table>
   );
 }
 ```
 
-Client Component Usage
+### Control Flow Components
+
+React components for declarative rendering logic - **use these instead of traditional React patterns**:
+
+#### For Component
+
+Iterate over arrays with built-in error boundaries:
 
 ```tsx
-// client-component.tsx
-"use client";
+import { For } from "@kanvas/phoenix-rebirth/lib/server";
 
-import { WithSlotsProps } from "...";
-
-const INTERACTIVE_SLOTS = ["header", "content"] as const;
-type InteractiveSlots = (typeof INTERACTIVE_SLOTS)[number];
-
-interface ClientProps extends WithSlotsProps<InteractiveSlots> {
-  onClick: () => void;
-}
-
-function InteractiveSlot(props: {
-  name: InteractiveSlots;
-  children: React.ReactNode;
-}) {
-  return <Slot<InteractiveSlots> {...props} />;
-}
-
-export function ClientComponent({ slots, onClick }: ClientProps) {
+function ProductList({ products }) {
   return (
-    <div onClick={onClick}>
-      {slots.header}
-      {slots.content}
+    <div className="grid grid-cols-3 gap-4">
+      <For
+        each={products}
+        fallback={<div>No products found</div>}
+        error={<div>Error loading product</div>}
+      >
+        {(product, { index, key }) => (
+          <Card key={key}>
+            <CardHeader>{product.name}</CardHeader>
+            <CardContent>
+              <p>Price: ${product.price}</p>
+              <p>Position: {index + 1}</p>
+            </CardContent>
+          </Card>
+        )}
+      </For>
     </div>
   );
 }
 
-const ClientWithSlots = WithSlots(ClientComponent, INTERACTIVE_SLOTS);
+// ❌ Don't use traditional map
+// products.map(product => ...)
+```
 
-// Usage in a Server Component
-function Page() {
+#### Show Component
+
+Conditional rendering with dependency tracking:
+
+```tsx
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+function UserProfile({ user, isLoading }) {
   return (
-    <ClientWithSlots onClick={() => console.log("clicked")}>
-      <InteractiveSlot name="header">
-        <button>Interactive Header</button>
-      </InteractiveSlot>
-      <InteractiveSlot name="content">
-        <div>Interactive Content</div>
-      </InteractiveSlot>
-    </ClientWithSlots>
+    <Show
+      when={!isLoading && user}
+      deps={[isLoading, user]}
+      fallback={<Skeleton className="h-40 w-full" />}
+    >
+      <Card>
+        <CardHeader>{user.name}</CardHeader>
+        <CardContent>{user.bio}</CardContent>
+      </Card>
+    </Show>
+  );
+}
+
+// ❌ Don't use ternary operators
+// isLoading ? <Skeleton /> : <Card>...</Card>
+```
+
+#### Switch/Match Components
+
+Multiple conditional rendering:
+
+```tsx
+import { Switch, Match } from "@kanvas/phoenix-rebirth/lib/server";
+
+function StatusIndicator({ status }) {
+  return (
+    <Switch fallback={<Badge variant="secondary">Unknown</Badge>}>
+      <Match when={status === "active"}>
+        <Badge variant="default">Active</Badge>
+      </Match>
+      <Match when={status === "pending"}>
+        <Badge variant="warning">Pending</Badge>
+      </Match>
+      <Match when={status === "inactive"}>
+        <Badge variant="destructive">Inactive</Badge>
+      </Match>
+    </Switch>
+  );
+}
+
+// ❌ Don't use multiple ternaries or if-else chains
+// status === "active" ? ... : status === "pending" ? ... : ...
+```
+
+## Hooks
+
+### useToast
+
+Display toast notifications:
+
+```tsx
+import { useToast } from "@kanvas/phoenix-rebirth/hooks";
+import { Toaster } from "@kanvas/phoenix-rebirth/ui/toaster";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+function App() {
+  const { toast, toasts } = useToast();
+
+  const handleSave = async () => {
+    try {
+      await saveData();
+      toast({
+        title: "Success",
+        description: "Your changes have been saved.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save changes.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <>
+      <Button onClick={handleSave}>Save</Button>
+      <Show when={toasts.length > 0} deps={[toasts]}>
+        <Toaster />
+      </Show>
+    </>
   );
 }
 ```
 
-Mixing Client and Server Components
+### useIsMobile
+
+Detect mobile viewport:
 
 ```tsx
-// server-component.tsx
-import { ClientComponent } from "./client-component";
+import { useIsMobile } from "@kanvas/phoenix-rebirth/hooks";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
-export function ServerComponent() {
+function ResponsiveLayout() {
+  const isMobile = useIsMobile();
+
   return (
-    <LayoutWithSlots app="myApp">
-      <LayoutSlot name="header">
-        <ClientComponent /> {/* Client Component in Server Component slot */}
-      </LayoutSlot>
-      <LayoutSlot name="main">
-        <div>Server Rendered Content</div>
-      </LayoutSlot>
-    </LayoutWithSlots>
+    <div className={isMobile ? "grid-cols-1" : "grid-cols-3"}>
+      <Show when={isMobile} deps={[isMobile]} fallback={<DesktopNav />}>
+        <MobileNav />
+      </Show>
+    </div>
   );
 }
 ```
 
-Advanced Patterns
+### useEvents
 
-Optional Slots
+Custom event emitter for cross-component communication:
 
 ```tsx
-const CARD_SLOTS = ["title", "content", "footer?"] as const;
+import { useEvents } from "@kanvas/phoenix-rebirth/lib/utils";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
-type CardSlots = (typeof CARD_SLOTS)[number];
-type RequiredCardSlots = Exclude<CardSlots, `${string}?`>;
-type OptionalCardSlots = Extract<CardSlots, `${string}?`>;
+// Component A - Emitter
+function SearchBar() {
+  const { emit } = useEvents<string>();
 
-interface CardProps extends WithSlotsProps<RequiredCardSlots> {
-  slots: Record<RequiredCardSlots, ReactNode> &
-    Partial<Record<OptionalCardSlots, ReactNode>>;
+  const handleSearch = (query: string) => {
+    emit("search", query);
+  };
+
+  return <Input onChange={(e) => handleSearch(e.target.value)} />;
+}
+
+// Component B - Listener
+function SearchResults() {
+  const { on } = useEvents<string>();
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    return on("search", ({ detail }) => {
+      setQuery(detail);
+    });
+  }, []);
+
+  return (
+    <Show when={query} deps={[query]} fallback={<div>No search query</div>}>
+      <div>Searching for: {query}</div>
+    </Show>
+  );
 }
 ```
 
-Nested Slots
+### useSet
+
+State management for Set data structure:
 
 ```tsx
-const NESTED_SLOTS = [
-  "header",
-  "header.title",
-  "header.subtitle",
-  "content",
-  "footer",
-] as const;
+import { useSet } from "@kanvas/phoenix-rebirth/lib/utils";
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
 
-type NestedSlots = (typeof NESTED_SLOTS)[number];
+function TagSelector() {
+  const selectedTags = useSet<string>(["react", "typescript"]);
 
-const NestedLayout = ({ slots }: WithSlotsProps<NestedSlots>) => (
-  <div>
-    <header>
-      {slots["header"]}
-      <div>
-        {slots["header.title"]}
-        {slots["header.subtitle"]}
+  return (
+    <div>
+      <div className="flex gap-2">
+        <For each={tags}>
+          {(tag, { key }) => (
+            <Badge
+              key={key}
+              variant={selectedTags.has(tag) ? "default" : "outline"}
+              onClick={() => {
+                <Show when={selectedTags.has(tag)} deps={[selectedTags.value]}>
+                  {() => selectedTags.delete(tag)}
+                </Show>
+                <Show when={!selectedTags.has(tag)} deps={[selectedTags.value]}>
+                  {() => selectedTags.add(tag)}
+                </Show>
+              }}
+            >
+              {tag}
+            </Badge>
+          )}
+        </For>
       </div>
-    </header>
-    {slots.content}
-    {slots.footer}
+      <p>Selected: {selectedTags.values().join(", ")}</p>
+      <Button onClick={() => selectedTags.clear()}>Clear All</Button>
+    </div>
+  );
+}
+```
+
+### useMap
+
+State management for Map data structure:
+
+```tsx
+import { useMap } from "@kanvas/phoenix-rebirth/lib/utils";
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+function ShoppingCart() {
+  const cart = useMap<string, number>();
+
+  const addItem = (id: string) => {
+    const current = cart.get(id) || 0;
+    cart.set(id, current + 1);
+  };
+
+  const removeItem = (id: string) => {
+    cart.delete(id);
+  };
+
+  return (
+    <div>
+      <h3>Cart Items: {cart.size()}</h3>
+      <For each={cart.entries()}>
+        {([id, quantity], { key }) => (
+          <div key={key} className="flex justify-between">
+            <span>Item {id}</span>
+            <span>Qty: {quantity}</span>
+            <Button size="sm" onClick={() => removeItem(id)}>
+              Remove
+            </Button>
+          </div>
+        )}
+      </For>
+      <Show when={cart.size() === 0} deps={[cart.value]}>
+        <p>Your cart is empty</p>
+      </Show>
+    </div>
+  );
+}
+```
+
+## Utilities
+
+### Threading Support
+
+Execute heavy computations in Web Workers:
+
+```tsx
+import { useThread } from "@kanvas/phoenix-rebirth/lib/utils";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+function DataProcessor() {
+  const { client, server } = useThread();
+  const [result, setResult] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // Client-side threading (browser)
+  const processInBrowser = async () => {
+    setIsProcessing(true);
+    const handler = client(async () => {
+      // This runs in a Web Worker
+      let sum = 0;
+      for (let i = 0; i < 1000000000; i++) {
+        sum += i;
+      }
+      return sum;
+    });
+
+    const result = await handler();
+    setResult(result);
+    setIsProcessing(false);
+  };
+
+  // Server-side threading (Node.js)
+  const processOnServer = async () => {
+    setIsProcessing(true);
+    const handler = server(
+      async (port, data) => {
+        // This runs in a Node.js Worker Thread
+        const { items } = data;
+        const processed = items.map((item) => item * 2);
+        return processed;
+      },
+      { items: [1, 2, 3, 4, 5] }
+    );
+
+    const result = await handler();
+    setResult(result);
+    setIsProcessing(false);
+  };
+
+  return (
+    <div>
+      <Button onClick={processInBrowser} disabled={isProcessing}>
+        Process in Browser
+      </Button>
+      <Button onClick={processOnServer} disabled={isProcessing}>
+        Process on Server
+      </Button>
+
+      <Show when={isProcessing} deps={[isProcessing]}>
+        <div>Processing...</div>
+      </Show>
+
+      <Show when={result && !isProcessing} deps={[result, isProcessing]}>
+        <div>Result: {JSON.stringify(result)}</div>
+      </Show>
+    </div>
+  );
+}
+```
+
+**Note:** For server-side threading, create an API route:
+
+```typescript
+// app/api/threads/route.ts
+import { POST } from "@kanvas/phoenix-rebirth/lib/threads-api";
+export { POST };
+```
+
+## Advanced Features
+
+### Slots Pattern
+
+Build composable components with named slots:
+
+```tsx
+import {
+  WithSlots,
+  Slot,
+  WithSlotsProps,
+} from "@kanvas/phoenix-rebirth/lib/server";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+// 1. Define your slots
+const DASHBOARD_SLOTS = ["header", "sidebar", "content", "footer"] as const;
+type DashboardSlots = (typeof DASHBOARD_SLOTS)[number];
+
+// 2. Create your component
+interface DashboardProps extends WithSlotsProps<DashboardSlots> {
+  theme?: "light" | "dark";
+  collapsed?: boolean;
+}
+
+const Dashboard = ({
+  slots,
+  theme = "light",
+  collapsed = false,
+}: DashboardProps) => (
+  <div className={`dashboard theme-${theme}`}>
+    <header className="h-16 border-b">{slots.header}</header>
+    <div className="flex">
+      <Show
+        when={!collapsed}
+        deps={[collapsed]}
+        fallback={<aside className="w-16 border-r">{slots.sidebar}</aside>}
+      >
+        <aside className="w-64 border-r">{slots.sidebar}</aside>
+      </Show>
+      <main className="flex-1 p-6">{slots.content}</main>
+    </div>
+    <footer className="h-12 border-t">{slots.footer}</footer>
   </div>
 );
+
+// 3. Wrap with slots HOC
+const DashboardWithSlots = WithSlots(Dashboard, DASHBOARD_SLOTS);
+
+// 4. Create typed slot component
+function DashboardSlot(props: {
+  name: DashboardSlots;
+  children: React.ReactNode;
+}) {
+  return <Slot<DashboardSlots> {...props} />;
+}
+
+// 5. Use the component
+export default function App() {
+  return (
+    <DashboardWithSlots theme="dark" collapsed={false}>
+      <DashboardSlot name="header">
+        <nav className="flex items-center px-4">
+          <h1>My Application</h1>
+        </nav>
+      </DashboardSlot>
+
+      <DashboardSlot name="sidebar">
+        <Navigation items={menuItems} />
+      </DashboardSlot>
+
+      <DashboardSlot name="content">
+        <Routes />
+      </DashboardSlot>
+
+      <DashboardSlot name="footer">
+        <p>© 2025 My Company</p>
+      </DashboardSlot>
+    </DashboardWithSlots>
+  );
+}
 ```
 
-Best Practices
+### Form Builder System
 
-1. **Define Slots Once**: Use a const array to define slots and derive types from it
+Create dynamic forms with validation:
 
-   ```tsx
-   const SLOTS = ["header", "main", "footer"] as const;
-   type Slots = (typeof SLOTS)[number];
-   ```
+```tsx
+import {
+  useSimpleFormBuilder,
+  SimpleFormBuilder,
+  SimpleFormBuilderFieldDefinition,
+} from "@kanvas/phoenix-rebirth/blocks/form";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
-2. **Create Typed Slot Components**: Make slot usage type-safe
+function UserForm() {
+  const formFields: SimpleFormBuilderFieldDefinition = [
+    // Row with multiple fields
+    [
+      {
+        kind: "input",
+        name: "firstname",
+        label: "First Name",
+        placeholder: "Enter first name",
+        rules: { required: "First name is required" },
+      },
+      {
+        kind: "input",
+        name: "lastname",
+        label: "Last Name",
+        placeholder: "Enter last name",
+        rules: { required: "Last name is required" },
+      },
+    ],
+    // Single field in row
+    {
+      kind: "input",
+      type: "email",
+      name: "email",
+      label: "Email",
+      placeholder: "user@example.com",
+      rules: {
+        required: "Email is required",
+        pattern: {
+          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+          message: "Invalid email address",
+        },
+      },
+    },
+    {
+      kind: "phone",
+      name: "phone",
+      label: "Phone Number",
+      placeholder: "Enter phone number",
+      optional: "true",
+      infoText: "Include country code",
+    },
+    {
+      kind: "select",
+      name: "role",
+      label: "Role",
+      placeholder: "Select a role",
+      rules: { required: "Role is required" },
+      options: [
+        { name: "Admin", value: "admin" },
+        { name: "User", value: "user" },
+        { name: "Moderator", value: "moderator" },
+      ],
+    },
+    {
+      kind: "faceted-select",
+      name: "permissions",
+      label: "Permissions",
+      placeholder: "Select permissions",
+      truncateAt: 3,
+      options: [
+        { name: "Read", value: "read" },
+        { name: "Write", value: "write" },
+        { name: "Delete", value: "delete" },
+        { name: "Admin", value: "admin" },
+      ],
+    },
+    {
+      kind: "textarea",
+      name: "bio",
+      label: "Bio",
+      placeholder: "Tell us about yourself",
+      optional: "true",
+    },
+    {
+      kind: "switch",
+      name: "notifications",
+      label: "Email Notifications",
+    },
+    {
+      kind: "checkbox",
+      name: "terms",
+      label: "I agree to the terms and conditions",
+      rules: { required: "You must accept the terms" },
+    },
+    // Custom component
+    {
+      kind: "custom",
+      name: "avatar",
+      label: "Profile Picture",
+      component: AvatarUploader,
+    },
+  ];
 
-   ```tsx
-   function TypedSlot(props: { name: Slots; children: ReactNode }) {
-     return <Slot<Slots> {...props} />;
-   }
-   ```
+  const { definitions, hook } = useSimpleFormBuilder(formFields, {
+    defaultValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      role: "",
+      permissions: "",
+      bio: "",
+      notifications: false,
+      terms: false,
+      avatar: null,
+    },
+  });
 
-3. **Mark Client Components**: Always mark interactive components with "use client"
+  const handleSubmit = hook.handleSubmit(async (values) => {
+    console.log("Form values:", values);
+    await saveUser(values);
+  });
 
-   ```tsx
-   "use client";
-   export function Interactive({ slots }: Props) {
-     // Interactive component code
-   }
-   ```
+  return (
+    <form onSubmit={handleSubmit}>
+      <SimpleFormBuilder definitions={definitions} hook={hook} />
 
-4. **Validate Required Slots**: Use TypeScript to enforce required slots
+      <div className="flex gap-2 mt-6">
+        <Button type="submit" disabled={!hook.formState.isValid}>
+          Submit
+        </Button>
+        <Button type="button" variant="outline" onClick={() => hook.reset()}>
+          Reset
+        </Button>
+      </div>
 
-   ```tsx
-   interface Props extends WithSlotsProps<RequiredSlots> {
-     // Additional props
-   }
-   ```
+      <Show when={hook.formState.errors} deps={[hook.formState.errors]}>
+        <Alert variant="destructive" className="mt-4">
+          <AlertDescription>Please fix the errors above</AlertDescription>
+        </Alert>
+      </Show>
+    </form>
+  );
+}
+```
 
-5. **Document Slot Purpose**: Comment what each slot is for
-   ```tsx
-   const DASHBOARD_SLOTS = [
-     "nav", // Navigation area
-     "sidebar", // Side configuration panel
-     "content", // Main content area
-     "footer", // Footer with actions
-   ] as const;
-   ```
+### Tour System
+
+Create interactive onboarding tours:
+
+```tsx
+import { useTourBuilder } from "@kanvas/phoenix-rebirth/lib/tour";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
+import "@kanvas/phoenix-rebirth/tour.css";
+
+function OnboardingTour() {
+  const [tourStarted, setTourStarted] = useState(false);
+
+  const { TourComponents, Driver } = useTourBuilder({
+    steps: [
+      {
+        wrappertName: "WelcomeStep",
+        title: "Welcome to Our App!",
+        description: "Let's take a quick tour of the main features.",
+        showButtons: ["next", "skip"],
+      },
+      {
+        wrappertName: "NavigationStep",
+        title: "Main Navigation",
+        description: "Use this menu to navigate between different sections.",
+        showButtons: ["previous", "next"],
+      },
+      {
+        wrappertName: "SearchStep",
+        title: "Search Functionality",
+        description: "Find anything quickly using our powerful search.",
+        showButtons: ["previous", "next"],
+      },
+      {
+        wrappertName: "ProfileStep",
+        title: "Your Profile",
+        description: "Manage your account settings and preferences here.",
+        showButtons: ["previous", "close"],
+      },
+    ],
+    options: {
+      animate: true,
+      overlayColor: "rgba(0, 0, 0, 0.5)",
+      smoothScroll: true,
+      allowClose: true,
+      progressText: "Step {{current}} of {{total}}",
+      nextBtnText: "Next",
+      prevBtnText: "Previous",
+      doneBtnText: "Finish",
+      onDestroyed: () => setTourStarted(false),
+    },
+  });
+
+  const startTour = () => {
+    setTourStarted(true);
+    Driver.drive();
+  };
+
+  return (
+    <div>
+      <TourComponents.WelcomeStep>
+        <h1>Welcome to MyApp</h1>
+      </TourComponents.WelcomeStep>
+
+      <TourComponents.NavigationStep>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/products">Products</a>
+          <a href="/about">About</a>
+        </nav>
+      </TourComponents.NavigationStep>
+
+      <TourComponents.SearchStep>
+        <Input placeholder="Search..." />
+      </TourComponents.SearchStep>
+
+      <TourComponents.ProfileStep>
+        <Avatar />
+      </TourComponents.ProfileStep>
+
+      <Show when={!tourStarted} deps={[tourStarted]}>
+        <Button onClick={startTour}>Start Tour</Button>
+      </Show>
+    </div>
+  );
+}
+```
+
+## Views
+
+### Login View
+
+Pre-built authentication view with Formik validation:
+
+```tsx
+import { Login } from "@kanvas/phoenix-rebirth/views/login";
+import { Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+function LoginPage() {
+  const [error, setError] = useState(null);
+
+  return (
+    <>
+      <Login
+        image={{
+          src: "/login-background.jpg",
+          alt: "Login Background",
+          className: "object-cover",
+        }}
+        card={{
+          logo: {
+            src: "/logo.svg",
+            alt: "Company Logo",
+            width: 150,
+            height: 50,
+          },
+          title: "Welcome Back",
+          inputs: {
+            email: {
+              label: "Email Address",
+              placeholder: "john@example.com",
+            },
+            password: {
+              label: "Password",
+              placeholder: "Enter your password",
+            },
+            check: "Keep me signed in",
+          },
+          forgot: {
+            text: "Forgot Password?",
+            url: "/auth/forgot-password",
+          },
+          action: "Sign In",
+        }}
+        onLogin={async (values) => {
+          // values: { email, password, remember }
+          const response = await authenticate(values);
+          <Show when={response.success} deps={[response]}>
+            {() => router.push("/dashboard")}
+          </Show>;
+        }}
+        onError={(error) => {
+          setError(error);
+          toast({
+            title: "Authentication Failed",
+            description: error.message,
+            variant: "destructive",
+          });
+        }}
+      />
+
+      <Show when={error} deps={[error]}>
+        <Alert variant="destructive">
+          <AlertDescription>{error.message}</AlertDescription>
+        </Alert>
+      </Show>
+    </>
+  );
+}
+```
+
+## API Reference
+
+### Component Props
+
+<details>
+<summary>View detailed component props</summary>
+
+#### DialogAlert Props
+
+| Prop             | Type                                                      | Required | Description                 |
+| ---------------- | --------------------------------------------------------- | -------- | --------------------------- |
+| `open`           | `boolean`                                                 | Yes      | Control dialog visibility   |
+| `onOpenChange`   | `(open: boolean) => void`                                 | No       | Handle open state changes   |
+| `title`          | `string`                                                  | Yes      | Dialog title                |
+| `description`    | `string`                                                  | Yes      | Dialog description          |
+| `dangerAction`   | `boolean`                                                 | Yes      | Style as destructive action |
+| `action`         | `{ title: string; disable?: boolean; pending?: boolean }` | Yes      | Action button config        |
+| `cancel`         | `{ title: string }`                                       | No       | Cancel button config        |
+| `onAction`       | `() => void \| Promise<void>`                             | No       | Action handler              |
+| `pendingSpinner` | `() => JSX.Element`                                       | No       | Custom loading spinner      |
+
+#### Table Props
+
+| Prop         | Type                | Required | Description             |
+| ------------ | ------------------- | -------- | ----------------------- |
+| `table`      | `Table<T>`          | Yes      | TanStack table instance |
+| `isFetching` | `boolean`           | Yes      | Loading state           |
+| `empty`      | `JSX.Element`       | No       | Custom empty state      |
+| `oneElement` | `boolean`           | No       | Single column mode      |
+| `spinner`    | `() => JSX.Element` | No       | Custom loading spinner  |
+
+#### Control Flow Component Props
+
+##### For Component
+
+| Prop       | Type                                                              | Required | Description                 |
+| ---------- | ----------------------------------------------------------------- | -------- | --------------------------- |
+| `each`     | `T[] \| undefined \| null \| false`                               | Yes      | Array to iterate            |
+| `fallback` | `JSX.Element`                                                     | No       | Show when array is empty    |
+| `error`    | `JSX.Element`                                                     | No       | Show when item render fails |
+| `children` | `(item: T, props: { index: number; key: string }) => JSX.Element` | Yes      | Render function             |
+
+##### Show Component
+
+| Prop       | Type                                        | Required | Description                  |
+| ---------- | ------------------------------------------- | -------- | ---------------------------- |
+| `when`     | `T \| undefined \| null \| false`           | Yes      | Condition to check           |
+| `deps`     | `any[]`                                     | Yes      | Dependencies for memoization |
+| `fallback` | `JSX.Element`                               | No       | Show when condition is false |
+| `children` | `JSX.Element \| ((item: T) => JSX.Element)` | Yes      | Content to show              |
+
+##### Switch/Match Components
+
+| Prop       | Type          | Required    | Description         |
+| ---------- | ------------- | ----------- | ------------------- |
+| `fallback` | `JSX.Element` | No          | Default case        |
+| `when`     | `boolean`     | Yes (Match) | Condition for Match |
+| `children` | `JSX.Element` | Yes         | Content to render   |
+
+</details>
+
+### Hook Returns
+
+<details>
+<summary>View hook return types</summary>
+
+#### useToast
+
+```typescript
+{
+  toast: (props: ToastProps) => {
+    id: string;
+    dismiss: () => void;
+    update: (props: ToastProps) => void;
+  };
+  toasts: ToasterToast[];
+  dismiss: (toastId?: string) => void;
+}
+```
+
+#### useSet
+
+```typescript
+{
+  add: (value: T) => void;
+  delete: (value: T) => void;
+  has: (value: T) => boolean;
+  clear: () => void;
+  size: () => number;
+  values: () => T[];
+  union: (otherSet: Set<T>) => void;
+  intersection: (otherSet: Set<T>) => void;
+  difference: (otherSet: Set<T>) => void;
+  value: Set<T>;
+}
+```
+
+#### useMap
+
+```typescript
+{
+  set: (key: K, value: V) => void;
+  get: (key: K) => V | undefined;
+  delete: (key: K) => void;
+  has: (key: K) => boolean;
+  clear: () => void;
+  size: () => number;
+  keys: () => K[];
+  values: () => V[];
+  entries: () => [K, V][];
+  value: Map<K, V>;
+}
+```
+
+</details>
+
+## Best Practices
+
+### 1. Always Use Control Flow Components
+
+```tsx
+// ✅ Good: Use For, Show, Switch/Match
+import { For, Show, Switch, Match } from "@kanvas/phoenix-rebirth/lib/server";
+
+function UserList({ users, loading }) {
+  return (
+    <Show
+      when={!loading}
+      deps={[loading]}
+      fallback={<Skeleton className="h-40" />}
+    >
+      <For
+        each={users}
+        fallback={<div>No users found</div>}
+        error={<Alert>Error loading user</Alert>}
+      >
+        {(user, { key }) => (
+          <Card key={key}>
+            <CardContent>{user.name}</CardContent>
+          </Card>
+        )}
+      </For>
+    </Show>
+  );
+}
+
+// ❌ Bad: Traditional React patterns
+function UserList({ users, loading }) {
+  if (loading) return <Skeleton />;
+
+  return users.map((user) => (
+    <Card key={user.id}>
+      <CardContent>{user.name}</CardContent>
+    </Card>
+  ));
+}
+```
+
+### 2. Component Composition with Control Flow
+
+```tsx
+// ✅ Good: Compose with control flow components
+function UserCard({ user }) {
+  return (
+    <Card>
+      <CardHeader>
+        <Avatar src={user.avatar} />
+        <CardTitle>{user.name}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Switch fallback={<Badge variant="secondary">No Role</Badge>}>
+          <Match when={user.role === "admin"}>
+            <Badge variant="destructive">Admin</Badge>
+          </Match>
+          <Match when={user.role === "user"}>
+            <Badge variant="default">User</Badge>
+          </Match>
+        </Switch>
+
+        <Show when={user.bio} deps={[user.bio]}>
+          <p className="mt-2">{user.bio}</p>
+        </Show>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+### 3. Type Safety with Control Flow
+
+```tsx
+// ✅ Good: Full type safety with control flow
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role?: "admin" | "user" | "moderator";
+}
+
+function UserTable({ users }: { users: User[] }) {
+  return (
+    <Table>
+      <TableBody>
+        <For<User[]>
+          each={users}
+          fallback={
+            <TableRow>
+              <TableCell colSpan={3}>No users</TableCell>
+            </TableRow>
+          }
+        >
+          {(user, { key }) => (
+            <TableRow key={key}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>
+                <Show when={user.role} deps={[user.role]}>
+                  {(role) => <Badge>{role}</Badge>}
+                </Show>
+              </TableCell>
+            </TableRow>
+          )}
+        </For>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### 4. Performance with Control Flow
+
+```tsx
+// ✅ Good: Optimized with deps and memoization
+import { useMemo } from "react";
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+function DataTable({ data, filters }) {
+  const filteredData = useMemo(() => {
+    return data.filter((item) => filters.every((filter) => filter(item)));
+  }, [data, filters]);
+
+  const columns = columnsBuilder(
+    [
+      // column definitions
+    ],
+    []
+  ); // Empty deps for static columns
+
+  return (
+    <Show
+      when={filteredData.length > 0}
+      deps={[filteredData]}
+      fallback={<EmptyState />}
+    >
+      <Table data={filteredData} columns={columns} />
+    </Show>
+  );
+}
+```
+
+### 5. Error Handling with Control Flow
+
+```tsx
+// ✅ Good: Graceful error handling
+import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
+
+function DataFetcher() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData()
+      .then(setData)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <Switch>
+      <Match when={loading}>
+        <Skeleton className="h-40" />
+      </Match>
+
+      <Match when={error}>
+        <Alert variant="destructive">
+          <AlertDescription>{error.message}</AlertDescription>
+        </Alert>
+      </Match>
+
+      <Match when={data}>
+        <For each={data} error={<div>Failed to render item</div>}>
+          {(item, { key }) => <DataItem key={key} item={item} />}
+        </For>
+      </Match>
+    </Switch>
+  );
+}
+```
+
+## Migration Guide
+
+### From v0.x to v1.0
+
+#### Breaking Changes
+
+1. **Import Paths**: All imports now use subpath exports
+
+```tsx
+// Old
+import { Button } from "@kanvas/phoenix-rebirth/dist/components/ui/button";
+import { Input } from "@kanvas/phoenix-rebirth/dist/components/ui/input";
+import { Card } from "@kanvas/phoenix-rebirth/dist/components/ui/card";
+
+// New
+import { Button } from "@kanvas/phoenix-rebirth/ui/button";
+import { Input } from "@kanvas/phoenix-rebirth/ui/input";
+import { Card } from "@kanvas/phoenix-rebirth/ui/card";
+```
+
+2. **CSS Imports**: Must be explicit in your application
+
+```tsx
+// Old - Bundled styles
+// Styles were automatically included
+
+// New - Explicit imports
+import "@kanvas/phoenix-rebirth/global.css";
+```
+
+3. **Control Flow Components**: Replace React patterns
+
+```tsx
+// Old - Traditional React
+{items.map(item => <Item key={item.id} {...item} />)}
+{isLoading ? <Loader /> : <Content />}
+
+// New - Control Flow Components
+<For each={items}>
+  {(item, { key }) => <Item key={key} {...item} />}
+</For>
+<Show when={!isLoading} deps={[isLoading]} fallback={<Loader />}>
+  <Content />
+</Show>
+```
+
+### From shadcn/ui
+
+Phoenix Rebirth is built on shadcn/ui, so migration is straightforward:
+
+1. Replace shadcn/ui imports with Phoenix Rebirth equivalents
+2. Add Control Flow Components for rendering logic
+3. Use Phoenix Rebirth's enhanced components for additional features
+4. Update to Tailwind CSS v4 syntax
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/kyanvasu/phoenix-rebirth.git
+cd phoenix-rebirth
+
+# Install dependencies
+pnpm install
+
+# Build the library
+pnpm build
+
+# Run the example app
+cd example-app
+pnpm dev
+```
+
+## License
+
+MIT © [MCTEKK S.R.L.](https://mctekk.com)
+
+---
+
+<p align="center">
+  Built with ❤️ by the Kanvas Team
+</p>

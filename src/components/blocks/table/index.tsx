@@ -10,14 +10,14 @@ import {
 } from "@/components/ui/table";
 
 import {
-  TableOptions,
   flexRender,
-  useReactTable,
   Table as ITable,
+  TableOptions,
+  useReactTable,
 } from "@tanstack/react-table";
 
-import { WithSlotsProps, For, Show, Slot, WithSlots } from "@/lib/server";
-import { DependencyList, useMemo, memo, JSX } from "react";
+import { For, Show, Slot, WithSlots, WithSlotsProps } from "@/lib/server";
+import { DependencyList, JSX, memo, useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +32,7 @@ const TableMemo = memo(TTable);
 
 export function columnsBuilder<T extends any = any>(
   columns: T[],
-  deps?: DependencyList
+  deps?: DependencyList,
 ) {
   const cached = useMemo(() => columns, deps ?? _deps);
 
@@ -74,15 +74,13 @@ function RawTable(props: Props) {
       deps={[props.isFetching]}
       fallback={
         <div
-          className={
-            "mx-auto w-full flex justify-center items-center flex-col mt-5"
-          }
+          className={"mx-auto w-full flex justify-center items-center flex-col mt-5"}
         >
           <TableSkeleton spinner={props.spinner} />
         </div>
       }
     >
-      <div className="w-full max-w-screen-2xl mx-auto">
+      <div className="w-full max-w-(--breakpoint-2xl) mx-auto">
         <Show when={!!props?.slots.top} deps={[props?.slots.top]}>
           <>{props?.slots?.top ?? null}</>
         </Show>
@@ -98,23 +96,19 @@ function RawTable(props: Props) {
                         <TableHeadMemo
                           key={header.id}
                           className={cn({
-                            "text-center":
-                              index > 0 &&
+                            "text-center": index > 0 &&
                               index < headerGroup.headers.length - 1,
-                            "text-end":
-                              !props.oneElement &&
+                            "text-end": !props.oneElement &&
                               index === headerGroup.headers.length - 1,
                             "rounded-tl-md": index === 0,
                             "rounded-tr-md":
                               index === headerGroup.headers.length - 1,
                           })}
                         >
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                          {header.isPlaceholder ? null : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                         </TableHeadMemo>
                       )}
                     </For>
@@ -157,17 +151,15 @@ function RawTable(props: Props) {
                           <TableCellMemo
                             key={cell.id}
                             className={cn({
-                              "text-center":
-                                index > 0 &&
+                              "text-center": index > 0 &&
                                 index < row.getVisibleCells().length - 1,
-                              "text-end":
-                                !props.oneElement &&
+                              "text-end": !props.oneElement &&
                                 index === row.getVisibleCells().length - 1,
                             })}
                           >
                             {flexRender(
                               cell.column.columnDef.cell,
-                              cell.getContext()
+                              cell.getContext(),
                             )}
                           </TableCellMemo>
                         )}
@@ -209,9 +201,10 @@ const TableSkeleton = (props: { spinner?: () => JSX.Element }) => (
               {
                 "bg-muted/70 rounded-t-lg": index === 0,
                 "border-b": index < 10,
-              }
+              },
             )}
-          ></div>
+          >
+          </div>
         )}
       </For>
 

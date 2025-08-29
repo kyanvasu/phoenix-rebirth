@@ -5,8 +5,8 @@
 //   Match,
 // } from "@kanvas/phoenix-rebirth/dist/lib/server";
 
-import { forwardRef, MemoExoticComponent, PropsWithChildren, JSX } from "react";
-import { Controller, useForm, UseControllerProps } from "react-hook-form";
+import { forwardRef, JSX, MemoExoticComponent, PropsWithChildren } from "react";
+import { Controller, UseControllerProps, useForm } from "react-hook-form";
 import { FormInputField, FormInputFieldProps } from "./kinds/input";
 import { PhoneInputProps } from "@/components/blocks/phone-input";
 import { FormFacetedSelect } from "./kinds/faced-select";
@@ -378,7 +378,7 @@ export function SimpleFormBuilder(props: SimpleFormBuilderProps) {
                       truncateAt,
                       ...rest
                     },
-                    { key }
+                    { key },
                   ) => {
                     const CustomComponentMultiple = (component ?? empty) as any;
 
@@ -556,7 +556,8 @@ export function SimpleFormBuilder(props: SimpleFormBuilderProps) {
                               <CustomComponentMultiple
                                 {...field}
                                 {...rest}
-                                onChange={(v: string) => hook.setValue(name, v)}
+                                onChange={(v: string) =>
+                                  hook.setValue(name, v)}
                                 placeholder={placeholder}
                                 helptext={error?.message}
                                 error={error ? 1 : 0}

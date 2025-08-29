@@ -73,7 +73,7 @@ export function FormFacetedSelect({
               "h-8 border border-border w-full flex-row justify-start font-normal group",
               {
                 "border-destructive": isError,
-              }
+              },
             )}
             disabled={disabled}
             variant="outline"
@@ -135,13 +135,13 @@ export function FormFacetedSelect({
           <p className={cn("text-destructive text-xs")}>{helptext}</p>
         </Show>
 
-        <PopoverContent className="w-[12.5rem] p-0" align="start">
+        <PopoverContent className="w-50 p-0" align="start">
           <Command>
             <CommandInput placeholder={`Search ${label}`} />
             <CommandList className="max-h-full">
               <CommandEmpty>No results found.</CommandEmpty>
 
-              <CommandGroup className="max-h-[18.75rem] overflow-y-auto overflow-x-hidden">
+              <CommandGroup className="max-h-75 overflow-y-auto overflow-x-hidden">
                 <For each={options}>
                   {(option) => {
                     const isSelected = selectedValues.has(option.value);
@@ -163,7 +163,7 @@ export function FormFacetedSelect({
                             "mr-2 flex size-4 items-center justify-center rounded-sm border border-primary",
                             isSelected
                               ? "bg-primary text-primary-foreground"
-                              : "opacity-50 [&_svg]:invisible"
+                              : "opacity-50 [&_svg]:invisible",
                           )}
                         >
                           <Check className="size-4" aria-hidden="true" />

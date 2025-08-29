@@ -2,8 +2,8 @@
 
 import {
   Tooltip,
-  TooltipProvider,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
@@ -59,7 +59,7 @@ export function FormTextArea({
         </p>
 
         <Show when={isOptional} deps={[optional]}>
-          <span className="text-foreground/60 ml-1"> (optional)</span>
+          <span className="text-foreground/60 ml-1">(optional)</span>
         </Show>
       </label>
 

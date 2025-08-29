@@ -25,16 +25,18 @@ import { For, Show } from "@/lib/server";
 import { cn } from "@/lib/utils";
 import * as React from "react";
 
-export type PhoneInputProps = Omit<
-  React.ComponentProps<"input">,
-  "onChange" | "value" | "ref"
-> &
-  Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
+export type PhoneInputProps =
+  & Omit<
+    React.ComponentProps<"input">,
+    "onChange" | "value" | "ref"
+  >
+  & Omit<RPNInput.Props<typeof RPNInput.default>, "onChange">
+  & {
     onChange?: (value: RPNInput.Value) => void;
   };
 
-const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
-  React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
+const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React
+  .forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
     ({ className, onChange, value, ...props }, ref) => {
       return (
         <RPNInput.default
@@ -58,7 +60,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
           {...props}
         />
       );
-    }
+    },
   );
 
 PhoneInput.displayName = "PhoneInput";
@@ -70,7 +72,7 @@ const InputComponent = React.forwardRef<
   <Input
     className={cn(
       "rounded-e-md rounded-s-md rounded-tl-none rounded-bl-none",
-      className
+      className,
     )}
     {...props}
     ref={ref}
@@ -113,7 +115,7 @@ const CountrySelect = ({
           <ChevronsUpDown
             className={cn(
               "-mr-2 size-4 opacity-50",
-              disabled ? "hidden" : "opacity-100"
+              disabled ? "hidden" : "opacity-100",
             )}
           />
         </Button>
@@ -127,7 +129,7 @@ const CountrySelect = ({
               setTimeout(() => {
                 if (scrollAreaRef.current) {
                   const viewportElement = scrollAreaRef.current.querySelector(
-                    "[data-radix-scroll-area-viewport]"
+                    "[data-radix-scroll-area-viewport]",
                   );
                   if (viewportElement) {
                     viewportElement.scrollTop = 0;
@@ -186,9 +188,13 @@ const CountrySelectOption = ({
     <CommandItem className="gap-2" onSelect={handleSelect}>
       <FlagComponent country={country} countryName={countryName} />
       <span className="flex-1 text-sm">{countryName}</span>
-      <span className="text-sm text-foreground/50">{`+${RPNInput.getCountryCallingCode(
-        country
-      )}`}</span>
+      <span className="text-sm text-foreground/50">
+        {`+${
+          RPNInput.getCountryCallingCode(
+            country,
+          )
+        }`}
+      </span>
       <CheckIcon
         className={`ml-auto size-4 ${
           country === selectedCountry ? "opacity-100" : "opacity-0"
