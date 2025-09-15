@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0-beta.9",
   "name": "@kanvas/phoenix-rebirth",
   "description": "Client and ui kit",
   "files": [
@@ -66,14 +66,54 @@
         "default": "./dist/ui/*.js"
       }
     },
-    "./blocks/*": {
+    "./blocks/dialog": {
       "import": {
-        "types": "./dist/blocks/*.d.mts",
-        "default": "./dist/blocks/*.mjs"
+        "types": "./dist/blocks/dialog/index.d.mts",
+        "default": "./dist/blocks/dialog/index.mjs"
       },
       "require": {
-        "types": "./dist/blocks/*.d.ts",
-        "default": "./dist/blocks/*.js"
+        "types": "./dist/blocks/dialog/index.d.ts",
+        "default": "./dist/blocks/dialog/index.js"
+      }
+    },
+    "./blocks/form": {
+      "import": {
+        "types": "./dist/blocks/form/index.d.mts",
+        "default": "./dist/blocks/form/index.mjs"
+      },
+      "require": {
+        "types": "./dist/blocks/form/index.d.ts",
+        "default": "./dist/blocks/form/index.js"
+      }
+    },
+    "./blocks/modal": {
+      "import": {
+        "types": "./dist/blocks/modal/index.d.mts",
+        "default": "./dist/blocks/modal/index.mjs"
+      },
+      "require": {
+        "types": "./dist/blocks/modal/index.d.ts",
+        "default": "./dist/blocks/modal/index.js"
+      }
+    },
+    "./blocks/phone-input": {
+      "import": {
+        "types": "./dist/blocks/phone-input/index.d.mts",
+        "default": "./dist/blocks/phone-input/index.mjs"
+      },
+      "require": {
+        "types": "./dist/blocks/phone-input/index.d.ts",
+        "default": "./dist/blocks/phone-input/index.js"
+      }
+    },
+    "./blocks/table": {
+      "import": {
+        "types": "./dist/blocks/table/index.d.mts",
+        "default": "./dist/blocks/table/index.mjs"
+      },
+      "require": {
+        "types": "./dist/blocks/table/index.d.ts",
+        "default": "./dist/blocks/table/index.js"
       }
     },
     "./global.css": "./dist/global.css",
