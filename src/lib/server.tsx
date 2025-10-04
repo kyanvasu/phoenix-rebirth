@@ -10,7 +10,7 @@ const isSSR = globalThis?.window === undefined || globalThis?.window === null;
 
 function transformChildrenToSlots<T extends string>(
   children: ReactNode,
-  expectedSlots: readonly T[],
+  expectedSlots: readonly T[]
 ): Record<T, ReactNode> {
   const childrenArray = React.Children.toArray(children);
   const slots = childrenArray.reduce((acc, child) => {
@@ -56,6 +56,21 @@ export function For<T extends readonly any[], U extends JSX.Element>(props: {
 
       return !!items.length
         ? items.map((item, index) => {
+            try {
+              return props.children(item, {
+                index,
+                key: `${index}`,
+              });
+            } catch (e) {
+              return <ErrorFragment index={index} />;
+            }
+          })
+        : props.fallback;
+    }
+
+    // fallback for SSR
+    return !!props.each.length
+      ? props.each.map((item, index) => {
           try {
             return props.children(item, {
               index,
@@ -65,21 +80,6 @@ export function For<T extends readonly any[], U extends JSX.Element>(props: {
             return <ErrorFragment index={index} />;
           }
         })
-        : props.fallback;
-    }
-
-    // fallback for SSR
-    return !!props.each.length
-      ? props.each.map((item, index) => {
-        try {
-          return props.children(item, {
-            index,
-            key: `${index}`,
-          });
-        } catch (e) {
-          return <ErrorFragment index={index} />;
-        }
-      })
       : props.fallback;
   }
 
@@ -90,20 +90,37 @@ export function Show<T>(props: {
   when: T | undefined | null | false;
   deps: any[];
   fallback?: JSX.Element;
+  keepState?: boolean;
   children:
     | JSX.Element
     | ((item: NonNullable<T> | NonNullable<T>) => JSX.Element);
 }): JSX.Element {
   const condition = useMemo(
     () => props.when,
-    Array.isArray(props.deps) ? [...props.deps] : [],
+    Array.isArray(props.deps) ? [...props.deps] : []
   );
 
-  if (condition) {
-    const child = props.children;
-    const fn = typeof child === "function" && child.length > 0;
+  const child = props.children;
+  const fn = typeof child === "function" && child.length > 0;
+  const content = fn ? (child as any)(condition) : child;
 
-    return <Fragment>{fn ? (child as any)(condition) : child}</Fragment>;
+  // If keepState is enabled, render both but hide with CSS
+  if (props.keepState) {
+    return (
+      <Fragment>
+        <div style={{ display: condition ? "contents" : "none" }}>
+          {content}
+        </div>
+        {!condition && (
+          <div style={{ display: "contents" }}>{props.fallback ?? null}</div>
+        )}
+      </Fragment>
+    );
+  }
+
+  // Default behavior: mount/unmount
+  if (condition) {
+    return <Fragment>{content}</Fragment>;
   }
 
   return <Fragment>{props.fallback ?? null}</Fragment>;
@@ -133,9 +150,11 @@ export function Switch(props: {
     const children = props.children as JSX.Element;
     const condition = children.props.when;
 
-    return condition
-      ? <Fragment>{children}</Fragment>
-      : <Fragment>{props.fallback ?? null}</Fragment>;
+    return condition ? (
+      <Fragment>{children}</Fragment>
+    ) : (
+      <Fragment>{props.fallback ?? null}</Fragment>
+    );
   }
 }
 
@@ -148,10 +167,10 @@ export function Match(props: {
 
 export function WithSlots<T extends string, P extends WithSlotsProps<T>>(
   WrappedComponent: React.ComponentType<P>,
-  expectedSlots: readonly T[],
+  expectedSlots: readonly T[]
 ) {
   return function WithSlotsWrapper(
-    props: Omit<P, keyof WithSlotsProps<T>> & { children: ReactNode },
+    props: Omit<P, keyof WithSlotsProps<T>> & { children: ReactNode }
   ) {
     const { children, ...rest } = props;
 
