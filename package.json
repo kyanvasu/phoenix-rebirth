@@ -205,7 +205,7 @@
     "next-themes": "^0.3.0",
     "postcss": "^8.5.6",
     "radix-ui": "^1.4.3",
-    "react-day-picker": "^9.11.0",
+    "react-day-picker": "^9.11.2",
     "react-hook-form": "^7.64.0",
     "react-phone-number-input": "^3.4.12",
     "react-resizable-panels": "^2.1.9",
