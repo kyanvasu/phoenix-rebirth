@@ -5,7 +5,18 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@kanvas/phoenix-rebirth/lib/*": ["lib/*"],
+      "@kanvas/phoenix-rebirth/store": ["store/index.ts"],
+      "@kanvas/phoenix-rebirth/icons": ["components/icons/index.ts"],
+      "@kanvas/phoenix-rebirth/views/*": ["views/*"],
+      "@kanvas/phoenix-rebirth/hooks": ["hooks/index.ts"],
+      "@kanvas/phoenix-rebirth/ui/*": ["components/ui/*"],
+      "@kanvas/phoenix-rebirth/blocks/dialog": ["components/blocks/dialog"],
+      "@kanvas/phoenix-rebirth/blocks/form": ["components/blocks/form"],
+      "@kanvas/phoenix-rebirth/blocks/modal": ["components/blocks/modal"],
+      "@kanvas/phoenix-rebirth/blocks/phone-input": ["components/blocks/phone-input"],
+      "@kanvas/phoenix-rebirth/blocks/table": ["components/blocks/table"]
     },
     "target": "ESNext",
     "module": "ESNext",

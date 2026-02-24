@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta.11",
+  "version": "1.0.0-beta.12",
   "name": "@kanvas/phoenix-rebirth",
   "description": "Client and ui kit",
   "files": [
@@ -130,6 +130,21 @@
     "./tour.css": "./dist/lib/tour.css",
     "./package.json": "./package.json"
   },
+  "typesVersions": {
+    "*": {
+      "lib/*": ["dist/lib/*.d.ts"],
+      "store": ["dist/store/index.d.ts"],
+      "icons": ["dist/icons/index.d.ts"],
+      "views/*": ["dist/views/*.d.ts"],
+      "hooks": ["dist/hooks/index.d.ts"],
+      "ui/*": ["dist/ui/*.d.ts"],
+      "blocks/dialog": ["dist/blocks/dialog/index.d.ts"],
+      "blocks/form": ["dist/blocks/form/index.d.ts"],
+      "blocks/modal": ["dist/blocks/modal/index.d.ts"],
+      "blocks/phone-input": ["dist/blocks/phone-input/index.d.ts"],
+      "blocks/table": ["dist/blocks/table/index.d.ts"]
+    }
+  },
   "engines": {
     "node": ">=21.0.0"
   },
@@ -163,6 +178,7 @@
     "yup": "^1.7.1"
   },
   "dependencies": {
+    "@base-ui/react": "^1.2.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -205,10 +221,10 @@
     "next-themes": "^0.3.0",
     "postcss": "^8.5.6",
     "radix-ui": "^1.4.3",
-    "react-day-picker": "^9.13.0",
+    "react-day-picker": "^9.13.2",
     "react-hook-form": "^7.64.0",
     "react-phone-number-input": "^3.4.12",
-    "react-resizable-panels": "^2.1.9",
+    "react-resizable-panels": "^4.6.5",
     "react-store-js": "^1.0.0",
     "react-use": "^17.6.0",
     "recharts": "2.15.4",
