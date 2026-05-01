@@ -1,5 +1,6 @@
 "use client";
 
+import { JSX } from "react";
 import { useFormik } from "formik";
 import Image from "next/image";
 import Link from "next/link";

@@ -14,7 +14,12 @@ function transformChildrenToSlots<T extends string>(
 ): Record<T, ReactNode> {
   const childrenArray = React.Children.toArray(children);
   const slots = childrenArray.reduce((acc, child) => {
-    if (React.isValidElement(child) && "name" in child.props) {
+    if (
+      React.isValidElement<{ name: T; children: ReactNode }>(child) &&
+      typeof child.props === "object" &&
+      child.props !== null &&
+      "name" in child.props
+    ) {
       return {
         ...acc,
         [child.props.name]: child.props.children,

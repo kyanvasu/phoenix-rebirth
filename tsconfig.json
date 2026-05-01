@@ -3,6 +3,7 @@
   "include": ["src/**/*"],
   "exclude": ["test", "node_modules"],
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"],
@@ -15,7 +16,9 @@
       "@kanvas/phoenix-rebirth/blocks/dialog": ["components/blocks/dialog"],
       "@kanvas/phoenix-rebirth/blocks/form": ["components/blocks/form"],
       "@kanvas/phoenix-rebirth/blocks/modal": ["components/blocks/modal"],
-      "@kanvas/phoenix-rebirth/blocks/phone-input": ["components/blocks/phone-input"],
+      "@kanvas/phoenix-rebirth/blocks/phone-input": [
+        "components/blocks/phone-input"
+      ],
       "@kanvas/phoenix-rebirth/blocks/table": ["components/blocks/table"]
     },
     "target": "ESNext",

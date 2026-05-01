@@ -32,7 +32,10 @@
 
 ## Overview
 
-Kanvas Phoenix Rebirth is a comprehensive React component library built on top of shadcn/ui, designed to accelerate enterprise application development. It provides a rich set of pre-built components, hooks, utilities, and patterns that streamline the creation of modern, accessible, and performant user interfaces.
+Kanvas Phoenix Rebirth is a comprehensive React component library built on top
+of shadcn/ui, designed to accelerate enterprise application development. It
+provides a rich set of pre-built components, hooks, utilities, and patterns that
+streamline the creation of modern, accessible, and performant user interfaces.
 
 ### Key Features
 
@@ -55,9 +58,11 @@ Kanvas Phoenix Rebirth is a comprehensive React component library built on top o
 - Node.js >= 21.0.0
 - React >= 18.3.0
 - Next.js >= 15.0.0 (recommended)
-- [Kanvas Core JS](https://github.com/bakaphp/kanvas-core-js#kanvas-core-js) installed
+- [Kanvas Core JS](https://github.com/bakaphp/kanvas-core-js#kanvas-core-js)
+  installed
 
-For the best editor autocomplete, use TypeScript 5.4+ with `moduleResolution` set to `"node"`, `"node16"`, or `"bundler"`.
+For the best editor autocomplete, use TypeScript 5.4+ with `moduleResolution`
+set to `"node"`, `"node16"`, or `"bundler"`.
 
 ### Package Installation
 
@@ -123,6 +128,153 @@ In your main CSS file (e.g., `app/globals.css`):
 }
 ```
 
+### Theme Variants (Vega, Nova, Maia, Lyra, Mira, Luma, Sera)
+
+Phoenix Rebirth ships the seven official shadcn base styles as opt-in
+`[data-theme]` overrides. They only swap CSS variables (colors + `--radius`) —
+no markup, no font imports, no JS.
+
+Import all variants at once:
+
+```css
+@import "@kanvas/phoenix-rebirth/global.css";
+@import "@kanvas/phoenix-rebirth/themes.css";
+```
+
+Or only the ones you use:
+
+```css
+@import "@kanvas/phoenix-rebirth/global.css";
+@import "@kanvas/phoenix-rebirth/themes/sera.css";
+@import "@kanvas/phoenix-rebirth/themes/lyra.css";
+```
+
+Activate a theme by setting `data-theme` on `<html>` (or any ancestor). Combine
+with `.dark` for dark mode:
+
+```html
+<html data-theme="sera" class="dark">
+```
+
+#### Autocomplete for `data-theme`
+
+To get IntelliSense on `data-theme="..."` (suggesting `vega`, `nova`, `maia`,
+`lyra`, `mira`, `luma`, `sera`), import the type augmentation **once** at your
+app entry:
+
+```tsx
+// app/layout.tsx, _app.tsx, or main.tsx — anywhere imported on startup
+import "@kanvas/phoenix-rebirth/themes";
+```
+
+That single import enables:
+
+```tsx
+<html data-theme="lyra" />   // ← autocompletes the 7 theme names
+```
+
+The augmentation still accepts arbitrary strings, so any custom `data-theme`
+you might use for other purposes keeps working.
+
+You can also import the runtime list and the type for switchers:
+
+```tsx
+import { PHOENIX_THEMES, type PhoenixTheme } from "@kanvas/phoenix-rebirth/themes";
+
+const [theme, setTheme] = useState<PhoenixTheme>("vega");
+
+return (
+  <select value={theme} onChange={(e) => setTheme(e.target.value as PhoenixTheme)}>
+    {PHOENIX_THEMES.map((t) => <option key={t} value={t}>{t}</option>)}
+  </select>
+);
+```
+
+Alternatively, register it once in your `tsconfig.json` (no runtime import
+needed):
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@kanvas/phoenix-rebirth/themes"]
+  }
+}
+```
+
+Switch at runtime without `ThemeProvider`:
+
+```tsx
+// hooks/use-theme.ts
+"use client";
+import { useEffect, useState } from "react";
+
+const THEMES = [
+  "vega",
+  "nova",
+  "maia",
+  "lyra",
+  "mira",
+  "luma",
+  "sera",
+] as const;
+type Theme = (typeof THEMES)[number];
+
+export function useTheme() {
+  const [theme, setThemeState] = useState<Theme>("vega");
+  const [dark, setDarkState] = useState(false);
+
+  useEffect(() => {
+    setThemeState((localStorage.getItem("theme") as Theme) ?? "vega");
+    setDarkState(localStorage.getItem("dark") === "1");
+  }, []);
+
+  const setTheme = (t: Theme) => {
+    document.documentElement.dataset.theme = t;
+    localStorage.setItem("theme", t);
+    setThemeState(t);
+  };
+  const setDark = (d: boolean) => {
+    document.documentElement.classList.toggle("dark", d);
+    localStorage.setItem("dark", d ? "1" : "0");
+    setDarkState(d);
+  };
+
+  return { theme, setTheme, dark, setDark, themes: THEMES };
+}
+```
+
+Add an inline script to the `<head>` to avoid theme flash on SSR:
+
+```tsx
+<script
+  dangerouslySetInnerHTML={{
+    __html: `
+  (function() {
+    try {
+      var t = localStorage.getItem('theme') || 'vega';
+      var d = localStorage.getItem('dark') === '1';
+      document.documentElement.dataset.theme = t;
+      if (d) document.documentElement.classList.add('dark');
+    } catch (e) {}
+  })();
+`,
+  }}
+/>;
+```
+
+Each theme bundles the variable font that ships with its official shadcn preset,
+so the import is self-contained — no extra setup needed:
+
+| Theme  | Font                         | Notes                                                 |
+| ------ | ---------------------------- | ----------------------------------------------------- |
+| `vega` | system default               | classic shadcn neutral                                |
+| `nova` | Geist Variable               | reduced spacing                                       |
+| `maia` | Figtree Variable             | soft, rounded                                         |
+| `lyra` | JetBrains Mono Variable      | mono throughout (`--font-sans` is overridden to mono) |
+| `mira` | Inter Variable               | dense                                                 |
+| `luma` | Inter Variable               | rounded                                               |
+| `sera` | Noto Sans + Playfair Display | warm stone palette, serif headings                    |
+
 ### 3. Next.js App Router Setup
 
 For Next.js applications, simply import the CSS in your root layout:
@@ -168,7 +320,8 @@ import {
 <summary>View all 40+ components</summary>
 
 - **Layout**: Card, Separator, Sheet, Sidebar
-- **Forms**: Input, Textarea, Select, Checkbox, Radio, Switch, Slider, Calendar, DatePicker
+- **Forms**: Input, Textarea, Select, Checkbox, Radio, Switch, Slider, Calendar,
+  DatePicker
 - **Buttons**: Button, Toggle, ToggleGroup
 - **Navigation**: Tabs, NavigationMenu, Breadcrumb, Pagination
 - **Data Display**: Table, Badge, Avatar, Progress, Skeleton
@@ -266,10 +419,10 @@ Data table with built-in sorting, filtering, and pagination:
 
 ```tsx
 import {
-  Table,
   columnsBuilder,
-  useTable,
+  Table,
   TableSlot,
+  useTable,
 } from "@kanvas/phoenix-rebirth/blocks/table";
 import { For, Show } from "@kanvas/phoenix-rebirth/lib/server";
 
@@ -292,16 +445,16 @@ function UserTable() {
         header: "Status",
         cell: ({ row }) => (
           <Badge
-            variant={
-              row.getValue("status") === "active" ? "default" : "secondary"
-            }
+            variant={row.getValue("status") === "active"
+              ? "default"
+              : "secondary"}
           >
             {row.getValue("status")}
           </Badge>
         ),
       },
     ],
-    []
+    [],
   );
 
   const { table } = useTable({
@@ -327,7 +480,8 @@ function UserTable() {
 
 ### Control Flow Components
 
-React components for declarative rendering logic - **use these instead of traditional React patterns**:
+React components for declarative rendering logic - **use these instead of
+traditional React patterns**:
 
 #### For Component
 
@@ -393,7 +547,7 @@ function UserProfile({ user, isLoading }) {
 Multiple conditional rendering:
 
 ```tsx
-import { Switch, Match } from "@kanvas/phoenix-rebirth/lib/server";
+import { Match, Switch } from "@kanvas/phoenix-rebirth/lib/server";
 
 function StatusIndicator({ status }) {
   return (
@@ -583,7 +737,11 @@ function ShoppingCart() {
           <div key={key} className="flex justify-between">
             <span>Item {id}</span>
             <span>Qty: {quantity}</span>
-            <Button size="sm" onClick={() => removeItem(id)}>
+            <Button
+              size="sm"
+              onClick={() =>
+                removeItem(id)}
+            >
               Remove
             </Button>
           </div>
@@ -639,7 +797,7 @@ function DataProcessor() {
         const processed = items.map((item) => item * 2);
         return processed;
       },
-      { items: [1, 2, 3, 4, 5] }
+      { items: [1, 2, 3, 4, 5] },
     );
 
     const result = await handler();
@@ -684,8 +842,8 @@ Build composable components with named slots:
 
 ```tsx
 import {
-  WithSlots,
   Slot,
+  WithSlots,
   WithSlotsProps,
 } from "@kanvas/phoenix-rebirth/lib/server";
 import { Show } from "@kanvas/phoenix-rebirth/lib/server";
@@ -764,9 +922,9 @@ Create dynamic forms with validation:
 
 ```tsx
 import {
-  useSimpleFormBuilder,
   SimpleFormBuilder,
   SimpleFormBuilderFieldDefinition,
+  useSimpleFormBuilder,
 } from "@kanvas/phoenix-rebirth/blocks/form";
 import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 
@@ -1189,7 +1347,7 @@ function LoginPage() {
 
 ```tsx
 // ✅ Good: Use For, Show, Switch/Match
-import { For, Show, Switch, Match } from "@kanvas/phoenix-rebirth/lib/server";
+import { For, Match, Show, Switch } from "@kanvas/phoenix-rebirth/lib/server";
 
 function UserList({ users, loading }) {
   return (
@@ -1312,7 +1470,7 @@ function DataTable({ data, filters }) {
     [
       // column definitions
     ],
-    []
+    [],
   ); // Empty deps for static columns
 
   return (
@@ -1424,7 +1582,8 @@ Phoenix Rebirth is built on shadcn/ui, so migration is straightforward:
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md)
+for details.
 
 ### Development Setup
 
@@ -1456,7 +1615,9 @@ MIT © [MCTEKK S.R.L.](https://mctekk.com)
 
 ## Full API Catalog
 
-This catalog documents all public modules in the package: UI components, block components, control-flow components, hooks, utilities, views, icons, and store. It includes import paths, typical usage, main props, and examples.
+This catalog documents all public modules in the package: UI components, block
+components, control-flow components, hooks, utilities, views, icons, and store.
+It includes import paths, typical usage, main props, and examples.
 
 ### Import Conventions
 
@@ -1475,11 +1636,18 @@ This catalog documents all public modules in the package: UI components, block c
 
 ### UI Components
 
-Components in `src/components/ui` are typed wrappers over Radix UI, Base UI, or native HTML elements. They mirror the source APIs, add sensible styles and `data-slot` attributes, and accept `className` for Tailwind customization.
+Components in `src/components/ui` are typed wrappers over Radix UI, Base UI, or
+native HTML elements. They mirror the source APIs, add sensible styles and
+`data-slot` attributes, and accept `className` for Tailwind customization.
 
 General notes:
-- Props and events generally match their underlying equivalents, with added `className` and sometimes `asChild`.
-- See each file for exact exports. For example, [dialog.tsx](/src/components/ui/dialog.tsx) exports `Dialog`, `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogFooter`, `DialogClose`, `DialogOverlay`, `DialogPortal`.
+
+- Props and events generally match their underlying equivalents, with added
+  `className` and sometimes `asChild`.
+- See each file for exact exports. For example,
+  [dialog.tsx](/src/components/ui/dialog.tsx) exports `Dialog`, `DialogTrigger`,
+  `DialogContent`, `DialogHeader`, `DialogTitle`, `DialogDescription`,
+  `DialogFooter`, `DialogClose`, `DialogOverlay`, `DialogPortal`.
 
 Selected minimal examples:
 
@@ -1488,9 +1656,9 @@ Selected minimal examples:
 ```tsx
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
 } from "@kanvas/phoenix-rebirth/ui/accordion";
 
 <Accordion type="single" collapsible>
@@ -1502,7 +1670,7 @@ import {
     <AccordionTrigger>Another</AccordionTrigger>
     <AccordionContent>More content</AccordionContent>
   </AccordionItem>
-</Accordion>
+</Accordion>;
 ```
 
 - Alert Dialog
@@ -1510,13 +1678,13 @@ import {
 ```tsx
 import {
   AlertDialog,
-  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
-  AlertDialogAction,
+  AlertDialogTrigger,
 } from "@kanvas/phoenix-rebirth/ui/alert-dialog";
 
 <AlertDialog>
@@ -1524,23 +1692,29 @@ import {
   <AlertDialogContent>
     <AlertDialogHeader>
       <AlertDialogTitle>Confirm</AlertDialogTitle>
-      <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+      <AlertDialogDescription>
+        This action cannot be undone.
+      </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogCancel>Cancel</AlertDialogCancel>
     <AlertDialogAction>Delete</AlertDialogAction>
   </AlertDialogContent>
-  </AlertDialog>
+</AlertDialog>;
 ```
 
 - Alert
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription } from "@kanvas/phoenix-rebirth/ui/alert";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@kanvas/phoenix-rebirth/ui/alert";
 
 <Alert variant="destructive">
   <AlertTitle>Error</AlertTitle>
   <AlertDescription>A problem occurred.</AlertDescription>
-</Alert>
+</Alert>;
 ```
 
 - Aspect Ratio
@@ -1550,39 +1724,51 @@ import { AspectRatio } from "@kanvas/phoenix-rebirth/ui/aspect-ratio";
 
 <AspectRatio ratio={16 / 9}>
   <img src="/image.jpg" alt="Demo" className="object-cover w-full h-full" />
-</AspectRatio>
+</AspectRatio>;
 ```
 
 - Avatar
 
 ```tsx
-import { Avatar, AvatarImage, AvatarFallback } from "@kanvas/phoenix-rebirth/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@kanvas/phoenix-rebirth/ui/avatar";
 
 <Avatar>
   <AvatarImage src="/user.png" alt="@user" />
   <AvatarFallback>US</AvatarFallback>
-</Avatar>
+</Avatar>;
 ```
 
 - Badge
 
 ```tsx
 import { Badge } from "@kanvas/phoenix-rebirth/ui/badge";
-<Badge variant="secondary">Status</Badge>
+<Badge variant="secondary">Status</Badge>;
 ```
 
 - Breadcrumb
 
 ```tsx
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbLink, BreadcrumbSeparator } from "@kanvas/phoenix-rebirth/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@kanvas/phoenix-rebirth/ui/breadcrumb";
 
 <Breadcrumb>
   <BreadcrumbList>
-    <BreadcrumbItem><BreadcrumbLink href="/">Home</BreadcrumbLink></BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
     <BreadcrumbSeparator />
     <BreadcrumbItem>Section</BreadcrumbItem>
   </BreadcrumbList>
-</Breadcrumb>
+</Breadcrumb>;
 ```
 
 - Button / Button Group
@@ -1605,13 +1791,20 @@ import { ButtonGroup, ButtonGroupSeparator } from "@kanvas/phoenix-rebirth/ui/bu
 
 ```tsx
 import { Calendar } from "@kanvas/phoenix-rebirth/ui/calendar";
-<Calendar mode="single" selected={new Date()} onSelect={(d) => setDate(d)} />
+<Calendar mode="single" selected={new Date()} onSelect={(d) => setDate(d)} />;
 ```
 
 - Card
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@kanvas/phoenix-rebirth/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@kanvas/phoenix-rebirth/ui/card";
 
 <Card>
   <CardHeader>
@@ -1620,7 +1813,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
   </CardHeader>
   <CardContent>Content</CardContent>
   <CardFooter>Footer</CardFooter>
-</Card>
+</Card>;
 ```
 
 - Carousel
@@ -1641,7 +1834,7 @@ import {
   </CarouselContent>
   <CarouselPrevious />
   <CarouselNext />
-</Carousel>
+</Carousel>;
 ```
 
 - Chart
@@ -1656,25 +1849,29 @@ import {
 <ChartContainer config={{}} className="h-64">
   {/* Insert your Recharts chart here */}
   <ChartTooltip content={<ChartTooltipContent />} />
-</ChartContainer>
+</ChartContainer>;
 ```
 
 - Checkbox
 
 ```tsx
 import { Checkbox } from "@kanvas/phoenix-rebirth/ui/checkbox";
-<Checkbox checked onCheckedChange={(v) => console.log(v)} />
+<Checkbox checked onCheckedChange={(v) => console.log(v)} />;
 ```
 
 - Collapsible
 
 ```tsx
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@kanvas/phoenix-rebirth/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@kanvas/phoenix-rebirth/ui/collapsible";
 
 <Collapsible>
   <CollapsibleTrigger>Show</CollapsibleTrigger>
   <CollapsibleContent>Hidden content</CollapsibleContent>
-</Collapsible>
+</Collapsible>;
 ```
 
 - Combobox
@@ -1682,10 +1879,10 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@kanvas/pho
 ```tsx
 import {
   Combobox,
-  ComboboxTrigger,
   ComboboxContent,
-  ComboboxItem,
   ComboboxInput,
+  ComboboxItem,
+  ComboboxTrigger,
 } from "@kanvas/phoenix-rebirth/ui/combobox";
 
 <Combobox>
@@ -1694,39 +1891,57 @@ import {
     <ComboboxInput placeholder="Search..." />
     <ComboboxItem value="1">One</ComboboxItem>
   </ComboboxContent>
-</Combobox>
+</Combobox>;
 ```
 
 - Command
 
 ```tsx
-import { Command, CommandList, CommandInput, CommandItem } from "@kanvas/phoenix-rebirth/ui/command";
+import {
+  Command,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@kanvas/phoenix-rebirth/ui/command";
 
 <Command>
   <CommandInput placeholder="Search..." />
   <CommandList>
     <CommandItem>Option</CommandItem>
   </CommandList>
-</Command>
+</Command>;
 ```
 
 - Context Menu
 
 ```tsx
-import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from "@kanvas/phoenix-rebirth/ui/context-menu";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@kanvas/phoenix-rebirth/ui/context-menu";
 
 <ContextMenu>
   <ContextMenuTrigger className="border p-4">Right click</ContextMenuTrigger>
   <ContextMenuContent>
     <ContextMenuItem>Action</ContextMenuItem>
   </ContextMenuContent>
-</ContextMenu>
+</ContextMenu>;
 ```
 
 - Dialog
 
 ```tsx
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@kanvas/phoenix-rebirth/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@kanvas/phoenix-rebirth/ui/dialog";
 
 <Dialog>
   <DialogTrigger>Open</DialogTrigger>
@@ -1739,7 +1954,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
       <button className="btn">Confirm</button>
     </DialogFooter>
   </DialogContent>
-</Dialog>
+</Dialog>;
 ```
 
 - Direction
@@ -1749,13 +1964,19 @@ import { DirectionProvider } from "@kanvas/phoenix-rebirth/ui/direction";
 
 <DirectionProvider dir="ltr">
   <div>Content</div>
-</DirectionProvider>
+</DirectionProvider>;
 ```
 
 - Drawer
 
 ```tsx
-import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from "@kanvas/phoenix-rebirth/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@kanvas/phoenix-rebirth/ui/drawer";
 
 <Drawer>
   <DrawerTrigger>Open</DrawerTrigger>
@@ -1765,50 +1986,72 @@ import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from 
     </DrawerHeader>
     <div>Content</div>
   </DrawerContent>
-</Drawer>
+</Drawer>;
 ```
 
 - Dropdown Menu
 
 ```tsx
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@kanvas/phoenix-rebirth/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@kanvas/phoenix-rebirth/ui/dropdown-menu";
 
 <DropdownMenu>
   <DropdownMenuTrigger>Options</DropdownMenuTrigger>
   <DropdownMenuContent>
     <DropdownMenuItem>Profile</DropdownMenuItem>
   </DropdownMenuContent>
-</DropdownMenu>
+</DropdownMenu>;
 ```
 
 - Empty
 
 ```tsx
-import { Empty, EmptyHeader, EmptyTitle, EmptyDescription } from "@kanvas/phoenix-rebirth/ui/empty";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@kanvas/phoenix-rebirth/ui/empty";
 
 <Empty>
   <EmptyHeader>
     <EmptyTitle>No data</EmptyTitle>
     <EmptyDescription>Try adjusting the filters</EmptyDescription>
   </EmptyHeader>
-</Empty>
+</Empty>;
 ```
 
 - Form helpers (React Hook Form)
 
 ```tsx
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, useFormField } from "@kanvas/phoenix-rebirth/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
+} from "@kanvas/phoenix-rebirth/ui/form";
 ```
 
 - Hover Card
 
 ```tsx
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@kanvas/phoenix-rebirth/ui/hover-card";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@kanvas/phoenix-rebirth/ui/hover-card";
 
 <HoverCard>
   <HoverCardTrigger>User</HoverCardTrigger>
   <HoverCardContent>More info</HoverCardContent>
-</HoverCard>
+</HoverCard>;
 ```
 
 - Input / Textarea / Input OTP / Input Group
@@ -1840,21 +2083,41 @@ import { Kbd } from "@kanvas/phoenix-rebirth/ui/kbd";
 
 ```tsx
 import { Label } from "@kanvas/phoenix-rebirth/ui/label";
-<Label htmlFor="field">Field</Label>
+<Label htmlFor="field">Field</Label>;
 ```
 
 - Menubar / Navigation Menu
 
 ```tsx
-import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from "@kanvas/phoenix-rebirth/ui/menubar";
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from "@kanvas/phoenix-rebirth/ui/navigation-menu";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@kanvas/phoenix-rebirth/ui/menubar";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@kanvas/phoenix-rebirth/ui/navigation-menu";
 ```
 
 - Native Select / Select
 
 ```tsx
-import { NativeSelect, NativeSelectOption } from "@kanvas/phoenix-rebirth/ui/native-select";
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@kanvas/phoenix-rebirth/ui/select";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@kanvas/phoenix-rebirth/ui/native-select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@kanvas/phoenix-rebirth/ui/select";
 ```
 
 - Pagination
@@ -1866,31 +2129,50 @@ import { Pagination } from "@kanvas/phoenix-rebirth/ui/pagination";
 - Popover / Tooltip
 
 ```tsx
-import { Popover, PopoverTrigger, PopoverContent } from "@kanvas/phoenix-rebirth/ui/popover";
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@kanvas/phoenix-rebirth/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@kanvas/phoenix-rebirth/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@kanvas/phoenix-rebirth/ui/tooltip";
 ```
 
 - Progress
 
 ```tsx
 import { Progress } from "@kanvas/phoenix-rebirth/ui/progress";
-<Progress value={54} />
+<Progress value={54} />;
 ```
 
 - Radio Group / Switch / Slider / Toggle / Toggle Group
 
 ```tsx
-import { RadioGroup, RadioGroupItem } from "@kanvas/phoenix-rebirth/ui/radio-group";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@kanvas/phoenix-rebirth/ui/radio-group";
 import { Switch } from "@kanvas/phoenix-rebirth/ui/switch";
 import { Slider } from "@kanvas/phoenix-rebirth/ui/slider";
 import { Toggle } from "@kanvas/phoenix-rebirth/ui/toggle";
-import { ToggleGroup, ToggleGroupItem } from "@kanvas/phoenix-rebirth/ui/toggle-group";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@kanvas/phoenix-rebirth/ui/toggle-group";
 ```
 
 - Resizable / Scroll Area / Separator / Skeleton / Spinner
 
 ```tsx
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@kanvas/phoenix-rebirth/ui/resizable";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@kanvas/phoenix-rebirth/ui/resizable";
 import { ScrollArea } from "@kanvas/phoenix-rebirth/ui/scroll-area";
 import { Separator } from "@kanvas/phoenix-rebirth/ui/separator";
 import { Skeleton } from "@kanvas/phoenix-rebirth/ui/skeleton";
@@ -1900,14 +2182,32 @@ import { Spinner } from "@kanvas/phoenix-rebirth/ui/spinner";
 - Sheet / Sidebar
 
 ```tsx
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@kanvas/phoenix-rebirth/ui/sheet";
-import { Sidebar, SidebarProvider, SidebarContent, SidebarTrigger } from "@kanvas/phoenix-rebirth/ui/sidebar";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@kanvas/phoenix-rebirth/ui/sheet";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@kanvas/phoenix-rebirth/ui/sidebar";
 ```
 
 - Table
 
 ```tsx
-import { Table, TableHeader, TableRow, TableHead, TableCell, TableBody } from "@kanvas/phoenix-rebirth/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@kanvas/phoenix-rebirth/ui/table";
 
 <Table>
   <TableHeader>
@@ -1922,13 +2222,18 @@ import { Table, TableHeader, TableRow, TableHead, TableCell, TableBody } from "@
       <TableCell>jane@acme.com</TableCell>
     </TableRow>
   </TableBody>
-</Table>
+</Table>;
 ```
 
 - Tabs
 
 ```tsx
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@kanvas/phoenix-rebirth/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@kanvas/phoenix-rebirth/ui/tabs";
 
 <Tabs defaultValue="account">
   <TabsList>
@@ -1937,7 +2242,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@kanvas/phoenix-rebirt
   </TabsList>
   <TabsContent value="account">Account content</TabsContent>
   <TabsContent value="profile">Profile content</TabsContent>
-</Tabs>
+</Tabs>;
 ```
 
 - Toast and Toaster
@@ -1950,7 +2255,10 @@ function Example() {
   const { toast } = useToast();
   return (
     <>
-      <button onClick={() => toast({ title: "Saved", description: "Changes applied" })}>
+      <button
+        onClick={() =>
+          toast({ title: "Saved", description: "Changes applied" })}
+      >
         Show toast
       </button>
       <Toaster />
@@ -1978,11 +2286,15 @@ import { DialogAlert } from "@kanvas/phoenix-rebirth/blocks/dialog";
   dangerAction
   action={{ title: "Delete", disable: isDeleting, pending: isDeleting }}
   cancel={{ title: "Cancel" }}
-  onAction={async () => { await remove(); setOpen(false); }}
-/>
+  onAction={async () => {
+    await remove();
+    setOpen(false);
+  }}
+/>;
 ```
 
 Main props [see implementation](/src/components/blocks/dialog/index.tsx):
+
 - open: boolean
 - onOpenChange?: (open: boolean) => void
 - title: string
@@ -1995,7 +2307,8 @@ Main props [see implementation](/src/components/blocks/dialog/index.tsx):
 
 #### ModalDialog
 
-Responsive modal that uses Drawer on mobile and Dialog on desktop, switching automatically based on viewport.
+Responsive modal that uses Drawer on mobile and Dialog on desktop, switching
+automatically based on viewport.
 
 ```tsx
 import { ModalDialog } from "@kanvas/phoenix-rebirth/blocks/modal";
@@ -2011,33 +2324,37 @@ import { ModalDialog } from "@kanvas/phoenix-rebirth/blocks/modal";
   <form className="space-y-4">
     {/* fields */}
   </form>
-</ModalDialog>
+</ModalDialog>;
 ```
 
 Main props [see implementation](/src/components/blocks/modal/index.tsx):
+
 - open: boolean
 - onOpenChange?: (open: boolean) => void
 - title: string
 - className?: string (content)
 - dialog?: { className?: string } (desktop only)
-- action: { title: string; disable?: boolean; pending?: boolean; type?: "button" | "submit" | "reset" }
+- action: { title: string; disable?: boolean; pending?: boolean; type?: "button"
+  | "submit" | "reset" }
 - cancel?: { title: string }
 - pendingSpinner?: () => JSX.Element
 - onAction?: () => void | Promise<void>
 
 Behavior:
+
 - Uses Drawer below `md` and Dialog at `md` and above.
 - Disables the action button when `action.disable` or `action.pending` is true.
 
 #### Advanced Table
 
-Helpers for TanStack Table: `columnsBuilder`, `useTable`, slot components, and the `Table` container.
+Helpers for TanStack Table: `columnsBuilder`, `useTable`, slot components, and
+the `Table` container.
 
 ```tsx
 import {
+  columnsBuilder,
   Table,
   TableSlot,
-  columnsBuilder,
   useTable,
 } from "@kanvas/phoenix-rebirth/blocks/table";
 import { Button } from "@kanvas/phoenix-rebirth/ui/button";
@@ -2045,10 +2362,14 @@ import { Input } from "@kanvas/phoenix-rebirth/ui/input";
 
 const columns = columnsBuilder(
   [
-    { accessorKey: "name", header: "Name", cell: ({ row }) => row.getValue("name") },
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => row.getValue("name"),
+    },
     { accessorKey: "email", header: "Email" },
   ],
-  []
+  [],
 );
 
 const { table } = useTable({ data, columns });
@@ -2060,12 +2381,14 @@ const { table } = useTable({ data, columns });
       <Button>New</Button>
     </div>
   </TableSlot>
-</Table>
+</Table>;
 ```
 
 API [see implementation](/src/components/blocks/table/index.tsx):
+
 - columnsBuilder<T>(columns: T[], deps?: DependencyList): memoizes columns
-- useTable<T>(options: TableOptions<T>): returns `{ table }` with empty-data fixes
+- useTable<T>(options: TableOptions<T>): returns `{ table }` with empty-data
+  fixes
 - Table props:
   - table: TanStack `Table<T>`
   - isFetching: boolean
@@ -2085,11 +2408,13 @@ import { PhoneInput } from "@kanvas/phoenix-rebirth/blocks/phone-input";
   placeholder="+1 555 000 0000"
   value={value}
   onChange={setValue}
-/>
+/>;
 ```
 
 Main props [see implementation](/src/components/blocks/phone-input/index.tsx):
-- Inherits standard `<input>` and `react-phone-number-input` props, except `onChange`, `value`, and `ref`
+
+- Inherits standard `<input>` and `react-phone-number-input` props, except
+  `onChange`, `value`, and `ref`
 - onChange?: (value: E164Number | string | undefined) => void
 
 #### Form Builder
@@ -2098,36 +2423,81 @@ Form-builder system powered by React Hook Form.
 
 ```tsx
 import {
-  useSimpleFormBuilder,
   SimpleFormBuilder,
+  useSimpleFormBuilder,
 } from "@kanvas/phoenix-rebirth/blocks/form";
 
 const definitions = [
   [
-    { kind: "input", name: "firstname", label: "First name", rules: { required: "Required" } },
-    { kind: "input", name: "lastname", label: "Last name", rules: { required: "Required" } },
+    {
+      kind: "input",
+      name: "firstname",
+      label: "First name",
+      rules: { required: "Required" },
+    },
+    {
+      kind: "input",
+      name: "lastname",
+      label: "Last name",
+      rules: { required: "Required" },
+    },
   ],
-  { kind: "input", name: "email", type: "email", label: "Email", rules: { required: "Required" } },
+  {
+    kind: "input",
+    name: "email",
+    type: "email",
+    label: "Email",
+    rules: { required: "Required" },
+  },
   { kind: "phone", name: "phone", label: "Phone", optional: "true" },
-  { kind: "select", name: "role", label: "Role", rules: { required: "Required" }, options: [{ name: "Admin", value: "admin" }] },
-  { kind: "faceted-select", name: "permissions", label: "Permissions", options: [{ name: "Read", value: "read" }] },
+  {
+    kind: "select",
+    name: "role",
+    label: "Role",
+    rules: { required: "Required" },
+    options: [{ name: "Admin", value: "admin" }],
+  },
+  {
+    kind: "faceted-select",
+    name: "permissions",
+    label: "Permissions",
+    options: [{ name: "Read", value: "read" }],
+  },
   { kind: "textarea", name: "bio", label: "Bio", optional: "true" },
   { kind: "switch", name: "notifications", label: "Notifications" },
-  { kind: "checkbox", name: "terms", label: "I accept terms", rules: { required: "Required" } },
+  {
+    kind: "checkbox",
+    name: "terms",
+    label: "I accept terms",
+    rules: { required: "Required" },
+  },
 ];
 
 const { definitions: defs, hook } = useSimpleFormBuilder(definitions, {
-  defaultValues: { firstname: "", lastname: "", email: "", phone: "", role: "", permissions: "", bio: "", notifications: false, terms: false },
+  defaultValues: {
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    role: "",
+    permissions: "",
+    bio: "",
+    notifications: false,
+    terms: false,
+  },
 });
 
 <form onSubmit={hook.handleSubmit((values) => console.log(values))}>
   <SimpleFormBuilder definitions={defs} hook={hook} />
   <button type="submit" disabled={!hook.formState.isValid}>Submit</button>
-</form>
+</form>;
 ```
 
-Field definitions and props [see implementation](/src/components/blocks/form/index.tsx):
-- kind: "input" | "textarea" | "select" | "checkbox" | "switch" | "custom" | "faceted-select" | "phone"
+Field definitions and props
+[see implementation](/src/components/blocks/form/index.tsx):
+
+- kind: "input" | "textarea" | "select" | "checkbox" | "switch" | "custom" |
+  "faceted-select" | "phone"
 - name: string
 - label: string
 - rules: UseControllerProps["rules"] (unless `optional: "true"`)
@@ -2159,7 +2529,7 @@ import { For } from "@kanvas/phoenix-rebirth/lib/server";
 
 <For each={items} fallback={<div>No data</div>} error={<div>Error</div>}>
   {(item, { key }) => <div key={key}>{item.name}</div>}
-</For>
+</For>;
 ```
 
 - Show
@@ -2175,7 +2545,7 @@ import { For } from "@kanvas/phoenix-rebirth/lib/server";
 import { Show } from "@kanvas/phoenix-rebirth/lib/server";
 <Show when={user} deps={[user]} fallback={<div>Loading...</div>}>
   {(u) => <div>{u.name}</div>}
-</Show>
+</Show>;
 ```
 
 - Switch and Match
@@ -2184,21 +2554,26 @@ import { Show } from "@kanvas/phoenix-rebirth/lib/server";
   - Example:
 
 ```tsx
-import { Switch, Match } from "@kanvas/phoenix-rebirth/lib/server";
+import { Match, Switch } from "@kanvas/phoenix-rebirth/lib/server";
 
 <Switch fallback={<div>Unknown</div>}>
-  <Match when={status === "ok"}><div>OK</div></Match>
-  <Match when={status === "error"}><div>Error</div></Match>
-</Switch>
+  <Match when={status === "ok"}>
+    <div>OK</div>
+  </Match>
+  <Match when={status === "error"}>
+    <div>Error</div>
+  </Match>
+</Switch>;
 ```
 
 - WithSlots / Slot
-  - WithSlots(Component, expectedSlots): HOC that transforms named children into a `slots` object
+  - WithSlots(Component, expectedSlots): HOC that transforms named children into
+    a `slots` object
   - Slot: typed marker to name content
   - Example:
 
 ```tsx
-import { WithSlots, Slot } from "@kanvas/phoenix-rebirth/lib/server";
+import { Slot, WithSlots } from "@kanvas/phoenix-rebirth/lib/server";
 
 const SLOTS = ["header", "content"] as const;
 type MySlots = (typeof SLOTS)[number];
@@ -2221,7 +2596,7 @@ function PanelSlot(props: { name: MySlots; children: React.ReactNode }) {
 <PanelWithSlots>
   <PanelSlot name="header">Header</PanelSlot>
   <PanelSlot name="content">Content</PanelSlot>
-</PanelWithSlots>
+</PanelWithSlots>;
 ```
 
 ---
@@ -2234,12 +2609,13 @@ Location: [lib/utils.ts](/src/lib/utils.ts)
 
 ```ts
 import { cn } from "@kanvas/phoenix-rebirth/lib/utils";
-<div className={cn("p-2", active && "bg-primary")} />
+<div className={cn("p-2", active && "bg-primary")} />;
 ```
 
 - useEvents<T>()
   - emit(name: string, data: T): dispatches a CustomEvent
-  - on(name: string, listener: (data: { detail: T }) => void): subscribes and returns `unsubscribe()`
+  - on(name: string, listener: (data: { detail: T }) => void): subscribes and
+    returns `unsubscribe()`
 
 ```tsx
 import { useEvents } from "@kanvas/phoenix-rebirth/lib/utils";
@@ -2250,17 +2626,23 @@ emit("search", "text");
 
 - useThread(name?)
   - client(callback: () => Promise<any>): executes in a browser Web Worker
-  - server(callback: (port, data) => Promise<any>, workerData?): requires `/api/threads` route with exported handler
+  - server(callback: (port, data) => Promise<any>, workerData?): requires
+    `/api/threads` route with exported handler
 
 ```tsx
 import { useThread } from "@kanvas/phoenix-rebirth/lib/utils";
 const { client, server } = useThread("task");
-const heavyInBrowser = client(async () => {/* ... */ return 42;});
-const heavyInServer = server(async (port, data) => {/* ... */ return "ok";}, { x: 1 });
+const heavyInBrowser = client(async () => {
+  /* ... */ return 42;
+});
+const heavyInServer = server(async (port, data) => {
+  /* ... */ return "ok";
+}, { x: 1 });
 ```
 
 - useSet<T>(initial?: T[])
-  - add, delete, has, clear, size, values, union, intersection, difference, value (Set)
+  - add, delete, has, clear, size, values, union, intersection, difference,
+    value (Set)
 
 ```tsx
 import { useSet } from "@kanvas/phoenix-rebirth/lib/utils";
@@ -2278,7 +2660,8 @@ const map = useMap<string, number>([["a", 1]]);
 map.set("b", 2);
 ```
 
-- toListValues(values: string): string[] and fromListValues(values: string[]): string
+- toListValues(values: string): string[] and fromListValues(values: string[]):
+  string
 - Leaves<T>: utility type for leaf paths of an object
 
 #### Threads API (Next.js)
@@ -2306,8 +2689,18 @@ import { useTourBuilder } from "@kanvas/phoenix-rebirth/lib/tour";
 
 const { TourComponents, Driver } = useTourBuilder({
   steps: [
-    { wrappertName: "Welcome", title: "Welcome", description: "Intro", showButtons: ["next"] },
-    { wrappertName: "Navigation", title: "Menu", description: "Where to find things", showButtons: ["previous", "next"] },
+    {
+      wrappertName: "Welcome",
+      title: "Welcome",
+      description: "Intro",
+      showButtons: ["next"],
+    },
+    {
+      wrappertName: "Navigation",
+      title: "Menu",
+      description: "Where to find things",
+      showButtons: ["previous", "next"],
+    },
   ],
   options: { animate: true, allowClose: true },
 });
@@ -2315,8 +2708,12 @@ const { TourComponents, Driver } = useTourBuilder({
 function App() {
   return (
     <div>
-      <TourComponents.Welcome><h1>Header</h1></TourComponents.Welcome>
-      <TourComponents.Navigation><nav>Menu</nav></TourComponents.Navigation>
+      <TourComponents.Welcome>
+        <h1>Header</h1>
+      </TourComponents.Welcome>
+      <TourComponents.Navigation>
+        <nav>Menu</nav>
+      </TourComponents.Navigation>
       <button onClick={() => Driver.drive()}>Start tour</button>
     </div>
   );
@@ -2324,8 +2721,11 @@ function App() {
 ```
 
 Notes:
-- `wrappertName` must be unique per step; a wrapper component with an auto-assigned id is created.
-- `Driver` is the `driver.js` instance configured with the provided `steps` and `options`.
+
+- `wrappertName` must be unique per step; a wrapper component with an
+  auto-assigned id is created.
+- `Driver` is the `driver.js` instance configured with the provided `steps` and
+  `options`.
 
 ---
 
@@ -2346,7 +2746,8 @@ const isMobile = useIsMobile();
   - In-app toast manager.
   - Returns `{ toasts, toast, dismiss }`.
   - Use with `<Toaster />` UI component.
-  - Implementation: [hooks/use-toast.ts](/src/hooks/use-toast.ts) and [ui/toaster.tsx](/src/components/ui/toaster.tsx)
+  - Implementation: [hooks/use-toast.ts](/src/hooks/use-toast.ts) and
+    [ui/toaster.tsx](/src/components/ui/toaster.tsx)
 
 ```tsx
 import { useToast } from "@kanvas/phoenix-rebirth/hooks";
@@ -2357,13 +2758,16 @@ toast({ title: "Action successful", description: "Changes were saved" });
 ```
 
 - Re-export from `react-use`
-  - Via `export * from "react-use"` in [hooks/index.ts](/src/hooks/index.ts). You can import hooks from that library through `@kanvas/phoenix-rebirth/hooks`.
+  - Via `export * from "react-use"` in [hooks/index.ts](/src/hooks/index.ts).
+    You can import hooks from that library through
+    `@kanvas/phoenix-rebirth/hooks`.
 
 ---
 
 ### Icons
 
-The `@kanvas/phoenix-rebirth/icons` module re-exports all icons from `lucide-react`.
+The `@kanvas/phoenix-rebirth/icons` module re-exports all icons from
+`lucide-react`.
 
 ```tsx
 import { Home, Search } from "@kanvas/phoenix-rebirth/icons";
@@ -2375,7 +2779,8 @@ Implementation: [icons/index.ts](/src/components/icons/index.ts)
 
 ### Store
 
-The `@kanvas/phoenix-rebirth/store` module re-exports everything from `react-store-js` for lightweight state management.
+The `@kanvas/phoenix-rebirth/store` module re-exports everything from
+`react-store-js` for lightweight state management.
 
 ```ts
 import { createStore } from "@kanvas/phoenix-rebirth/store";
@@ -2411,24 +2816,26 @@ import { Login } from "@kanvas/phoenix-rebirth/views/login";
     // authenticate
   }}
   onError={(e) => console.error(e)}
-/>
+/>;
 ```
 
 Main props [see implementation](/src/views/login.tsx):
-- image?: { src: string | StaticImport; alt?: string; width?: number | string; height?: number | string; className?: string }
+
+- image?: { src: string | StaticImport; alt?: string; width?: number | string;
+  height?: number | string; className?: string }
 - children?: JSX.Element (replace the default card with custom content)
 - card?: {
-  - logo?: { src: string | StaticImport; width?: number | string; height?: number | string; alt?: string; className?: string }
+  - logo?: { src: string | StaticImport; width?: number | string; height?:
+    number | string; alt?: string; className?: string }
   - title?: string
   - inputs?: {
     - email: { label: string; placeholder: string }
     - password: { label: string; placeholder: string }
-    - check: string
-  }
+    - check: string }
   - forgot?: { text: string; url: string }
-  - action?: string
-}
-- onLogin?: (values: { email: string; password: string; remember: boolean }) => void | Promise<void>
+  - action?: string }
+- onLogin?: (values: { email: string; password: string; remember: boolean }) =>
+  void | Promise<void>
 - onError?: (error: any) => void
 
 ---
@@ -2436,4 +2843,5 @@ Main props [see implementation](/src/views/login.tsx):
 ### Compatibility Notes
 
 - Node >= 21 and Next.js ≥ 15 recommended. See `engines` in package.json.
-- Subpath exports in `package.json` resolve to built files in `dist/`. Structure imports as shown in this catalog.
+- Subpath exports in `package.json` resolve to built files in `dist/`. Structure
+  imports as shown in this catalog.

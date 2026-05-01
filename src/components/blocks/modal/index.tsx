@@ -19,7 +19,7 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, JSX } from "react";
 import { useMedia } from "react-use";
 import { Show } from "@/lib/server";
 import { cn } from "@/lib/utils";

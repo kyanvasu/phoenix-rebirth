@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+import { JSX } from "react";
 import { Button } from "@/components/ui/button";
 import { Show } from "@/lib/server";
 
