@@ -11,6 +11,16 @@
 - [Overview](#overview)
 - [Installation](#installation)
 - [Configuration](#configuration)
+- [Theming System](#theming-system)
+  - [Architecture overview](#architecture-overview)
+  - [Layer 1 — Base tokens (`global.css`)](#layer-1--base-tokens-globalcss)
+  - [Layer 2 — Theme variants (`data-theme`)](#layer-2--theme-variants-data-theme)
+  - [Layer 3 — Density & shape patches](#layer-3--density--shape-patches)
+  - [Layer 4 — Composable modifiers (`extras/`)](#layer-4--composable-modifiers-extras)
+  - [Composition & cascade rules](#composition--cascade-rules)
+  - [Next.js integration (SSR + cookies)](#nextjs-integration-ssr--cookies)
+  - [Recipes](#recipes)
+  - [Troubleshooting](#troubleshooting)
 - [Core Components](#core-components)
   - [Base UI Components](#base-ui-components)
   - [Block Components](#block-components)
@@ -128,55 +138,127 @@ In your main CSS file (e.g., `app/globals.css`):
 }
 ```
 
-### Theme Variants (Vega, Nova, Maia, Lyra, Mira, Luma, Sera)
+## Theming System
 
-Phoenix Rebirth ships the seven official shadcn base styles as opt-in
-`[data-theme]` overrides. They only swap CSS variables (colors + `--radius`) —
-no markup, no font imports, no JS.
+Phoenix Rebirth ships a four-layer theming system that is **fully composable**
+and **server-renderable**. You opt in to as little or as much as you need: a
+single base palette, the seven official shadcn base styles, density variants,
+and a class-based modifier layer for colors / fonts / radius / contrast.
 
-Import all variants at once:
+### Architecture overview
 
-```css
-@import "@kanvas/phoenix-rebirth/global.css";
-@import "@kanvas/phoenix-rebirth/themes.css";
+| Layer | Source                                  | Selector                | Purpose                                                |
+| ----- | --------------------------------------- | ----------------------- | ------------------------------------------------------ |
+| **1** | `global.css`                            | `:root` / `.dark`       | Base CSS variables — colors, radius scale, font tokens |
+| **2** | `themes.css` / `themes/<name>.css`      | `[data-theme="<name>"]` | Seven official shadcn base styles (palette + font)     |
+| **3** | `themes/patches/<name>.css`             | `[data-theme] [data-slot]` | Density & shape per base style (button height, card padding…) |
+| **4** | `themes/extras.css` / `extras/<group>.css` | `.theme-<modifier> .theme-container` | Composable modifiers — colors, fonts, radius, modes, twists |
+
+All four layers are CSS-only. Switching at runtime is one DOM mutation away
+(set an attribute or toggle a class). No JS framework, no provider, no flash
+on SSR.
+
+```
+┌─ Layer 1 ─ global.css ──────────────────────────────────────────┐
+│  :root { --primary: oklch(...); --radius: 0.625rem; ... }       │
+│  .dark { --primary: oklch(...); ... }                           │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓ overridden by
+┌─ Layer 2 ─ data-theme="sera" ───────────────────────────────────┐
+│  [data-theme="sera"]   { stone palette, Noto Sans + Playfair }  │
+│  [data-theme="sera"].dark { dark stone palette }                │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓ enriched by
+┌─ Layer 3 ─ patches/sera.css ────────────────────────────────────┐
+│  [data-theme="sera"] [data-slot="button"]   { rounded-none... } │
+│  [data-theme="sera"] [data-slot="card"]     { gap-8 py-8 ... }  │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓ further refined by
+┌─ Layer 4 ─ <body class="theme-rose theme-soft">  ───────────────┐
+│  .theme-rose .theme-container  { --primary: rose-600 ... }      │
+│  .theme-soft .theme-container  { --primary: mix(white 25%) }    │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-Or only the ones you use:
+### Layer 1 — Base tokens (`global.css`)
+
+Always required. Defines every CSS variable consumed by every component
+(`--primary`, `--background`, `--ring`, `--radius`, `--font-sans`, …) plus the
+`@theme inline` mapping that Tailwind v4 needs to expose them as utilities
+(`bg-primary`, `text-foreground`, `rounded-md`, …).
+
+```css
+/* app/globals.css */
+@import "tailwindcss";
+@import "@kanvas/phoenix-rebirth/global.css";
+```
+
+The default palette is the standard shadcn neutral set. Override anything you
+want by re-declaring variables after the import:
 
 ```css
 @import "@kanvas/phoenix-rebirth/global.css";
+
+:root {
+  --primary: oklch(0.6 0.2 264);          /* your brand color */
+  --radius: 0.5rem;                       /* tighter corners  */
+}
+.dark {
+  --primary: oklch(0.7 0.2 264);
+}
+```
+
+### Layer 2 — Theme variants (`data-theme`)
+
+Seven base styles ported from shadcn — each bundles a palette + a variable
+font in a single CSS file.
+
+```css
+/* import everything (~44 KB CSS + ~620 KB woff2) */
+@import "@kanvas/phoenix-rebirth/themes.css";
+
+/* or granular — pay only for what you use */
 @import "@kanvas/phoenix-rebirth/themes/sera.css";
 @import "@kanvas/phoenix-rebirth/themes/lyra.css";
 ```
 
-Activate a theme by setting `data-theme` on `<html>` (or any ancestor). Combine
-with `.dark` for dark mode:
+Activate by setting `data-theme` on `<html>` (or any ancestor). Combine with
+`.dark` for the dark variant of the same theme:
 
 ```html
 <html data-theme="sera" class="dark">
 ```
 
+| Theme  | Font                         | Vibe                                                  |
+| ------ | ---------------------------- | ----------------------------------------------------- |
+| `vega` | system default               | classic shadcn neutral                                |
+| `nova` | Geist Variable               | reduced spacing                                       |
+| `maia` | Figtree Variable             | soft, rounded                                         |
+| `lyra` | JetBrains Mono Variable      | mono throughout (`--font-sans` is overridden to mono) |
+| `mira` | Inter Variable               | dense                                                 |
+| `luma` | Inter Variable               | rounded                                               |
+| `sera` | Noto Sans + Playfair Display | warm stone palette, serif headings                    |
+
+> Each `themes/<name>.css` bundles the corresponding `@fontsource-variable/*`
+> via `@import`, so its woff2 files are emitted into `dist/themes/` and resolved
+> automatically by Next.js / Vite. No manual font setup needed.
+
 #### Autocomplete for `data-theme`
 
-To get IntelliSense on `data-theme="..."` (suggesting `vega`, `nova`, `maia`,
-`lyra`, `mira`, `luma`, `sera`), import the type augmentation **once** at your
-app entry:
+A single import enables IntelliSense suggestions on `data-theme="..."`:
 
 ```tsx
-// app/layout.tsx, _app.tsx, or main.tsx — anywhere imported on startup
-import "@kanvas/phoenix-rebirth/themes";
+import "@kanvas/phoenix-rebirth/themes";   // anywhere imported on startup
 ```
-
-That single import enables:
 
 ```tsx
-<html data-theme="lyra" />   // ← autocompletes the 7 theme names
+<html data-theme="lyra" />     // ← suggests vega / nova / maia / lyra / mira / luma / sera
 ```
 
-The augmentation still accepts arbitrary strings, so any custom `data-theme`
-you might use for other purposes keeps working.
+The augmentation still accepts arbitrary strings via `(string & {})`, so any
+custom `data-theme` you might use elsewhere keeps working.
 
-You can also import the runtime list and the type for switchers:
+You can also use the exported runtime list and type:
 
 ```tsx
 import { PHOENIX_THEMES, type PhoenixTheme } from "@kanvas/phoenix-rebirth/themes";
@@ -190,94 +272,537 @@ return (
 );
 ```
 
-Alternatively, register it once in your `tsconfig.json` (no runtime import
-needed):
+Or skip the runtime import and register only the type via `tsconfig.json`:
 
 ```json
-{
-  "compilerOptions": {
-    "types": ["@kanvas/phoenix-rebirth/themes"]
+{ "compilerOptions": { "types": ["@kanvas/phoenix-rebirth/themes"] } }
+```
+
+### Layer 3 — Density & shape patches
+
+Theme variants (Layer 2) only swap palette + font. To also adopt the
+**radius, padding and component sizing** of a base style — Maia's rounded
+buttons, Lyra's boxy compact layout, Sera's editorial uppercase — opt in to
+the patches:
+
+```css
+@import "@kanvas/phoenix-rebirth/themes/patches/sera.css";
+@import "@kanvas/phoenix-rebirth/themes/patches/lyra.css";
+```
+
+Patches target the `data-slot` / `data-variant` / `data-size` attributes that
+every Phoenix Rebirth component already emits, scoped under `[data-theme="X"]`.
+They live in `@layer base`, so a Tailwind utility you apply yourself
+(`<Button className="rounded-3xl">`) still wins — patches only change the
+default look.
+
+```css
+/* extracted from dist/themes/patches/sera.css */
+@layer base {
+  [data-theme="sera"] [data-slot="button"] {
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="default"] {
+    height: 2.5rem;
+    padding-inline: 1.5rem;
+  }
+  [data-theme="sera"] [data-slot="card"] {
+    border-radius: 0;
+    gap: 2rem;
+    padding-block: 2rem;
   }
 }
 ```
 
-Switch at runtime without `ThemeProvider`:
+| Patch  | Look                                                                 | Size  |
+| ------ | -------------------------------------------------------------------- | ----- |
+| `vega` | classic shadcn (`rounded-md`, `h-9` default, `px-2.5`)               | 1.5 KB |
+| `nova` | compact (`h-8` buttons, `rounded-lg`, `px-2.5`)                      | 1.2 KB |
+| `maia` | rounded + roomy (`rounded-4xl`, `px-3`)                              | 1.2 KB |
+| `lyra` | boxy + compact (`rounded-none`, `text-xs`, `h-8`)                    | 1.2 KB |
+| `mira` | densest (`text-xs/relaxed`, `h-7` default, `h-5` xs)                 | 1.3 KB |
+| `luma` | rounded + airy (`rounded-4xl`, large card padding `py-6 px-6`)       | 1.4 KB |
+| `sera` | editorial (sharp, uppercase tracked buttons, large card `py-8 px-8`) | 1.7 KB |
+
+Components currently covered by patches: `button` (radius + heights + paddings
++ typography for sera), `card` + `card-header`/`content`/`footer` (radius +
+gap + padding), `input` (radius + height), `badge` (radius + uppercase for
+sera), `dialog-content`, `popover-content`. More can be added without
+breaking changes.
+
+### Layer 4 — Composable modifiers (`extras/`)
+
+A class-based modifier layer that composes on top of any `[data-theme]`. Each
+modifier targets `.theme-X .theme-container` (and Radix popper/portal) so it
+**only applies inside a wrapper marked with `theme-container`** — see
+[Composition & cascade rules](#composition--cascade-rules) below.
+
+```css
+@import "@kanvas/phoenix-rebirth/themes/extras.css";              /* everything */
+
+/* or granular — each group is independently importable */
+@import "@kanvas/phoenix-rebirth/themes/extras/colors.css";       /* 17 palettes  */
+@import "@kanvas/phoenix-rebirth/themes/extras/fonts.css";        /* 4 fonts      */
+@import "@kanvas/phoenix-rebirth/themes/extras/radius.css";       /* 5 levels     */
+@import "@kanvas/phoenix-rebirth/themes/extras/modes.css";        /* mono, scaled */
+@import "@kanvas/phoenix-rebirth/themes/extras/twists.css";       /* intensity + contrast */
+```
+
+```html
+<html data-theme="vega" class="dark">
+  <body class="theme-blue theme-rounded-large theme-inter theme-soft theme-contrast-high">
+    <main class="theme-container">…</main>
+  </body>
+</html>
+```
+
+#### Colors (`extras/colors.css`)
+
+17 palettes — 11 from the original shadcn set plus 6 expansions. Every color
+overrides `--primary`, `--primary-foreground`, `--ring`, `--chart-1..5`,
+`--sidebar-primary`, `--sidebar-primary-foreground`, `--sidebar-ring`, with a
+matching `@variant dark` block.
+
+| Class             | Tailwind palette |
+| ----------------- | ---------------- |
+| `theme-default`   | blue charts only (no primary change) |
+| `theme-blue`      | `blue`           |
+| `theme-green`     | `lime` (primary) + `green` (charts) |
+| `theme-amber`     | `amber`          |
+| `theme-rose`      | `rose`           |
+| `theme-purple`    | `purple`         |
+| `theme-orange`    | `orange`         |
+| `theme-teal`      | `teal`           |
+| `theme-red`       | `red`            |
+| `theme-yellow`    | `yellow`         |
+| `theme-violet`    | `violet`         |
+| `theme-sky`       | `sky`            |
+| `theme-indigo`    | `indigo`         |
+| `theme-pink`      | `pink`           |
+| `theme-fuchsia`   | `fuchsia`        |
+| `theme-emerald`   | `emerald`        |
+| `theme-cyan`      | `cyan`           |
+
+#### Fonts (`extras/fonts.css`)
+
+Each font modifier bundles its `@fontsource-variable/*` package via `@import`,
+so dropping the file in is enough — no manual font wiring.
+
+| Class              | Font family                  |
+| ------------------ | ---------------------------- |
+| `theme-inter`      | Inter Variable               |
+| `theme-noto-sans`  | Noto Sans Variable           |
+| `theme-nunito-sans`| Nunito Sans Variable         |
+| `theme-figtree`    | Figtree Variable             |
+
+These override `--font-sans`. To override the heading font instead, set
+`--font-heading` directly in your own CSS.
+
+#### Radius (`extras/radius.css`)
+
+Five levels — each just sets `--radius` to a different value, which propagates
+through the entire `--radius-{sm,md,lg,xl,2xl,3xl,4xl}` scale defined in
+`global.css`.
+
+| Class                    | `--radius` |
+| ------------------------ | ---------- |
+| `theme-rounded-none`     | `0`        |
+| `theme-rounded-small`    | `0.4rem`   |
+| `theme-rounded-medium`   | `0.65rem`  |
+| `theme-rounded-large`    | `1rem`     |
+| `theme-rounded-full`     | `1.2rem`   |
+
+#### Modes (`extras/modes.css`)
+
+| Class           | Effect                                                                 |
+| --------------- | ---------------------------------------------------------------------- |
+| `theme-mono`    | JetBrains Mono everywhere, stone primary, sharp corners, no shadows, scaled type at `lg`+. Also flattens form controls (`toggle-group`, `checkbox`, `radio`, `switch`) to rectangles. |
+| `theme-scaled`  | Smaller type / tighter spacing at `lg`+, blue chart palette, denser card padding. Useful for dashboards. |
+
+#### Twists (`extras/twists.css`)
+
+Two-axis adjustment in OKLCH space via `color-mix()`, so the same modifier
+works on any base color (vega, sera, theme-rose, theme-emerald, …).
+
+| Axis      | Class                  | Effect                                       |
+| --------- | ---------------------- | -------------------------------------------- |
+| Intensity | `theme-soft`           | primary mixed +25% white (lighter)           |
+| Intensity | `theme-bold`           | primary mixed +14% black (deeper)            |
+| Contrast  | `theme-contrast-low`   | text/border pulled toward background (calm)  |
+| Contrast  | `theme-contrast-high`  | text/border pulled toward foreground (punchy) |
+
+```html
+<body class="theme-rose theme-soft">                          <!-- soft rose -->
+<body class="theme-blue theme-bold theme-contrast-high">      <!-- bold blue, sharp text -->
+<body class="theme-emerald theme-rounded-large theme-soft">   <!-- emerald, rounded, lighter -->
+```
+
+> **Browser support:** `color-mix(in oklch)` is Chrome 111+, Safari 16.2+,
+> Firefox 113+. tsup automatically wraps each declaration with `@supports`
+> fallbacks, so older browsers degrade to the unmixed value.
+
+### Composition & cascade rules
+
+#### The `theme-container` requirement
+
+Modifiers from Layer 4 target three selectors:
+
+- `.theme-X .theme-container` — the main content
+- `.theme-X [data-radix-popper-content-wrapper]` — Radix popovers / dropdowns / selects
+- `.theme-X [data-radix-portal]` — Radix portal-based content (Dialog, Sheet, …)
+
+The wrapper rule means **the modifier class must be on an ancestor of an
+element that has class `theme-container`**. The two are usually on different
+levels:
+
+```html
+<body class="theme-blue theme-rounded-large">    <!-- modifiers here -->
+  <main class="theme-container">                  <!-- container here -->
+    <Button>Now styled blue, rounded large</Button>
+  </main>
+</body>
+```
+
+Without `theme-container` on a wrapping element, the modifiers don't apply.
+Common patterns:
+
+```tsx
+// Option A — main as the container
+<body className="theme-blue">
+  <main className="theme-container">{children}</main>
+</body>
+
+// Option B — body itself is the container (one less div)
+<body className="theme-container theme-blue">{children}</body>
+
+// Option C — your existing layout root (whatever it is)
+<body className="theme-blue">
+  <RootLayout className="theme-container">{children}</RootLayout>
+</body>
+```
+
+#### Per-section override (nested containers)
+
+You can re-scope any modifier by nesting another `theme-container`:
+
+```html
+<body class="theme-blue">
+  <main class="theme-container">…blue primary…</main>
+  <aside class="theme-rose theme-soft">
+    <div class="theme-container">…soft rose primary, only here…</div>
+  </aside>
+</body>
+```
+
+#### Cascade order
+
+The four layers compose with predictable specificity:
+
+1. `:root` from `global.css` → lowest priority
+2. `[data-theme="X"]` from `themes/<name>.css` → overrides `:root`
+3. `[data-theme="X"] [data-slot="Y"]` from `patches/<name>.css` → overrides per-component (one extra attribute selector)
+4. `.theme-X .theme-container` from `extras/<group>.css` → re-overrides anywhere in the subtree (descendant combinator + class)
+
+Because patches live in `@layer base`, any Tailwind utility a consumer applies
+(`<Button className="rounded-3xl">`) wins over the patch — utilities are in
+`@layer utilities`, which beats `@layer base` regardless of specificity.
+
+### Next.js integration (SSR + cookies)
+
+The recommended pattern: persist user preference in cookies, read on the
+server, render the right classes immediately. **No flash, no hydration
+mismatch, no client-only state**.
+
+```tsx
+// app/layout.tsx
+import { cookies } from "next/headers";
+import { cn } from "@kanvas/phoenix-rebirth/lib/utils";
+
+import "@kanvas/phoenix-rebirth/global.css";
+import "@kanvas/phoenix-rebirth/themes.css";
+import "@kanvas/phoenix-rebirth/themes/extras.css";
+import "@kanvas/phoenix-rebirth/themes/patches/sera.css";
+import "@kanvas/phoenix-rebirth/themes/patches/lyra.css";   // import patches you'll allow
+import "@kanvas/phoenix-rebirth/themes";                    // type augmentation
+
+export default async function RootLayout({
+  children,
+}: { children: React.ReactNode }) {
+  const c = await cookies();
+
+  const dataTheme  = c.get("data-theme")?.value  ?? "vega";    // base style
+  const dark       = c.get("color-scheme")?.value === "dark";  // light/dark
+  const themeColor = c.get("theme-color")?.value ?? "";        // theme-blue / ...
+  const themeRadius= c.get("theme-radius")?.value ?? "";       // theme-rounded-large / ...
+  const themeFont  = c.get("theme-font")?.value  ?? "";        // theme-inter / ...
+  const themeMode  = c.get("theme-mode")?.value  ?? "";        // theme-mono / theme-scaled
+  const themeTwist = c.get("theme-twist")?.value ?? "";        // theme-soft theme-contrast-high (space-separated)
+
+  return (
+    <html
+      lang="en"
+      data-theme={dataTheme}
+      className={cn(dark && "dark")}
+      suppressHydrationWarning
+    >
+      <body
+        className={cn(
+          "antialiased",
+          themeColor,
+          themeRadius,
+          themeFont,
+          themeMode,
+          themeTwist,
+        )}
+      >
+        <div className="theme-container">{children}</div>
+      </body>
+    </html>
+  );
+}
+```
+
+Set the cookies via a Server Action when the user changes a preference:
+
+```tsx
+// app/actions/theme.ts
+"use server";
+import { cookies } from "next/headers";
+
+export async function setThemePref(name: string, value: string) {
+  const store = await cookies();
+  store.set(name, value, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+    sameSite: "lax",
+  });
+}
+```
+
+```tsx
+// components/theme-color-picker.tsx
+"use client";
+import { useTransition } from "react";
+import { setThemePref } from "@/app/actions/theme";
+
+const COLORS = ["", "theme-blue", "theme-rose", "theme-emerald", "theme-amber"];
+
+export function ThemeColorPicker({ current }: { current: string }) {
+  const [pending, startTransition] = useTransition();
+  return (
+    <div className="flex gap-2">
+      {COLORS.map((c) => (
+        <button
+          key={c || "default"}
+          disabled={pending}
+          onClick={() =>
+            startTransition(async () => {
+              await setThemePref("theme-color", c);
+              window.location.reload(); // pick up new cookie immediately
+            })
+          }
+          className={cn("size-6 rounded-full border", c === current && "ring-2 ring-ring")}
+        >
+          <span className={cn(c, "theme-container")}>
+            <span className="block size-full rounded-full bg-primary" />
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+#### Without ThemeProvider (manual, client-only)
+
+If you don't want server-rendered themes, use plain `localStorage` + an inline
+script in `<head>` to avoid flash:
+
+```tsx
+// app/layout.tsx <head>
+<script
+  dangerouslySetInnerHTML={{
+    __html: `
+      try {
+        var t = localStorage.getItem('data-theme') || 'vega';
+        var d = localStorage.getItem('color-scheme') === 'dark';
+        document.documentElement.dataset.theme = t;
+        if (d) document.documentElement.classList.add('dark');
+      } catch (e) {}
+    `,
+  }}
+/>
+```
 
 ```tsx
 // hooks/use-theme.ts
 "use client";
 import { useEffect, useState } from "react";
-
-const THEMES = [
-  "vega",
-  "nova",
-  "maia",
-  "lyra",
-  "mira",
-  "luma",
-  "sera",
-] as const;
-type Theme = (typeof THEMES)[number];
+import {
+  PHOENIX_THEMES,
+  type PhoenixTheme,
+} from "@kanvas/phoenix-rebirth/themes";
 
 export function useTheme() {
-  const [theme, setThemeState] = useState<Theme>("vega");
+  const [theme, setThemeState] = useState<PhoenixTheme>("vega");
   const [dark, setDarkState] = useState(false);
 
   useEffect(() => {
-    setThemeState((localStorage.getItem("theme") as Theme) ?? "vega");
-    setDarkState(localStorage.getItem("dark") === "1");
+    setThemeState(
+      (localStorage.getItem("data-theme") as PhoenixTheme) ?? "vega",
+    );
+    setDarkState(localStorage.getItem("color-scheme") === "dark");
   }, []);
 
-  const setTheme = (t: Theme) => {
+  const setTheme = (t: PhoenixTheme) => {
     document.documentElement.dataset.theme = t;
-    localStorage.setItem("theme", t);
+    localStorage.setItem("data-theme", t);
     setThemeState(t);
   };
   const setDark = (d: boolean) => {
     document.documentElement.classList.toggle("dark", d);
-    localStorage.setItem("dark", d ? "1" : "0");
+    localStorage.setItem("color-scheme", d ? "dark" : "light");
     setDarkState(d);
   };
 
-  return { theme, setTheme, dark, setDark, themes: THEMES };
+  return { theme, setTheme, dark, setDark, themes: PHOENIX_THEMES };
 }
 ```
 
-Add an inline script to the `<head>` to avoid theme flash on SSR:
+### Recipes
+
+#### Light/dark toggle only
 
 ```tsx
-<script
-  dangerouslySetInnerHTML={{
-    __html: `
-  (function() {
-    try {
-      var t = localStorage.getItem('theme') || 'vega';
-      var d = localStorage.getItem('dark') === '1';
-      document.documentElement.dataset.theme = t;
-      if (d) document.documentElement.classList.add('dark');
-    } catch (e) {}
-  })();
-`,
-  }}
-/>;
+// Minimum viable theming — just dark mode
+import "@kanvas/phoenix-rebirth/global.css";
+
+<html className={dark ? "dark" : ""}>…</html>
 ```
 
-Each theme bundles the variable font that ships with its official shadcn preset,
-so the import is self-contained — no extra setup needed:
+#### Multi-tenant: per-tenant brand color
 
-| Theme  | Font                         | Notes                                                 |
-| ------ | ---------------------------- | ----------------------------------------------------- |
-| `vega` | system default               | classic shadcn neutral                                |
-| `nova` | Geist Variable               | reduced spacing                                       |
-| `maia` | Figtree Variable             | soft, rounded                                         |
-| `lyra` | JetBrains Mono Variable      | mono throughout (`--font-sans` is overridden to mono) |
-| `mira` | Inter Variable               | dense                                                 |
-| `luma` | Inter Variable               | rounded                                               |
-| `sera` | Noto Sans + Playfair Display | warm stone palette, serif headings                    |
+Pull the tenant's brand from your DB → set `data-theme` and a color modifier
+on the server.
+
+```tsx
+const tenant = await getTenant();   // { brand: "blue", style: "vega" }
+
+<html data-theme={tenant.style}>
+  <body className={`theme-${tenant.brand}`}>
+    <main className="theme-container">…</main>
+  </body>
+</html>
+```
+
+#### User preferences panel (color × radius × font × mode)
+
+```tsx
+import { setThemePref } from "@/app/actions/theme";
+
+const COLORS = ["theme-blue","theme-rose","theme-emerald","theme-amber","theme-purple"];
+const RADII  = ["theme-rounded-none","theme-rounded-small","theme-rounded-medium","theme-rounded-large","theme-rounded-full"];
+const FONTS  = ["","theme-inter","theme-noto-sans","theme-nunito-sans","theme-figtree"];
+const MODES  = ["","theme-mono","theme-scaled"];
+
+<form action={async (fd) => {
+  "use server";
+  await setThemePref("theme-color",  fd.get("color")  as string);
+  await setThemePref("theme-radius", fd.get("radius") as string);
+  await setThemePref("theme-font",   fd.get("font")   as string);
+  await setThemePref("theme-mode",   fd.get("mode")   as string);
+}}>
+  <select name="color">{COLORS.map(c => <option key={c} value={c}>{c}</option>)}</select>
+  <select name="radius">{RADII.map(r => <option key={r} value={r}>{r}</option>)}</select>
+  <select name="font">{FONTS.map(f => <option key={f} value={f}>{f || "default"}</option>)}</select>
+  <select name="mode">{MODES.map(m => <option key={m} value={m}>{m || "default"}</option>)}</select>
+  <button type="submit">Save</button>
+</form>
+```
+
+#### Custom brand color (not in the 17 palettes)
+
+Skip Layer 4 colors entirely and override `--primary` directly in your own
+CSS, scoped to a class you control:
+
+```css
+.theme-brand .theme-container {
+  --primary: oklch(0.55 0.22 263);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.65 0.18 263);
+}
+.theme-brand .theme-container.dark {
+  --primary: oklch(0.7 0.22 263);
+}
+```
+
+```html
+<body class="theme-brand">
+  <main class="theme-container">…</main>
+</body>
+```
+
+### Troubleshooting
+
+**Modifiers don't apply.**
+Ensure an ancestor of your content has both:
+- the modifier class (e.g. `theme-blue`)
+- a descendant with class `theme-container`
+
+```html
+<body class="theme-blue">                   ← modifier here
+  <main class="theme-container">…</main>    ← container here
+</body>
+```
+
+**Tailwind utilities I apply lose to the patches.**
+Patches are in `@layer base`, so utilities should win. If they don't, make
+sure your `app/globals.css` imports Tailwind **before** Phoenix Rebirth's
+patches:
+
+```css
+@import "tailwindcss";                                       /* first  */
+@import "@kanvas/phoenix-rebirth/global.css";                /* then   */
+@import "@kanvas/phoenix-rebirth/themes.css";
+@import "@kanvas/phoenix-rebirth/themes/patches/sera.css";   /* last   */
+```
+
+**Twists look wrong on Safari < 16.2 / Firefox < 113.**
+`color-mix(in oklch)` isn't supported. tsup emits `@supports` fallbacks that
+keep the unmixed (base) color, so the design degrades to the chosen theme
+without the twist. Test on a modern browser.
+
+**Hydration mismatch on `<html>` `data-theme` / class.**
+Add `suppressHydrationWarning` to the `<html>` element. The cookie-based
+pattern in [Next.js integration](#nextjs-integration-ssr--cookies) avoids
+mismatch entirely because the server emits the final value.
+
+**Fonts from `themes/sera.css` / `extras/fonts.css` aren't loading.**
+The bundled `.woff2` files live in `dist/themes/` (or `dist/themes/extras/`).
+Verify your bundler resolves them — for Next.js this works out of the box.
+For custom Webpack / Vite setups, ensure CSS imports preserve relative URLs.
+
+**I have my own font via `next/font/google`. How do I use it instead of the
+themes' bundled fonts?**
+Override `--font-sans` in your own CSS, scoped to `.theme-container`:
+
+```css
+.theme-container {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+```
+
+This wins over `themes/<name>.css` (same `[data-theme]` specificity, declared
+later) and over `extras/fonts.css` (same selector, declared later if your
+import comes after). Don't apply font-modifier classes (`theme-inter`, …)
+when you want your own font to win.
 
 ### 3. Next.js App Router Setup
 
-For Next.js applications, simply import the CSS in your root layout:
+For a minimal single-theme integration:
 
 ```tsx
 // app/layout.tsx
@@ -296,6 +821,9 @@ export default function RootLayout({
   );
 }
 ```
+
+For the full theming system see [Next.js integration](#nextjs-integration-ssr--cookies)
+above.
 
 ## Core Components
 

@@ -1,0 +1,65 @@
+/*
+ * Mira density & shape patches.
+ * Source: shadcn `pnpm dlx shadcn@latest init --preset mira` (Vite template).
+ *
+ * Mira is the most compact style — dense interfaces, text-xs body,
+ * shorter heights than Nova.
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/patches/mira.css";`
+ */
+
+@layer base {
+  /* ── Button ──────────────────────────────────────────── */
+  [data-theme="mira"] [data-slot="button"] {
+    border-radius: var(--radius-md);
+    font-size: 0.75rem; /* text-xs */
+    line-height: 1.625; /* /relaxed */
+  }
+  [data-theme="mira"] [data-slot="button"][data-size="default"] {
+    height: 1.75rem; /* h-7 */
+    padding-inline: 0.5rem; /* px-2 */
+  }
+  [data-theme="mira"] [data-slot="button"][data-size="xs"] {
+    height: 1.25rem; /* h-5 */
+    padding-inline: 0.5rem;
+    font-size: 0.625rem;
+  }
+  [data-theme="mira"] [data-slot="button"][data-size="sm"] {
+    height: 1.5rem; /* h-6 */
+    padding-inline: 0.5rem;
+  }
+  [data-theme="mira"] [data-slot="button"][data-size="lg"] {
+    height: 2rem; /* h-8 */
+    padding-inline: 0.625rem; /* px-2.5 */
+  }
+  [data-theme="mira"] [data-slot="button"][data-size="icon"] {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  [data-theme="mira"] [data-slot="button"][data-size="icon-xs"] {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  [data-theme="mira"] [data-slot="button"][data-size="icon-sm"] {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  [data-theme="mira"] [data-slot="button"][data-size="icon-lg"] {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* ── Card / Input / Badge ────────────────────────────── */
+  [data-theme="mira"] [data-slot="card"] {
+    border-radius: var(--radius-lg);
+  }
+  [data-theme="mira"] [data-slot="input"] {
+    border-radius: var(--radius-md);
+    height: 1.75rem; /* h-7 */
+    font-size: 0.875rem;
+  }
+  [data-theme="mira"] [data-slot="badge"] {
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.625rem;
+  }
+}

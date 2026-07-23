@@ -1,0 +1,65 @@
+/*
+ * Maia density & shape patches.
+ * Source: shadcn `pnpm dlx shadcn@latest init --preset maia` (Vite template).
+ *
+ * Targets data-* attributes that phoenix-rebirth's components already emit
+ * (data-slot, data-variant, data-size). Rules live in @layer base, so any
+ * Tailwind utility a consumer applies (e.g. `<Button className="rounded-3xl">`)
+ * still wins.
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/patches/maia.css";`
+ */
+
+@layer base {
+  /* ── Button ──────────────────────────────────────────── */
+  [data-theme="maia"] [data-slot="button"] {
+    border-radius: var(--radius-4xl);
+  }
+  [data-theme="maia"] [data-slot="button"][data-size="default"] {
+    height: 2.25rem; /* h-9 */
+    padding-inline: 0.75rem; /* px-3 */
+  }
+  [data-theme="maia"] [data-slot="button"][data-size="xs"] {
+    height: 1.5rem; /* h-6 */
+    padding-inline: 0.625rem; /* px-2.5 */
+  }
+  [data-theme="maia"] [data-slot="button"][data-size="sm"] {
+    height: 2rem; /* h-8 */
+    padding-inline: 0.75rem; /* px-3 */
+  }
+  [data-theme="maia"] [data-slot="button"][data-size="lg"] {
+    height: 2.5rem; /* h-10 */
+    padding-inline: 1rem; /* px-4 */
+  }
+  [data-theme="maia"] [data-slot="button"][data-size="icon"] {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  [data-theme="maia"] [data-slot="button"][data-size="icon-xs"] {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  [data-theme="maia"] [data-slot="button"][data-size="icon-sm"] {
+    width: 2rem;
+    height: 2rem;
+  }
+  [data-theme="maia"] [data-slot="button"][data-size="icon-lg"] {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  /* ── Card ────────────────────────────────────────────── */
+  [data-theme="maia"] [data-slot="card"] {
+    border-radius: var(--radius-2xl);
+  }
+
+  /* ── Input ───────────────────────────────────────────── */
+  [data-theme="maia"] [data-slot="input"] {
+    border-radius: var(--radius-2xl);
+  }
+
+  /* ── Badge ───────────────────────────────────────────── */
+  [data-theme="maia"] [data-slot="badge"] {
+    border-radius: var(--radius-4xl);
+  }
+}

@@ -1,0 +1,32 @@
+/*
+ * Radius modifiers — composable on top of any [data-theme] base style.
+ * Override the base `--radius` token, which propagates to all
+ * `--radius-{sm,md,lg,xl}` derivations in `global.css`.
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/extras/radius.css";`
+ */
+
+.theme-rounded-none .theme-container,
+.theme-rounded-none [data-radix-popper-content-wrapper] {
+  --radius: 0;
+}
+
+.theme-rounded-small .theme-container,
+.theme-rounded-small [data-radix-popper-content-wrapper] {
+  --radius: 0.4rem;
+}
+
+.theme-rounded-medium .theme-container,
+.theme-rounded-medium [data-radix-popper-content-wrapper] {
+  --radius: 0.65rem;
+}
+
+.theme-rounded-large .theme-container,
+.theme-rounded-large [data-radix-popper-content-wrapper] {
+  --radius: 1rem;
+}
+
+.theme-rounded-full .theme-container,
+.theme-rounded-full [data-radix-popper-content-wrapper] {
+  --radius: 1.2rem;
+}

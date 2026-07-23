@@ -1,0 +1,77 @@
+/*
+ * Twist modifiers — orthogonal lightness & contrast adjustments that compose
+ * on top of any color theme. Use `color-mix(in oklch, ...)` to operate on
+ * whatever CSS vars are active, so the same modifier works for blue, rose,
+ * lyra-mono, etc.
+ *
+ * Two axes, two directions each (4 modifiers total):
+ *
+ *   intensity  →  `.theme-soft`           softer/lighter primary
+ *                 `.theme-bold`           darker/more saturated primary
+ *
+ *   contrast   →  `.theme-contrast-low`   muted text/borders, calm
+ *                 `.theme-contrast-high`  sharper text/borders, punchy
+ *
+ * Stack freely: `<body class="theme-rose theme-soft theme-contrast-high">`.
+ *
+ * Browser support: color-mix(in oklch) → Chrome 111+, Safari 16.2+, Firefox 113+.
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/extras/twists.css";`
+ */
+
+/* ── Intensity: soft / bold ──────────────────────────── */
+
+.theme-soft .theme-container,
+.theme-soft [data-radix-popper-content-wrapper],
+.theme-soft [data-radix-portal] {
+  --primary: color-mix(in oklch, var(--primary), white 25%);
+  --sidebar-primary: color-mix(in oklch, var(--sidebar-primary), white 25%);
+  --ring: color-mix(in oklch, var(--ring), white 20%);
+
+  @variant dark {
+    --primary: color-mix(in oklch, var(--primary), white 8%);
+    --sidebar-primary: color-mix(in oklch, var(--sidebar-primary), white 8%);
+  }
+}
+
+.theme-bold .theme-container,
+.theme-bold [data-radix-popper-content-wrapper],
+.theme-bold [data-radix-portal] {
+  --primary: color-mix(in oklch, var(--primary), black 14%);
+  --sidebar-primary: color-mix(in oklch, var(--sidebar-primary), black 14%);
+  --ring: color-mix(in oklch, var(--ring), black 10%);
+
+  @variant dark {
+    --primary: color-mix(in oklch, var(--primary), black 6%);
+    --sidebar-primary: color-mix(in oklch, var(--sidebar-primary), black 6%);
+  }
+}
+
+/* ── Contrast: low / high ────────────────────────────── */
+
+.theme-contrast-low .theme-container,
+.theme-contrast-low [data-radix-popper-content-wrapper],
+.theme-contrast-low [data-radix-portal] {
+  --foreground: color-mix(in oklch, var(--foreground), var(--background) 22%);
+  --muted-foreground: color-mix(in oklch, var(--muted-foreground), var(--background) 28%);
+  --border: color-mix(in oklch, var(--border), var(--background) 45%);
+  --input: color-mix(in oklch, var(--input), var(--background) 45%);
+  --sidebar-foreground: color-mix(in oklch, var(--sidebar-foreground), var(--sidebar) 22%);
+  --sidebar-border: color-mix(in oklch, var(--sidebar-border), var(--sidebar) 45%);
+}
+
+.theme-contrast-high .theme-container,
+.theme-contrast-high [data-radix-popper-content-wrapper],
+.theme-contrast-high [data-radix-portal] {
+  --foreground: color-mix(in oklch, var(--foreground), black 10%);
+  --muted-foreground: color-mix(in oklch, var(--muted-foreground), var(--foreground) 35%);
+  --border: color-mix(in oklch, var(--border), var(--foreground) 25%);
+  --input: color-mix(in oklch, var(--input), var(--foreground) 25%);
+  --sidebar-foreground: color-mix(in oklch, var(--sidebar-foreground), black 10%);
+  --sidebar-border: color-mix(in oklch, var(--sidebar-border), var(--sidebar-foreground) 25%);
+
+  @variant dark {
+    --foreground: color-mix(in oklch, var(--foreground), white 6%);
+    --muted-foreground: color-mix(in oklch, var(--muted-foreground), var(--foreground) 30%);
+  }
+}

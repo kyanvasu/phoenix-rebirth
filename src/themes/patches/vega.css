@@ -1,0 +1,71 @@
+/*
+ * Vega density & shape patches.
+ * Source: shadcn `pnpm dlx shadcn@latest init --preset vega` (Vite template).
+ *
+ * Vega is the classic shadcn/ui look. Phoenix Rebirth's existing components
+ * follow an older shadcn baseline (e.g. Button uses `px-4` for default).
+ * This patch realigns paddings, sizes and badge radius to the current
+ * official Vega preset.
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/patches/vega.css";`
+ */
+
+@layer base {
+  /* ── Button (rounded-md, classic) ────────────────────── */
+  [data-theme="vega"] [data-slot="button"] {
+    border-radius: var(--radius-md);
+  }
+  [data-theme="vega"] [data-slot="button"][data-size="default"] {
+    height: 2.25rem; /* h-9 */
+    padding-inline: 0.625rem; /* px-2.5  (was px-4 in legacy) */
+  }
+  [data-theme="vega"] [data-slot="button"][data-size="xs"] {
+    height: 1.5rem; /* h-6 */
+    padding-inline: 0.5rem; /* px-2 */
+    font-size: 0.75rem;
+  }
+  [data-theme="vega"] [data-slot="button"][data-size="sm"] {
+    height: 2rem; /* h-8 */
+    padding-inline: 0.625rem;
+  }
+  [data-theme="vega"] [data-slot="button"][data-size="lg"] {
+    height: 2.5rem; /* h-10 */
+    padding-inline: 0.625rem;
+  }
+  [data-theme="vega"] [data-slot="button"][data-size="icon"] {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  [data-theme="vega"] [data-slot="button"][data-size="icon-xs"] {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  [data-theme="vega"] [data-slot="button"][data-size="icon-sm"] {
+    width: 2rem;
+    height: 2rem;
+  }
+  [data-theme="vega"] [data-slot="button"][data-size="icon-lg"] {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  /* ── Card / Input / Badge ────────────────────────────── */
+  [data-theme="vega"] [data-slot="card"] {
+    border-radius: var(--radius-xl);
+    gap: 1.5rem; /* gap-6 */
+    padding-block: 1.5rem; /* py-6 */
+  }
+  [data-theme="vega"] [data-slot="card-header"],
+  [data-theme="vega"] [data-slot="card-content"],
+  [data-theme="vega"] [data-slot="card-footer"] {
+    padding-inline: 1.5rem; /* px-6 */
+  }
+  [data-theme="vega"] [data-slot="input"] {
+    border-radius: var(--radius-md);
+    height: 2.25rem; /* h-9 */
+    padding-inline: 0.625rem;
+  }
+  [data-theme="vega"] [data-slot="badge"] {
+    border-radius: var(--radius-4xl);
+  }
+}

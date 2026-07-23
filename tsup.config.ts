@@ -24,6 +24,31 @@ export default defineConfig([
     ],
     outDir: "dist/themes",
   },
+  // Theme extras: composable color/mode/radius/font modifiers (opt-in)
+  {
+    entry: [
+      "src/themes/extras/index.css",
+      "src/themes/extras/colors.css",
+      "src/themes/extras/modes.css",
+      "src/themes/extras/radius.css",
+      "src/themes/extras/fonts.css",
+      "src/themes/extras/twists.css",
+    ],
+    outDir: "dist/themes/extras",
+  },
+  // Theme density/shape patches (opt-in per style)
+  {
+    entry: [
+      "src/themes/patches/vega.css",
+      "src/themes/patches/nova.css",
+      "src/themes/patches/maia.css",
+      "src/themes/patches/lyra.css",
+      "src/themes/patches/mira.css",
+      "src/themes/patches/luma.css",
+      "src/themes/patches/sera.css",
+    ],
+    outDir: "dist/themes/patches",
+  },
   // Theme types (data-theme JSX augmentation + PhoenixTheme constant)
   {
     dts: true,

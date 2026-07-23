@@ -1,0 +1,417 @@
+/*
+ * Color modifiers — composable on top of any [data-theme] base style.
+ * Apply by adding a `theme-<color>` class to a parent that contains a
+ * `.theme-container` (or Radix popper/portal). Stacks with mode/radius/font
+ * modifiers.
+ *
+ * Tailwind palette: default, blue, green, amber, rose, purple, orange, teal,
+ * red, yellow, violet, sky, indigo, pink, fuchsia, emerald, cyan.
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/extras/colors.css";`
+ */
+
+.theme-default .theme-container,
+.theme-default [data-radix-popper-content-wrapper],
+.theme-default [data-radix-portal] {
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+}
+
+.theme-blue .theme-container,
+.theme-blue [data-radix-popper-content-wrapper],
+.theme-blue [data-radix-portal] {
+  --primary: var(--color-blue-700);
+  --primary-foreground: var(--color-blue-50);
+  --sidebar-primary: var(--color-blue-600);
+  --sidebar-primary-foreground: var(--color-blue-50);
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+
+  @variant dark {
+    --primary: var(--color-blue-700);
+    --primary-foreground: var(--color-blue-50);
+    --sidebar-primary: var(--color-blue-500);
+    --sidebar-primary-foreground: var(--color-blue-50);
+  }
+}
+
+.theme-green .theme-container,
+.theme-green [data-radix-popper-content-wrapper],
+.theme-green [data-radix-portal] {
+  --primary: var(--color-lime-600);
+  --primary-foreground: var(--color-lime-50);
+  --ring: var(--color-lime-400);
+  --chart-1: var(--color-green-300);
+  --chart-2: var(--color-green-500);
+  --chart-3: var(--color-green-600);
+  --chart-4: var(--color-green-700);
+  --chart-5: var(--color-green-800);
+  --sidebar-primary: var(--color-lime-600);
+  --sidebar-primary-foreground: var(--color-lime-50);
+  --sidebar-ring: var(--color-lime-400);
+
+  @variant dark {
+    --primary: var(--color-lime-600);
+    --primary-foreground: var(--color-lime-50);
+    --ring: var(--color-lime-900);
+    --sidebar-primary: var(--color-lime-500);
+    --sidebar-primary-foreground: var(--color-lime-50);
+    --sidebar-ring: var(--color-lime-900);
+  }
+}
+
+.theme-amber .theme-container,
+.theme-amber [data-radix-popper-content-wrapper],
+.theme-amber [data-radix-portal] {
+  --primary: var(--color-amber-600);
+  --primary-foreground: var(--color-amber-50);
+  --ring: var(--color-amber-400);
+  --chart-1: var(--color-amber-300);
+  --chart-2: var(--color-amber-500);
+  --chart-3: var(--color-amber-600);
+  --chart-4: var(--color-amber-700);
+  --chart-5: var(--color-amber-800);
+  --sidebar-primary: var(--color-amber-600);
+  --sidebar-primary-foreground: var(--color-amber-50);
+  --sidebar-ring: var(--color-amber-400);
+
+  @variant dark {
+    --primary: var(--color-amber-500);
+    --primary-foreground: var(--color-amber-50);
+    --ring: var(--color-amber-900);
+    --sidebar-primary: var(--color-amber-500);
+    --sidebar-primary-foreground: var(--color-amber-50);
+    --sidebar-ring: var(--color-amber-900);
+  }
+}
+
+.theme-rose .theme-container,
+.theme-rose [data-radix-popper-content-wrapper],
+.theme-rose [data-radix-portal] {
+  --primary: var(--color-rose-600);
+  --primary-foreground: var(--color-rose-50);
+  --ring: var(--color-rose-400);
+  --chart-1: var(--color-rose-300);
+  --chart-2: var(--color-rose-500);
+  --chart-3: var(--color-rose-600);
+  --chart-4: var(--color-rose-700);
+  --chart-5: var(--color-rose-800);
+  --sidebar-primary: var(--color-rose-600);
+  --sidebar-primary-foreground: var(--color-rose-50);
+  --sidebar-ring: var(--color-rose-400);
+
+  @variant dark {
+    --primary: var(--color-rose-500);
+    --primary-foreground: var(--color-rose-50);
+    --ring: var(--color-rose-900);
+    --sidebar-primary: var(--color-rose-500);
+    --sidebar-primary-foreground: var(--color-rose-50);
+    --sidebar-ring: var(--color-rose-900);
+  }
+}
+
+.theme-purple .theme-container,
+.theme-purple [data-radix-popper-content-wrapper],
+.theme-purple [data-radix-portal] {
+  --primary: var(--color-purple-600);
+  --primary-foreground: var(--color-purple-50);
+  --ring: var(--color-purple-400);
+  --chart-1: var(--color-purple-300);
+  --chart-2: var(--color-purple-500);
+  --chart-3: var(--color-purple-600);
+  --chart-4: var(--color-purple-700);
+  --chart-5: var(--color-purple-800);
+  --sidebar-primary: var(--color-purple-600);
+  --sidebar-primary-foreground: var(--color-purple-50);
+  --sidebar-ring: var(--color-purple-400);
+
+  @variant dark {
+    --primary: var(--color-purple-500);
+    --primary-foreground: var(--color-purple-50);
+    --ring: var(--color-purple-900);
+    --sidebar-primary: var(--color-purple-500);
+    --sidebar-primary-foreground: var(--color-purple-50);
+    --sidebar-ring: var(--color-purple-900);
+  }
+}
+
+.theme-orange .theme-container,
+.theme-orange [data-radix-popper-content-wrapper],
+.theme-orange [data-radix-portal] {
+  --primary: var(--color-orange-600);
+  --primary-foreground: var(--color-orange-50);
+  --ring: var(--color-orange-400);
+  --chart-1: var(--color-orange-300);
+  --chart-2: var(--color-orange-500);
+  --chart-3: var(--color-orange-600);
+  --chart-4: var(--color-orange-700);
+  --chart-5: var(--color-orange-800);
+  --sidebar-primary: var(--color-orange-600);
+  --sidebar-primary-foreground: var(--color-orange-50);
+  --sidebar-ring: var(--color-orange-400);
+
+  @variant dark {
+    --primary: var(--color-orange-500);
+    --primary-foreground: var(--color-orange-50);
+    --ring: var(--color-orange-900);
+    --sidebar-primary: var(--color-orange-500);
+    --sidebar-primary-foreground: var(--color-orange-50);
+    --sidebar-ring: var(--color-orange-900);
+  }
+}
+
+.theme-teal .theme-container,
+.theme-teal [data-radix-popper-content-wrapper],
+.theme-teal [data-radix-portal] {
+  --primary: var(--color-teal-600);
+  --primary-foreground: var(--color-teal-50);
+  --chart-1: var(--color-teal-300);
+  --chart-2: var(--color-teal-500);
+  --chart-3: var(--color-teal-600);
+  --chart-4: var(--color-teal-700);
+  --chart-5: var(--color-teal-800);
+  --sidebar-primary: var(--color-teal-600);
+  --sidebar-primary-foreground: var(--color-teal-50);
+  --sidebar-ring: var(--color-teal-400);
+
+  @variant dark {
+    --primary: var(--color-teal-500);
+    --primary-foreground: var(--color-teal-50);
+    --sidebar-primary: var(--color-teal-500);
+    --sidebar-primary-foreground: var(--color-teal-50);
+    --sidebar-ring: var(--color-teal-900);
+  }
+}
+
+.theme-red .theme-container,
+.theme-red [data-radix-popper-content-wrapper],
+.theme-red [data-radix-portal] {
+  --primary: var(--color-red-600);
+  --primary-foreground: var(--color-red-50);
+  --ring: var(--color-red-400);
+  --chart-1: var(--color-red-300);
+  --chart-2: var(--color-red-500);
+  --chart-3: var(--color-red-600);
+  --chart-4: var(--color-red-700);
+  --chart-5: var(--color-red-800);
+  --sidebar-primary: var(--color-red-600);
+  --sidebar-primary-foreground: var(--color-red-50);
+  --sidebar-ring: var(--color-red-400);
+
+  @variant dark {
+    --primary: var(--color-red-500);
+    --primary-foreground: var(--color-red-50);
+    --ring: var(--color-red-900);
+    --sidebar-primary: var(--color-red-500);
+    --sidebar-primary-foreground: var(--color-red-50);
+    --sidebar-ring: var(--color-red-900);
+  }
+}
+
+.theme-yellow .theme-container,
+.theme-yellow [data-radix-popper-content-wrapper],
+.theme-yellow [data-radix-portal] {
+  --primary: var(--color-yellow-400);
+  --primary-foreground: var(--color-yellow-900);
+  --ring: var(--color-yellow-400);
+  --chart-1: var(--color-yellow-300);
+  --chart-2: var(--color-yellow-500);
+  --chart-3: var(--color-yellow-600);
+  --chart-4: var(--color-yellow-700);
+  --chart-5: var(--color-yellow-800);
+  --sidebar-primary: var(--color-yellow-600);
+  --sidebar-primary-foreground: var(--color-yellow-50);
+  --sidebar-ring: var(--color-yellow-400);
+
+  @variant dark {
+    --primary: var(--color-yellow-500);
+    --primary-foreground: var(--color-yellow-900);
+    --ring: var(--color-yellow-900);
+    --sidebar-primary: var(--color-yellow-500);
+    --sidebar-primary-foreground: var(--color-yellow-50);
+    --sidebar-ring: var(--color-yellow-900);
+  }
+}
+
+.theme-violet .theme-container,
+.theme-violet [data-radix-popper-content-wrapper],
+.theme-violet [data-radix-portal] {
+  --primary: var(--color-violet-600);
+  --primary-foreground: var(--color-violet-50);
+  --ring: var(--color-violet-400);
+  --chart-1: var(--color-violet-300);
+  --chart-2: var(--color-violet-500);
+  --chart-3: var(--color-violet-600);
+  --chart-4: var(--color-violet-700);
+  --chart-5: var(--color-violet-800);
+  --sidebar-primary: var(--color-violet-600);
+  --sidebar-primary-foreground: var(--color-violet-50);
+  --sidebar-ring: var(--color-violet-400);
+
+  @variant dark {
+    --primary: var(--color-violet-500);
+    --primary-foreground: var(--color-violet-50);
+    --ring: var(--color-violet-900);
+    --sidebar-primary: var(--color-violet-500);
+    --sidebar-primary-foreground: var(--color-violet-50);
+    --sidebar-ring: var(--color-violet-900);
+  }
+}
+
+/* ── Expansion: 6 additional Tailwind palettes ───────────── */
+
+.theme-sky .theme-container,
+.theme-sky [data-radix-popper-content-wrapper],
+.theme-sky [data-radix-portal] {
+  --primary: var(--color-sky-600);
+  --primary-foreground: var(--color-sky-50);
+  --ring: var(--color-sky-400);
+  --chart-1: var(--color-sky-300);
+  --chart-2: var(--color-sky-500);
+  --chart-3: var(--color-sky-600);
+  --chart-4: var(--color-sky-700);
+  --chart-5: var(--color-sky-800);
+  --sidebar-primary: var(--color-sky-600);
+  --sidebar-primary-foreground: var(--color-sky-50);
+  --sidebar-ring: var(--color-sky-400);
+
+  @variant dark {
+    --primary: var(--color-sky-500);
+    --primary-foreground: var(--color-sky-50);
+    --ring: var(--color-sky-900);
+    --sidebar-primary: var(--color-sky-500);
+    --sidebar-primary-foreground: var(--color-sky-50);
+    --sidebar-ring: var(--color-sky-900);
+  }
+}
+
+.theme-indigo .theme-container,
+.theme-indigo [data-radix-popper-content-wrapper],
+.theme-indigo [data-radix-portal] {
+  --primary: var(--color-indigo-600);
+  --primary-foreground: var(--color-indigo-50);
+  --ring: var(--color-indigo-400);
+  --chart-1: var(--color-indigo-300);
+  --chart-2: var(--color-indigo-500);
+  --chart-3: var(--color-indigo-600);
+  --chart-4: var(--color-indigo-700);
+  --chart-5: var(--color-indigo-800);
+  --sidebar-primary: var(--color-indigo-600);
+  --sidebar-primary-foreground: var(--color-indigo-50);
+  --sidebar-ring: var(--color-indigo-400);
+
+  @variant dark {
+    --primary: var(--color-indigo-500);
+    --primary-foreground: var(--color-indigo-50);
+    --ring: var(--color-indigo-900);
+    --sidebar-primary: var(--color-indigo-500);
+    --sidebar-primary-foreground: var(--color-indigo-50);
+    --sidebar-ring: var(--color-indigo-900);
+  }
+}
+
+.theme-pink .theme-container,
+.theme-pink [data-radix-popper-content-wrapper],
+.theme-pink [data-radix-portal] {
+  --primary: var(--color-pink-600);
+  --primary-foreground: var(--color-pink-50);
+  --ring: var(--color-pink-400);
+  --chart-1: var(--color-pink-300);
+  --chart-2: var(--color-pink-500);
+  --chart-3: var(--color-pink-600);
+  --chart-4: var(--color-pink-700);
+  --chart-5: var(--color-pink-800);
+  --sidebar-primary: var(--color-pink-600);
+  --sidebar-primary-foreground: var(--color-pink-50);
+  --sidebar-ring: var(--color-pink-400);
+
+  @variant dark {
+    --primary: var(--color-pink-500);
+    --primary-foreground: var(--color-pink-50);
+    --ring: var(--color-pink-900);
+    --sidebar-primary: var(--color-pink-500);
+    --sidebar-primary-foreground: var(--color-pink-50);
+    --sidebar-ring: var(--color-pink-900);
+  }
+}
+
+.theme-fuchsia .theme-container,
+.theme-fuchsia [data-radix-popper-content-wrapper],
+.theme-fuchsia [data-radix-portal] {
+  --primary: var(--color-fuchsia-600);
+  --primary-foreground: var(--color-fuchsia-50);
+  --ring: var(--color-fuchsia-400);
+  --chart-1: var(--color-fuchsia-300);
+  --chart-2: var(--color-fuchsia-500);
+  --chart-3: var(--color-fuchsia-600);
+  --chart-4: var(--color-fuchsia-700);
+  --chart-5: var(--color-fuchsia-800);
+  --sidebar-primary: var(--color-fuchsia-600);
+  --sidebar-primary-foreground: var(--color-fuchsia-50);
+  --sidebar-ring: var(--color-fuchsia-400);
+
+  @variant dark {
+    --primary: var(--color-fuchsia-500);
+    --primary-foreground: var(--color-fuchsia-50);
+    --ring: var(--color-fuchsia-900);
+    --sidebar-primary: var(--color-fuchsia-500);
+    --sidebar-primary-foreground: var(--color-fuchsia-50);
+    --sidebar-ring: var(--color-fuchsia-900);
+  }
+}
+
+.theme-emerald .theme-container,
+.theme-emerald [data-radix-popper-content-wrapper],
+.theme-emerald [data-radix-portal] {
+  --primary: var(--color-emerald-600);
+  --primary-foreground: var(--color-emerald-50);
+  --ring: var(--color-emerald-400);
+  --chart-1: var(--color-emerald-300);
+  --chart-2: var(--color-emerald-500);
+  --chart-3: var(--color-emerald-600);
+  --chart-4: var(--color-emerald-700);
+  --chart-5: var(--color-emerald-800);
+  --sidebar-primary: var(--color-emerald-600);
+  --sidebar-primary-foreground: var(--color-emerald-50);
+  --sidebar-ring: var(--color-emerald-400);
+
+  @variant dark {
+    --primary: var(--color-emerald-500);
+    --primary-foreground: var(--color-emerald-50);
+    --ring: var(--color-emerald-900);
+    --sidebar-primary: var(--color-emerald-500);
+    --sidebar-primary-foreground: var(--color-emerald-50);
+    --sidebar-ring: var(--color-emerald-900);
+  }
+}
+
+.theme-cyan .theme-container,
+.theme-cyan [data-radix-popper-content-wrapper],
+.theme-cyan [data-radix-portal] {
+  --primary: var(--color-cyan-600);
+  --primary-foreground: var(--color-cyan-50);
+  --ring: var(--color-cyan-400);
+  --chart-1: var(--color-cyan-300);
+  --chart-2: var(--color-cyan-500);
+  --chart-3: var(--color-cyan-600);
+  --chart-4: var(--color-cyan-700);
+  --chart-5: var(--color-cyan-800);
+  --sidebar-primary: var(--color-cyan-600);
+  --sidebar-primary-foreground: var(--color-cyan-50);
+  --sidebar-ring: var(--color-cyan-400);
+
+  @variant dark {
+    --primary: var(--color-cyan-500);
+    --primary-foreground: var(--color-cyan-50);
+    --ring: var(--color-cyan-900);
+    --sidebar-primary: var(--color-cyan-500);
+    --sidebar-primary-foreground: var(--color-cyan-50);
+    --sidebar-ring: var(--color-cyan-900);
+  }
+}

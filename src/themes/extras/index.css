@@ -1,0 +1,15 @@
+/*
+ * Extras barrel — imports every composable modifier:
+ *   - colors   → `.theme-{blue,green,amber,...}`
+ *   - modes    → `.theme-mono`, `.theme-scaled`
+ *   - radius   → `.theme-rounded-{none,small,medium,large,full}`
+ *   - fonts    → `.theme-{inter,noto-sans,nunito-sans,figtree}`
+ *
+ * For granular control, import only the categories you need instead of
+ * this barrel.
+ */
+@import "./fonts.css";
+@import "./colors.css";
+@import "./modes.css";
+@import "./radius.css";
+@import "./twists.css";

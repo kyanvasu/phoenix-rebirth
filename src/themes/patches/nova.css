@@ -1,0 +1,60 @@
+/*
+ * Nova density & shape patches.
+ * Source: shadcn `pnpm dlx shadcn@latest init --preset nova` (Vite template).
+ *
+ * Nova is compact-tight (reduced spacing) with rounded-lg buttons.
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/patches/nova.css";`
+ */
+
+@layer base {
+  /* ── Button ──────────────────────────────────────────── */
+  [data-theme="nova"] [data-slot="button"] {
+    border-radius: var(--radius-lg);
+  }
+  [data-theme="nova"] [data-slot="button"][data-size="default"] {
+    height: 2rem; /* h-8 */
+    padding-inline: 0.625rem; /* px-2.5 */
+  }
+  [data-theme="nova"] [data-slot="button"][data-size="xs"] {
+    height: 1.5rem; /* h-6 */
+    padding-inline: 0.5rem; /* px-2 */
+  }
+  [data-theme="nova"] [data-slot="button"][data-size="sm"] {
+    height: 1.75rem; /* h-7 */
+    padding-inline: 0.625rem;
+    font-size: 0.8rem;
+  }
+  [data-theme="nova"] [data-slot="button"][data-size="lg"] {
+    height: 2.25rem; /* h-9 */
+    padding-inline: 0.625rem;
+  }
+  [data-theme="nova"] [data-slot="button"][data-size="icon"] {
+    width: 2rem;
+    height: 2rem;
+  }
+  [data-theme="nova"] [data-slot="button"][data-size="icon-xs"] {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  [data-theme="nova"] [data-slot="button"][data-size="icon-sm"] {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  [data-theme="nova"] [data-slot="button"][data-size="icon-lg"] {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  /* ── Card / Input / Badge ────────────────────────────── */
+  [data-theme="nova"] [data-slot="card"] {
+    border-radius: var(--radius-xl);
+  }
+  [data-theme="nova"] [data-slot="input"] {
+    border-radius: var(--radius-lg);
+    height: 2rem; /* h-8 */
+  }
+  [data-theme="nova"] [data-slot="badge"] {
+    border-radius: var(--radius-4xl);
+  }
+}

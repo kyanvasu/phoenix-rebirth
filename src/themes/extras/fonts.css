@@ -1,0 +1,38 @@
+/*
+ * Font modifiers — composable on top of any [data-theme] base style.
+ * Each modifier bundles its variable font via @fontsource so the import is
+ * self-contained.
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/extras/fonts.css";`
+ */
+
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/noto-sans";
+@import "@fontsource-variable/nunito-sans";
+@import "@fontsource-variable/figtree";
+
+.theme-inter .theme-container,
+.theme-inter [data-radix-popper-content-wrapper],
+.theme-inter [data-radix-portal] {
+  --font-inter: "Inter Variable", sans-serif;
+  --font-sans: var(--font-inter);
+}
+
+.theme-noto-sans .theme-container,
+.theme-noto-sans [data-radix-popper-content-wrapper] {
+  --font-noto-sans: "Noto Sans Variable", sans-serif;
+  --font-sans: var(--font-noto-sans);
+}
+
+.theme-nunito-sans .theme-container,
+.theme-nunito-sans [data-radix-popper-content-wrapper] {
+  --font-nunito-sans: "Nunito Sans Variable", sans-serif;
+  --font-sans: var(--font-nunito-sans);
+}
+
+.theme-figtree .theme-container,
+.theme-figtree [data-radix-popper-content-wrapper],
+.theme-figtree [data-radix-portal] {
+  --font-figtree: "Figtree Variable", sans-serif;
+  --font-sans: var(--font-figtree);
+}

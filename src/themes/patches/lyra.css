@@ -1,0 +1,57 @@
+/*
+ * Lyra density & shape patches.
+ * Source: shadcn `pnpm dlx shadcn@latest init --preset lyra` (Vite template).
+ *
+ * Lyra is boxy + compact. Pairs with mono fonts (already wired in themes/lyra.css).
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/patches/lyra.css";`
+ */
+
+@layer base {
+  /* ── Button ──────────────────────────────────────────── */
+  [data-theme="lyra"] [data-slot="button"] {
+    border-radius: 0; /* rounded-none */
+    font-size: 0.75rem; /* text-xs */
+  }
+  [data-theme="lyra"] [data-slot="button"][data-size="default"] {
+    height: 2rem; /* h-8 */
+    padding-inline: 0.625rem; /* px-2.5 */
+  }
+  [data-theme="lyra"] [data-slot="button"][data-size="xs"] {
+    height: 1.5rem;
+    padding-inline: 0.5rem;
+  }
+  [data-theme="lyra"] [data-slot="button"][data-size="sm"] {
+    height: 1.75rem; /* h-7 */
+    padding-inline: 0.625rem;
+  }
+  [data-theme="lyra"] [data-slot="button"][data-size="lg"] {
+    height: 2.25rem; /* h-9 */
+    padding-inline: 0.625rem;
+  }
+  [data-theme="lyra"] [data-slot="button"][data-size="icon"] {
+    width: 2rem;
+    height: 2rem;
+  }
+  [data-theme="lyra"] [data-slot="button"][data-size="icon-xs"] {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  [data-theme="lyra"] [data-slot="button"][data-size="icon-sm"] {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  [data-theme="lyra"] [data-slot="button"][data-size="icon-lg"] {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  /* ── Card / Input / Badge: boxy ─────────────────────── */
+  [data-theme="lyra"] [data-slot="card"],
+  [data-theme="lyra"] [data-slot="input"],
+  [data-theme="lyra"] [data-slot="badge"],
+  [data-theme="lyra"] [data-slot="dialog-content"],
+  [data-theme="lyra"] [data-slot="popover-content"] {
+    border-radius: 0;
+  }
+}

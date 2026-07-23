@@ -1,0 +1,78 @@
+/*
+ * Sera density & shape patches.
+ * Source: shadcn `pnpm dlx shadcn@latest init --preset sera` (Vite template).
+ *
+ * Sera is editorial — sharp corners, uppercase tracking buttons, generous
+ * vertical rhythm in cards. Pairs with Noto Sans + Playfair Display
+ * (already wired in themes/sera.css).
+ *
+ * Opt-in: `@import "@kanvas/phoenix-rebirth/themes/patches/sera.css";`
+ */
+
+@layer base {
+  /* ── Button (sharp + uppercase) ──────────────────────── */
+  [data-theme="sera"] [data-slot="button"] {
+    border-radius: 0;
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 600; /* font-semibold */
+    letter-spacing: 0.1em; /* tracking-widest */
+    text-transform: uppercase;
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="default"] {
+    height: 2.5rem; /* h-10 */
+    padding-inline: 1.5rem; /* px-6 */
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="xs"] {
+    height: 1.75rem; /* h-7 */
+    padding-inline: 0.75rem; /* px-3 */
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="sm"] {
+    height: 2.25rem; /* h-9 */
+    padding-inline: 1rem; /* px-4 */
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="lg"] {
+    height: 2.75rem; /* h-11 */
+    padding-inline: 2rem; /* px-8 */
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="icon"] {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="icon-xs"] {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="icon-sm"] {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  [data-theme="sera"] [data-slot="button"][data-size="icon-lg"] {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  /* ── Card / Input / Badge: editorial ─────────────────── */
+  [data-theme="sera"] [data-slot="card"] {
+    border-radius: 0;
+    gap: 2rem; /* gap-8 */
+    padding-block: 2rem; /* py-8 */
+  }
+  [data-theme="sera"] [data-slot="card-header"],
+  [data-theme="sera"] [data-slot="card-content"],
+  [data-theme="sera"] [data-slot="card-footer"] {
+    padding-inline: 2rem; /* px-8 */
+    border-radius: 0;
+  }
+  [data-theme="sera"] [data-slot="input"],
+  [data-theme="sera"] [data-slot="dialog-content"],
+  [data-theme="sera"] [data-slot="popover-content"] {
+    border-radius: 0;
+  }
+  [data-theme="sera"] [data-slot="badge"] {
+    border-radius: 0;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
