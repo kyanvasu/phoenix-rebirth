@@ -2915,10 +2915,12 @@ const { table } = useTable({ data, columns });
 API [see implementation](/src/components/blocks/table/index.tsx):
 
 - columnsBuilder<T>(columns: T[], deps?: DependencyList): memoizes columns
-- useTable<T>(options: TableOptions<T>): returns `{ table }` with empty-data
-  fixes
+- useTable<T>(options: LegacyTableOptions<T>): returns `{ table }` with
+  empty-data fixes. Built on TanStack Table v9's `useLegacyTable`, so it takes
+  the v8-style options; import `getSortedRowModel`, `getPaginationRowModel`,
+  `LegacyColumnDef`, etc. from `@tanstack/react-table/legacy`
 - Table props:
-  - table: TanStack `Table<T>`
+  - table: TanStack `LegacyTable<T>` (what `useTable` returns)
   - isFetching: boolean
   - empty?: JSX.Element
   - oneElement?: boolean

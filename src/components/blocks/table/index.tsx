@@ -9,12 +9,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { flexRender, RowData } from "@tanstack/react-table";
+// v9 dropped useReactTable; the legacy entry keeps the v8-style options
+// (getSortedRowModel, getPaginationRowModel, ...) this block has always taken.
 import {
-  flexRender,
-  Table as ITable,
-  TableOptions,
-  useReactTable,
-} from "@tanstack/react-table";
+  LegacyTable as ITable,
+  LegacyTableOptions as TableOptions,
+  useLegacyTable,
+} from "@tanstack/react-table/legacy";
 
 import { For, Show, Slot, WithSlots, WithSlotsProps } from "@/lib/server";
 import { DependencyList, JSX, memo, useMemo } from "react";
@@ -41,11 +43,11 @@ export function columnsBuilder<T extends any = any>(
 
 const empty: any[] = [];
 
-export function useTable<T extends any = any>(options: TableOptions<T>) {
+export function useTable<T extends RowData = any>(options: TableOptions<T>) {
   const { data, ...rest } = options;
 
   // fixes: https://github.com/TanStack/table/issues/4240#issuecomment-1200916069
-  const table = useReactTable({
+  const table = useLegacyTable<T>({
     data: data.length === 0 ? empty : data,
     ...rest,
   });
@@ -59,7 +61,8 @@ export const TABLE_SLOTS = ["top", "bottom"] as const;
 
 export type TableSlots = (typeof TABLE_SLOTS)[number];
 
-export interface Props<T extends any = any> extends WithSlotsProps<TableSlots> {
+export interface Props<T extends RowData = any>
+  extends WithSlotsProps<TableSlots> {
   table: ITable<T>;
   empty?: JSX.Element;
   isFetching: boolean;
@@ -231,6 +234,10 @@ export function TableSlot(props: {
   return <Slot<TableSlots> {...props} />;
 }
 
-const Table = WithSlots(RawTable, TABLE_SLOTS);
+// WithSlots erases the row type, and v9 tables are invariant in it: a typed
+// table no longer fits a `table: Table<any>` prop. Keep T on the public type.
+const Table = WithSlots(RawTable, TABLE_SLOTS) as <T extends RowData = any>(
+  props: Omit<Props<T>, "slots"> & { children: React.ReactNode },
+) => JSX.Element;
 
 export { Table };

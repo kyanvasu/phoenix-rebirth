@@ -186,6 +186,10 @@ export default defineConfig([
     cjsInterop: true,
   },
   // Blocks
+  // @tanstack/react-table is bundled in, but its CJS-only transitive dep
+  // use-sync-external-store has to stay external (hence it being listed in
+  // dependencies): inlined into the ESM output it leaves a require("react")
+  // that throws on import.
   {
     dts: true,
     entry: ["src/components/blocks"],
