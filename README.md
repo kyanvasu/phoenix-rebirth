@@ -943,7 +943,8 @@ function CreateUserModal() {
 
 #### Advanced Table
 
-Data table with built-in sorting, filtering, and pagination:
+Data table with built-in sorting, pagination, and row selection (other
+TanStack features, like filtering, are opt-in through `features`):
 
 ```tsx
 import {
@@ -2915,12 +2916,34 @@ const { table } = useTable({ data, columns });
 API [see implementation](/src/components/blocks/table/index.tsx):
 
 - columnsBuilder<T>(columns: T[], deps?: DependencyList): memoizes columns
-- useTable<T>(options: LegacyTableOptions<T>): returns `{ table }` with
-  empty-data fixes. Built on TanStack Table v9's `useLegacyTable`, so it takes
-  the v8-style options; import `getSortedRowModel`, `getPaginationRowModel`,
-  `LegacyColumnDef`, etc. from `@tanstack/react-table/legacy`
+- useTable<T>(options: TableOptions<T>): returns `{ table }` with empty-data
+  fixes. Built on TanStack Table v9 with sorting, pagination and row selection
+  registered
+  - `getSortedRowModel` / `getPaginationRowModel`: pass any value to turn
+    client-side sorting / pagination on, the same switches as in v8
+  - `features`: opt in to anything else TanStack offers (filtering, column
+    visibility, grouping, ...). Tables that do not ask for a feature do not
+    ship it:
+
+    ```tsx
+    import {
+      columnFilteringFeature,
+      createFilteredRowModel,
+      filterFns,
+    } from "@tanstack/react-table";
+
+    const { table } = useTable({
+      data,
+      columns,
+      features: {
+        columnFilteringFeature,
+        filteredRowModel: createFilteredRowModel(),
+        filterFns,
+      },
+    });
+    ```
 - Table props:
-  - table: TanStack `LegacyTable<T>` (what `useTable` returns)
+  - table: the table `useTable` returns (any TanStack v9 `Table` works)
   - isFetching: boolean
   - empty?: JSX.Element
   - oneElement?: boolean

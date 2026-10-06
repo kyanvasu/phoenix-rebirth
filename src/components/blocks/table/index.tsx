@@ -9,19 +9,65 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { flexRender, RowData } from "@tanstack/react-table";
-// v9 dropped useReactTable; the legacy entry keeps the v8-style options
-// (getSortedRowModel, getPaginationRowModel, ...) this block has always taken.
 import {
-  LegacyTable as ITable,
-  LegacyTableOptions as TableOptions,
-  useLegacyTable,
-} from "@tanstack/react-table/legacy";
+  createPaginatedRowModel,
+  createSortedRowModel,
+  flexRender,
+  type ReactTable,
+  type RowData,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  sortFns,
+  type Table as ITable,
+  type TableFeatures,
+  type TableOptions as TanStackTableOptions,
+  useTable as useTanStackTable,
+} from "@tanstack/react-table";
 
 import { For, Show, Slot, WithSlots, WithSlotsProps } from "@/lib/server";
-import { DependencyList, JSX, memo, useMemo } from "react";
+import { DependencyList, JSX, memo, useMemo, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+
+// What every table gets. The rest of TanStack Table (filtering, column
+// visibility, grouping, ...) is opt-in through the `features` option, so a
+// table only ships the features it uses. Registering all of them, as
+// useLegacyTable does, more than doubles the size of this block.
+const baseFeatures = {
+  rowSortingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  sortFns,
+};
+
+export type TableBaseFeatures = typeof baseFeatures;
+
+export type TableOptions<
+  T extends RowData,
+  F extends TableFeatures = {},
+> =
+  // NoInfer: F is decided by the `features` option alone, not by the options
+  // whose types depend on it (state, on*Change, ...).
+  & Omit<TanStackTableOptions<TableBaseFeatures & NoInfer<F>, T>, "features">
+  & {
+    /** Extra TanStack features, on top of sorting, pagination and selection. */
+    features?: F;
+    /** Turns client-side sorting on. Any value works, as it did with v8. */
+    getSortedRowModel?: unknown;
+    /** Turns client-side pagination on. Any value works, as it did with v8. */
+    getPaginationRowModel?: unknown;
+    /** Ignored, the core row model is always on. Kept for v8 call sites. */
+    getCoreRowModel?: unknown;
+  };
+
+export type TableInstance<
+  T extends RowData,
+  F extends TableFeatures = {},
+> = ReactTable<TableBaseFeatures & F, T> & {
+  /** v8's `table.getState()`. v9 exposes the same value as `table.state`. */
+  getState: () => ReactTable<TableBaseFeatures & F, T>["state"];
+};
 
 const _deps: DependencyList = [];
 
@@ -43,17 +89,47 @@ export function columnsBuilder<T extends any = any>(
 
 const empty: any[] = [];
 
-export function useTable<T extends RowData = any>(options: TableOptions<T>) {
-  const { data, ...rest } = options;
+// Two signatures on purpose. With a single one, F needs a default for calls
+// that pass no `features`, and that default makes TypeScript give up on
+// inferring F when the features are written inline.
+export function useTable<T extends RowData = any>(
+  options: TableOptions<T> & { features?: undefined },
+): { table: TableInstance<T> };
+export function useTable<T extends RowData, F extends TableFeatures>(
+  options: TableOptions<T, F> & { features: F },
+): { table: TableInstance<T, F> };
+export function useTable(options: any): { table: any } {
+  const {
+    data,
+    features: extraFeatures,
+    getCoreRowModel: _getCoreRowModel,
+    getSortedRowModel,
+    getPaginationRowModel,
+    ...rest
+  } = options as TableOptions<any, any>;
 
-  // fixes: https://github.com/TanStack/table/issues/4240#issuecomment-1200916069
-  const table = useLegacyTable<T>({
-    data: data.length === 0 ? empty : data,
-    ...rest,
-  });
+  // TanStack reads the features once, when the table is created.
+  const [features] = useState(() => ({
+    ...baseFeatures,
+    ...(getSortedRowModel ? { sortedRowModel: createSortedRowModel() } : {}),
+    ...(getPaginationRowModel
+      ? { paginatedRowModel: createPaginatedRowModel() }
+      : {}),
+    ...extraFeatures,
+  }));
+
+  const table = useTanStackTable(
+    {
+      ...rest,
+      // fixes: https://github.com/TanStack/table/issues/4240#issuecomment-1200916069
+      data: data.length === 0 ? empty : data,
+      features,
+    },
+    (state) => state,
+  );
 
   return {
-    table,
+    table: useMemo(() => ({ ...table, getState: () => table.state }), [table]),
   };
 }
 
@@ -61,9 +137,11 @@ export const TABLE_SLOTS = ["top", "bottom"] as const;
 
 export type TableSlots = (typeof TABLE_SLOTS)[number];
 
-export interface Props<T extends RowData = any>
-  extends WithSlotsProps<TableSlots> {
-  table: ITable<T>;
+export interface Props<
+  T extends RowData = any,
+  F extends TableFeatures = any,
+> extends WithSlotsProps<TableSlots> {
+  table: ITable<F, T>;
   empty?: JSX.Element;
   isFetching: boolean;
   oneElement?: boolean;
@@ -144,31 +222,38 @@ function RawTable(props: Props) {
                 }
               >
                 <For each={props.table.getRowModel().rows}>
-                  {(row) => (
-                    <TableRowMemo
-                      data-state={row.getIsSelected() && "selected"}
-                      key={row.id}
-                    >
-                      <For each={row.getVisibleCells()}>
-                        {(cell, { index }) => (
-                          <TableCellMemo
-                            key={cell.id}
-                            className={cn({
-                              "text-center": index > 0 &&
-                                index < row.getVisibleCells().length - 1,
-                              "text-end": !props.oneElement &&
-                                index === row.getVisibleCells().length - 1,
-                            })}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </TableCellMemo>
-                        )}
-                      </For>
-                    </TableRowMemo>
-                  )}
+                  {(row) => {
+                    // These two only exist when their feature is registered:
+                    // column visibility is opt-in, and the table may come from
+                    // a consumer's own useTable without row selection.
+                    const cells = row.getVisibleCells?.() ?? row.getAllCells();
+
+                    return (
+                      <TableRowMemo
+                        data-state={row.getIsSelected?.() && "selected"}
+                        key={row.id}
+                      >
+                        <For each={cells}>
+                          {(cell, { index }) => (
+                            <TableCellMemo
+                              key={cell.id}
+                              className={cn({
+                                "text-center": index > 0 &&
+                                  index < cells.length - 1,
+                                "text-end": !props.oneElement &&
+                                  index === cells.length - 1,
+                              })}
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </TableCellMemo>
+                          )}
+                        </For>
+                      </TableRowMemo>
+                    );
+                  }}
                 </For>
               </Show>
             </TableBodyMemo>
@@ -234,10 +319,14 @@ export function TableSlot(props: {
   return <Slot<TableSlots> {...props} />;
 }
 
-// WithSlots erases the row type, and v9 tables are invariant in it: a typed
-// table no longer fits a `table: Table<any>` prop. Keep T on the public type.
-const Table = WithSlots(RawTable, TABLE_SLOTS) as <T extends RowData = any>(
-  props: Omit<Props<T>, "slots"> & { children: React.ReactNode },
+// WithSlots erases the row and feature types, and v9 tables are invariant in
+// both: a typed table no longer fits a `table: Table<any>` prop. Keep them on
+// the public type.
+const Table = WithSlots(RawTable, TABLE_SLOTS) as <
+  T extends RowData = any,
+  F extends TableFeatures = any,
+>(
+  props: Omit<Props<T, F>, "slots"> & { children: React.ReactNode },
 ) => JSX.Element;
 
 export { Table };

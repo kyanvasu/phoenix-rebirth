@@ -1,10 +1,8 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+// Same engine the ui components import directly. Keeping a second one here
+// (clsx + tailwind-merge) shipped ~27 KB of duplicate class-merging code.
+export { cn } from "cn";
 
 /**
  * dispatch custom dom events

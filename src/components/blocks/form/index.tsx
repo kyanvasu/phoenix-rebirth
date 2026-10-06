@@ -5,17 +5,51 @@
 //   Match,
 // } from "@kanvas/phoenix-rebirth/dist/lib/server";
 
-import { forwardRef, JSX, MemoExoticComponent, PropsWithChildren } from "react";
+import {
+  forwardRef,
+  JSX,
+  lazy,
+  MemoExoticComponent,
+  PropsWithChildren,
+  Suspense,
+} from "react";
 import { Controller, UseControllerProps, useForm } from "react-hook-form";
 import { FormInputField, FormInputFieldProps } from "./kinds/input";
-import { PhoneInputProps } from "@/components/blocks/phone-input";
+import type { PhoneInputProps } from "@/components/blocks/phone-input";
 import { FormFacetedSelect } from "./kinds/faced-select";
 import { For, Match, Show, Switch } from "@/lib/server";
 import { FormCheckboxField } from "./kinds/checkbox";
 import { FormSelectField } from "./kinds/select";
 import { FormSwitchField } from "./kinds/switch";
 import { FormTextArea } from "./kinds/textarea";
-import { FormPhoneInput } from "./kinds/phone";
+import type { FormPhoneInputProps } from "./kinds/phone";
+
+// The phone field pulls in libphonenumber and every country flag (~425 KB
+// minified). Loading it on demand keeps that out of forms that have no phone
+// field, which used to pay for it just by importing SimpleFormBuilder.
+const LazyFormPhoneInput = lazy(() =>
+  import("./kinds/phone").then((m) => ({ default: m.FormPhoneInput }))
+);
+
+function FormPhoneInput(props: FormPhoneInputProps) {
+  return (
+    <Suspense
+      fallback={
+        <FormInputField
+          placeholder={props.placeholder}
+          infoText={props.infoText}
+          optional={props.optional}
+          label={props.label}
+          name={props.name}
+          id={props.id}
+          disabled
+        />
+      }
+    >
+      <LazyFormPhoneInput {...props} />
+    </Suspense>
+  );
+}
 
 type Props = FormInputFieldProps & PhoneInputProps;
 
