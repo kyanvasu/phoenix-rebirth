@@ -108,7 +108,7 @@
   line-height: 1.3;
   border-radius: 3px;
 
-  @apply !bg-primary !text-primary-foreground border border-border;
+  @apply bg-primary! text-primary-foreground! border border-border;
 }
 
 .driver-popover-footer .driver-popover-btn-disabled {
@@ -232,5 +232,5 @@
 }
 
 svg.driver-overlay path {
-  @apply dark:!fill-foreground/40 dark:!backdrop-blur-lg;
+  @apply dark:fill-foreground/40! dark:backdrop-blur-lg!;
 }
